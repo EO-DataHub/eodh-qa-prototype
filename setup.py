@@ -6,7 +6,7 @@ import sys
 from setuptools import find_packages
 from setuptools import setup
 
-sys.path.append('eodh-qa-prototype')
+sys.path.append('eodh_qa_prototype')
 from _version import __version__
 
 
@@ -19,7 +19,7 @@ def read(filename):
 
 setup(
     version=__version__,
-    name="eodh-qa-prototype",
+    name="eodh_qa_prototype",
     url="https://github.com/EO-DataHub/eodh-qa-prototype",
     license="BSD 2-Clause License",
     author=["Sam Hunt", "Samantha Malone"],
