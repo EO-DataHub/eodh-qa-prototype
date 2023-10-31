@@ -27,5 +27,5 @@ setup(
     description="Python package to prototyping components of the EODH QA Check Service",
     long_description=read("README.md"),
     packages=find_packages(exclude=("tests",)),
-    install_requires=[],
+    install_requires=["pyyaml"],
 )
