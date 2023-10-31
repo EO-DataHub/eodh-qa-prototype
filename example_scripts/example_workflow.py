@@ -1,7 +1,7 @@
 """example_workflow - script to prototype qa check workflow for EODH"""
 
 import json
-from eodh_qa_prototype.qa_check_workflows.stac_geometry_coordinates import QACheckSTACItemGeomCoords
+from eodh_qa_prototype.runner import QACheckRunner
 
 __author__ = ["Sam Hunt <sam.hunt@npl.co.uk>", "Sam Malone <samantha.malone@npl.co.uk>"]
 __all__ = []
@@ -54,11 +54,14 @@ def main():
     # stac_item = requests.get(STAC_ITEM_URL).json()  # use when SSL error is fixed due to NPLs firewall
     stac_item = json.loads(STAC_ITEM_JSON)
 
-    # Runs example QA check - this could have arbitrary complexity
-    qa_check = QACheckSTACItemGeomCoords()
-    example_check_result, example_ancillary_info = qa_check.run_check(stac_item)
+    # Init QA check runner
+    qa_check_runner = QACheckRunner()
 
-    return example_check_result
+    # Runs example process to run all QA check workflows for input item
+    # Triggered to run when a new item gets added to the STAC catalogue
+    example_check_results = qa_check_runner.run_item_qa_check_workflows(stac_item)
+
+    return example_check_results
 
 
 if __name__ == "__main__":
