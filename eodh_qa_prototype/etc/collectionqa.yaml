@@ -1,0 +1,4 @@
+Sentinel-2A:
+  collection_qa_check_workflows:
+  item_qa_check_workflows:
+    - "stac_item_geom_coords"
