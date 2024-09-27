@@ -1,0 +1,114 @@
+@scheme = https
+@testeodh = workspaces.test.eodhp.eco-ke-staging.com
+@ades = test.eodatahub.org.uk/ades
+@username= sam_malone41
+@workspace = workspace
+@s3Endpoint = AccessPointName-AccountId.s3-accesspoint.region.amazonaws.com
+@fileName = <WORKSPACE NAME>/<FILENAME>.tif
+@logindetails = <TOKEN>
+@deployStatus = {{deployProcessJson.response.headers.Location}}
+@executeStatus = {{executeProcess.response.headers.Location}}
+
+###
+# example from GitHub guide
+# @name accessFileInWorkspace
+GET /files/<bucket_name>/<path_to_file> HTTP/1.1
+Host: {{workspace}}.workspaces.test.eodhp.eco-ke-staging.com
+Authorization: Bearer {{logindetails}}
+
+###
+
+# @name deleteProcess
+DELETE {{scheme}}:/{{ades}}/{{username}}/ogc-api/processes/qa-workflow-test HTTP/1.1
+Authorization: Basic {{logindetails}}
+Accept: application/json
+
+###
+
+# throws 403 error: {"detail": "Access denied"}
+# @name listProcesses
+GET {{ades}}/{{username}}/ogc-api/processes HTTP/1.1
+Authorization: Bearer {{logindetails}}
+Accept: application/json
+
+###
+
+# testing other urls/host combinations
+# @name listProcessesTest
+GET /{{username}}/ogc-api/processes HTTP/1.1
+Host: {{testeodh}}
+Authorization: Bearer {{logindetails}}
+Accept: application/json
+
+###
+
+
+# @name deployProcessJson
+POST {{scheme}}://{{ades}}/{{username}}/ogc-api/processes HTTP/1.1
+Authorization: Basic {{logindetails}}
+Accept: application/json
+Content-Type: application/cwl+yaml
+
+< qa-workflow-test.cwl
+
+###
+
+# @name getDeployStatus
+GET {{deployStatus}} HTTP/1.1
+Authorization: Basic {{logindetails}}
+Accept: application/json
+
+###
+
+# @name getProcessDetails
+GET {{ades}}/{{username}}/ogc-api/processes/qa-workflow-test HTTP/1.1
+Authorization: Basic {{logindetails}}
+Accept: application/json
+
+###
+
+
+# @name executeProcess
+POST {{scheme}}://{{ades}}/{{username}}/ogc-api/processes/qa-workflow-test/execution HTTP/1.1
+Authorization: Basic {{logindetails}}
+Accept: application/json
+Content-Type: application/json
+Prefer: respond-async
+
+{
+  "inputs": {
+    "workspace": "{{workspace}}",
+    "s3_endpoint": "{{s3Endpoint}}",
+    "file_name":  "{{fileName}}",
+  }
+}
+
+###
+
+# @name getExecuteStatus
+GET {{executeStatus}} HTTP/1.1
+Authorization: Basic {{logindetails}}
+Accept: application/json
+
+###
+
+# @name getProcessingResults
+GET {{executeStatus}}/results HTTP/1.1
+Authorization: Basic {{logindetails}}
+Accept: application/json
+
+###
+
+# @name undeployProcess
+DELETE {{scheme}}://{{ades}}/{{username}}/ogc-api/processes/qa-workflow-test HTTP/1.1
+Authorization: Basic {{logindetails}}
+Accept: application/json
+
+###
+
+# @name listJobs
+GET {{ades}}/{{username}}/ogc-api/jobs HTTP/1.1
+Authorization: Basic {{logindetails}}
+Accept: application/json
+
+###
