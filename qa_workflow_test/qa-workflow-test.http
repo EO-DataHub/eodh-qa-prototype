@@ -113,14 +113,3 @@ Accept: application/json
 GET https://test.eodatahub.org.uk/ades/sam_malone41/ogc-api/jobs HTTP/1.1
 Authorization: Bearer 454f4448f8f6774c8647a5b7f97bff37
 Accept: application/json
-
-
-###
-# doesn't work - no permission, failed jobs all deleted after a day anyway
-# @name deleteJobs
-DELETE https://test.eodatahub.org.uk/ades/sam_malone41/ogc-api/jobs HTTP/1.1
-Authorization: Bearer 454f4448f8f6774c8647a5b7f97bff37
-Accept: application/json
-
-
-###
