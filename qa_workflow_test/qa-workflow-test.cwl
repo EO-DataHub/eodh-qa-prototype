@@ -15,10 +15,6 @@ $graph:
         label: https s3 endpoint
         doc: https s3 endpoint
         type: string
-#      file_name:
-#        label: file to download
-#        doc: file to download
-#        type: string
     outputs:
       - id: results
         type: Directory
@@ -29,7 +25,6 @@ $graph:
         run: "#qa-workflow-test"
         in:
           s3_endpoint: s3_endpoint
-#          file_name: file_name
         out:
           - results
 
@@ -38,17 +33,13 @@ $graph:
     id: qa-workflow-test
     hints:
       DockerRequirement:
-        dockerPull: docker.io/sm41/qa-workflow-test:latest
+        dockerPull: docker.io/sm41/qa-workflow-test5:latest
     baseCommand: ["/venv/bin/python", "-m", "qa-workflow-test"]
     inputs:
       s3_endpoint:
         type: string
         inputBinding:
           position: 1
-#      file_name:
-#        type: string
-#        inputBinding:
-#          position: 2
     outputs:
       results:
         type: Directory

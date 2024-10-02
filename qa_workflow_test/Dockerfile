@@ -10,4 +10,4 @@ WORKDIR /app
 COPY requirements.txt /app
 RUN python -m pip install -r requirements.txt
 
-ENTRYPOINT ["/venv/bin/python", "-m", "qa_workflow_test"]
+ENTRYPOINT ["/venv/bin/python", "-m", "qa-workflow-test"]

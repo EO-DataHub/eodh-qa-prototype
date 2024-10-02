@@ -5,9 +5,10 @@
 @workspace = workspace
 @s3Endpoint = AccessPointName-AccountId.s3-accesspoint.region.amazonaws.com
 @fileName = <WORKSPACE NAME>/<FILENAME>.tif
-@logindetails = <TOKEN>
+@logindetails = 454f4448f8f6774c8647a5b7f97bff37
 @deployStatus = {{deployProcessJson.response.headers.Location}}
 @executeStatus = {{executeProcess.response.headers.Location}}
+
 
 ###
 # example from GitHub guide
@@ -18,97 +19,108 @@ Authorization: Bearer {{logindetails}}
 
 ###
 
+# @name TestUserDatasetsAccess
+GET /https://test.eodatahub.org.uk/api/catalogue/stac/catalogs/user-datasets/sam-malone41/processing-results
+Authorization: Bearer 454f4448f8f6774c8647a5b7f97bff37
+Accept: application/json
+
+###
+
 # @name deleteProcess
-DELETE {{scheme}}:/{{ades}}/{{username}}/ogc-api/processes/qa-workflow-test HTTP/1.1
-Authorization: Basic {{logindetails}}
+DELETE https://test.eodatahub.org.uk/ades/sam_malone41/ogc-api/processes/qa-workflow-test HTTP/1.1
+Authorization: Bearer 454f4448f8f6774c8647a5b7f97bff37
 Accept: application/json
+
 
 ###
 
-# throws 403 error: {"detail": "Access denied"}
 # @name listProcesses
-GET {{ades}}/{{username}}/ogc-api/processes HTTP/1.1
-Authorization: Bearer {{logindetails}}
+GET https://test.eodatahub.org.uk/ades/sam_malone41/ogc-api/processes HTTP/1.1
+Authorization: Bearer 454f4448f8f6774c8647a5b7f97bff37
 Accept: application/json
 
-###
-
-# testing other urls/host combinations
-# @name listProcessesTest
-GET /{{username}}/ogc-api/processes HTTP/1.1
-Host: {{testeodh}}
-Authorization: Bearer {{logindetails}}
-Accept: application/json
 
 ###
-
 
 # @name deployProcessJson
-POST {{scheme}}://{{ades}}/{{username}}/ogc-api/processes HTTP/1.1
-Authorization: Basic {{logindetails}}
+POST https://test.eodatahub.org.uk/ades/sam_malone41/ogc-api/processes HTTP/1.1
+Authorization: Bearer 454f4448f8f6774c8647a5b7f97bff37
 Accept: application/json
 Content-Type: application/cwl+yaml
 
 < qa-workflow-test.cwl
 
-###
 
+###
+# need to update url
 # @name getDeployStatus
-GET {{deployStatus}} HTTP/1.1
-Authorization: Basic {{logindetails}}
+GET deployProcessJson.response.headers.Location HTTP/1.1
+Authorization: Bearer 454f4448f8f6774c8647a5b7f97bff37
 Accept: application/json
+
 
 ###
 
 # @name getProcessDetails
-GET {{ades}}/{{username}}/ogc-api/processes/qa-workflow-test HTTP/1.1
-Authorization: Basic {{logindetails}}
+GET https://test.eodatahub.org.uk/ades/sam_malone41/ogc-api/processes/qa-workflow-test HTTP/1.1
+Authorization: Bearer 454f4448f8f6774c8647a5b7f97bff37
 Accept: application/json
+
 
 ###
 
-
 # @name executeProcess
-POST {{scheme}}://{{ades}}/{{username}}/ogc-api/processes/qa-workflow-test/execution HTTP/1.1
-Authorization: Basic {{logindetails}}
+POST https://test.eodatahub.org.uk/ades/sam_malone41/ogc-api/processes/qa-workflow-test/execution HTTP/1.1
+Authorization: Bearer 454f4448f8f6774c8647a5b7f97bff37
 Accept: application/json
 Content-Type: application/json
 Prefer: respond-async
 
 {
   "inputs": {
-    "workspace": "{{workspace}}",
-    "s3_endpoint": "{{s3Endpoint}}",
-    "file_name":  "{{fileName}}",
+  "s3_endpoint": "AccessPointName-AccountId.s3-accesspoint.region.amazonaws.com"
   }
 }
 
-###
 
+###
+# need to update url
 # @name getExecuteStatus
 GET {{executeStatus}} HTTP/1.1
 Authorization: Basic {{logindetails}}
 Accept: application/json
 
-###
 
+###
+# need to update url
 # @name getProcessingResults
 GET {{executeStatus}}/results HTTP/1.1
 Authorization: Basic {{logindetails}}
 Accept: application/json
 
+
 ###
 
 # @name undeployProcess
-DELETE {{scheme}}://{{ades}}/{{username}}/ogc-api/processes/qa-workflow-test HTTP/1.1
-Authorization: Basic {{logindetails}}
+DELETE https://test.eodatahub.org.uk/ades/sam_malone41/ogc-api/processes/qa-workflow-test HTTP/1.1
+Authorization: Bearer 454f4448f8f6774c8647a5b7f97bff37
 Accept: application/json
+
 
 ###
 
 # @name listJobs
-GET {{ades}}/{{username}}/ogc-api/jobs HTTP/1.1
-Authorization: Basic {{logindetails}}
+GET https://test.eodatahub.org.uk/ades/sam_malone41/ogc-api/jobs HTTP/1.1
+Authorization: Bearer 454f4448f8f6774c8647a5b7f97bff37
 Accept: application/json
+
+
+###
+# doesn't work - no permission, failed jobs all deleted after a day anyway
+# @name deleteJobs
+DELETE https://test.eodatahub.org.uk/ades/sam_malone41/ogc-api/jobs HTTP/1.1
+Authorization: Bearer 454f4448f8f6774c8647a5b7f97bff37
+Accept: application/json
+
 
 ###
