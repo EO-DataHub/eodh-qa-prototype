@@ -83,6 +83,8 @@ def create_stac_item(out_name):
     # )
 
     data = dict(id = qa_check_results_dict["data_collection"].replace(" ", "_") + '_qa_check_test',
+                type = "Feature",
+                stac_version = "1.0.0",
                 geometry=None,
                 bbox=None,
                 datetime=qa_check_results_dict["check_datetime"],

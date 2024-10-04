@@ -22,7 +22,7 @@ $graph:
           - qa-workflow-test/results
     steps:
       qa-workflow-test:
-        run: "#qa-workflow-test"
+        run: "#run"
         in:
           s3_endpoint: s3_endpoint
         out:
@@ -30,11 +30,11 @@ $graph:
 
   # Main Python script execution
   - class: CommandLineTool
-    id: qa-workflow-test
+    id: run
     hints:
       DockerRequirement:
         dockerPull: docker.io/sm41/qa-workflow-test5:latest
-    baseCommand: ["/venv/bin/python", "-m", "qa-workflow-test"]
+    baseCommand: ["python", "/app/qa-workflow-test"]
     inputs:
       s3_endpoint:
         type: string
