@@ -2,7 +2,6 @@ import os
 import sys
 import datetime as dt
 import json
-import pystac
 from pathlib import Path
 # import mimetypes
 
@@ -74,17 +73,6 @@ def create_stac_item(out_name):
     # size = os.path.getsize(f"{out_name}")
     # mime = mimetypes.guess_type(f"{out_name}")[0]
 
-    # # create stac item manually
-    # STAC_item = pystac.item.Item(
-    #     id=qa_check_results_dict["data_collection"].replace(" ", "_")+'_qa_check_test',
-    #     geometry=None,
-    #     bbox=None,
-    #     datetime=qa_check_results_dict["check_datetime"],
-    #     # start_datetime=qa_check_results_dict["check_datetime"],
-    #     # end_datetime=qa_check_results_dict["check_date_validity_end"],
-    #     properties={'full_qa_check_result_output': qa_check_results_dict},
-    # )
-
     data = dict(id = qa_check_results_dict["data_collection"].replace(" ", "_") + '_qa_check_test',
                 type = "Feature",
                 stac_version = "1.0.0",
@@ -136,5 +124,5 @@ def create_stac_catalog_root(out_name):
 
 
 if __name__ == "__main__":
-    # sys_argv = ['/opt/project/qa_workflow_test/qa-workflow-test/__main__.py', 's3_endpoint']
+    # sys_argv = ['/opt/project/qa_workflow_test/qa-workflow-test/__main__.py', 's3_endpoint']  # for testing locally
     do_func(sys.argv)
