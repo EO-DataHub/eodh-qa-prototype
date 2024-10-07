@@ -4,6 +4,7 @@ import datetime as dt
 import json
 import pystac
 from pathlib import Path
+# import mimetypes
 
 import boto3
 
@@ -54,8 +55,8 @@ def qa_check_doc_review():
         "check_name": "documentation review",
         "result": maturity_matrix_dict,
         "result_vocab": "vocab/url",
-        "check_datetime": dt.datetime.now().strftime("%Y%m%dT%H%M"),
-        "check_date_validity_end": (dt.datetime.now() + dt.timedelta(365)).strftime("%Y%m%dT%H%M"),  # approx. 12 months
+        "check_datetime": dt.datetime.now().strftime("%Y-%m-%dT%H:%M:%S.%f") + "Z",
+        "check_date_validity_end": (dt.datetime.now() + dt.timedelta(365)).strftime("%Y-%m-%dT%H:%M:%S.%f") + "Z",  # approx. 12 months
         "check_author": "S Malone",
         "check_version": "1.0",
         "ref_url": {"documentation_1": "url", "documentation_2": "url", "...": "url"}
@@ -70,6 +71,8 @@ def qa_check_doc_review():
 def create_stac_item(out_name):
     qa_check_results_dict = json.loads(qa_check_doc_review())
     stem = Path(out_name).stem  # later for "id": f"{stem}-{now}"
+    # size = os.path.getsize(f"{out_name}")
+    # mime = mimetypes.guess_type(f"{out_name}")[0]
 
     # # create stac item manually
     # STAC_item = pystac.item.Item(
@@ -85,12 +88,31 @@ def create_stac_item(out_name):
     data = dict(id = qa_check_results_dict["data_collection"].replace(" ", "_") + '_qa_check_test',
                 type = "Feature",
                 stac_version = "1.0.0",
-                geometry=None,
-                bbox=None,
-                datetime=qa_check_results_dict["check_datetime"],
-                # start_datetime=qa_check_results_dict["check_datetime"],
-                # end_datetime=qa_check_results_dict["check_date_validity_end"],
-                properties={'full_qa_check_result_output': qa_check_results_dict}
+                geometry={
+                    "type": "Polygon",
+                    "coordinates": [
+                        [[-180, -90], [-180, 90], [180, 90], [180, -90], [-180, -90]]
+                    ],
+                },
+                bbox=[-180, -90, 180, 90],
+                properties={"datetime": qa_check_results_dict["check_datetime"],
+                            # "start_datetime": qa_check_results_dict["check_datetime"],
+                            # "end_datetime": qa_check_results_dict["check_date_validity_end"],
+                            "full_qa_check_result_output": qa_check_results_dict,
+                            },
+                links = [
+                    {"type": "application/json", "rel": "self",  "href": f"{stem}.json"},
+                    {"type": "application/json", "rel": "parent", "href": "catalog.json"},
+                    {"type": "application/json", "rel": "root", "href": "catalog.json"},
+                ],
+                assets = {
+                    f"{stem}": {
+                        # "type": f"{mime}",
+                        # "file:size": size,
+                        "roles": ["data"],
+                        "href": f"{out_name}",
+                    }
+                },
                 )
 
     with open(f"{out_dir}/{stem}.json", "w", encoding="utf-8") as f:
@@ -114,4 +136,5 @@ def create_stac_catalog_root(out_name):
 
 
 if __name__ == "__main__":
+    # sys_argv = ['/opt/project/qa_workflow_test/qa-workflow-test/__main__.py', 's3_endpoint']
     do_func(sys.argv)

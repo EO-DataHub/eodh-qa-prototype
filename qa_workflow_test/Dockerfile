@@ -1,6 +1,6 @@
 FROM python:3.12-slim
 
-ENV PATH="/app:${PATH}"
+ENV PYTHONPATH "/app"
 
 RUN apt-get update
 RUN python3 -m pip install --upgrade pip
