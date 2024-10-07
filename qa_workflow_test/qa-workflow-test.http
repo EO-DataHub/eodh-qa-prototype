@@ -92,10 +92,10 @@ Accept: application/json
 
 
 ###
-# need to update url
+# need to update url to include correct job code
 # @name getProcessingResults
-GET {{executeStatus}}/results HTTP/1.1
-Authorization: Basic {{logindetails}}
+GET https://test.eodatahub.org.uk/ades/sam_malone41/ogc-api/jobs/11e04578-84ad-11ef-9330-9625a5233070/results HTTP/1.1
+Authorization: Bearer 454f4448f8f6774c8647a5b7f97bff37
 Accept: application/json
 
 
