@@ -31,20 +31,22 @@ def qa_check_doc_review():
                 "product_details": {"grade": "good", "ref": "https://asdf"},
                 "availability_and_accessability": {"grade": "basic", "ref": "https://asdf"},
                 "product_format_flags_and_metadata": {"grade": "excellent", "ref": "https://asdf"},
-                "...": {"grade": "good", "ref": "https://asdf"}
+                "user_documentation": {"grade": "ideal", "ref": "https://asdf"}
             },
         "metrology":
             {
                 "radiometric_calibration_and_characterisation)": {"grade": "excellent", "ref": "https://asdf"},
                 "geometric_calibration_and_characterisation": {"grade": "excellent", "ref": "https://asdf"},
                 "metrological_traceability_documentation": {"grade": "basic", "ref": "https://asdf"},
-                "...": {"grade": "good", "ref": "https://asdf"}
+                "uncertainty_characterisation": {"grade": "good", "ref": "https://asdf"},
+                "ancillary_data": {"grade": "excellent", "ref": "https://asdf"}
             },
         "product_generation":
             {
                 "radiometric_calibration_algorithm": {"grade": "good", "ref": "https://asdf"},
                 "geometric_processing": {"grade": "good", "ref": "https://asdf"},
-                "...": {"grade": "good", "ref": "https://asdf"}
+                "retrieval_algorithm": {"grade": "excellent", "ref": "https://asdf"},
+                "mission_specific_processing": {"grade": "good", "ref": "https://asdf"},
             },
     }
 
@@ -58,7 +60,7 @@ def qa_check_doc_review():
         "check_date_validity_end": (dt.datetime.now() + dt.timedelta(365)).strftime("%Y-%m-%dT%H:%M:%S.%f") + "Z",  # approx. 12 months
         "check_author": "S Malone",
         "check_version": "1.0",
-        "ref_url": {"documentation_1": "url", "documentation_2": "url", "...": "url"}
+        "ref_url": {"documentation_1": "url", "documentation_2": "url"}
     }
 
     # save to JSON
