@@ -1,0 +1,18 @@
+{
+    "stac_version": "1.0.0",
+    "id": "catalog",
+    "type": "Catalog",
+    "description": "Root catalog",
+    "links": [
+        {
+            "type": "application/json",
+            "rel": "item",
+            "href": "qa_check_doc_review.json"
+        },
+        {
+            "type": "application/json",
+            "rel": "self",
+            "href": "catalog.json"
+        }
+    ]
+}
