@@ -1,0 +1,139 @@
+{
+    "id": "Sentinel-2_L1C_qa_check_test",
+    "type": "Feature",
+    "stac_version": "1.0.0",
+    "geometry": {
+        "type": "Polygon",
+        "coordinates": [
+            [
+                [
+                    -180,
+                    -90
+                ],
+                [
+                    -180,
+                    90
+                ],
+                [
+                    180,
+                    90
+                ],
+                [
+                    180,
+                    -90
+                ],
+                [
+                    -180,
+                    -90
+                ]
+            ]
+        ]
+    },
+    "bbox": [
+        -180,
+        -90,
+        180,
+        90
+    ],
+    "properties": {
+        "datetime": "2024-10-07T16:43:38.679352Z",
+        "full_qa_check_result_output": {
+            "data_collection": "Sentinel-2 L1C",
+            "check_name": "documentation review",
+            "result": {
+                "product_information": {
+                    "product_details": {
+                        "grade": "good",
+                        "ref": "https://asdf"
+                    },
+                    "availability_and_accessability": {
+                        "grade": "basic",
+                        "ref": "https://asdf"
+                    },
+                    "product_format_flags_and_metadata": {
+                        "grade": "excellent",
+                        "ref": "https://asdf"
+                    },
+                    "user_documentation": {
+                        "grade": "ideal",
+                        "ref": "https://asdf"
+                    }
+                },
+                "metrology": {
+                    "radiometric_calibration_and_characterisation)": {
+                        "grade": "excellent",
+                        "ref": "https://asdf"
+                    },
+                    "geometric_calibration_and_characterisation": {
+                        "grade": "excellent",
+                        "ref": "https://asdf"
+                    },
+                    "metrological_traceability_documentation": {
+                        "grade": "basic",
+                        "ref": "https://asdf"
+                    },
+                    "uncertainty_characterisation": {
+                        "grade": "good",
+                        "ref": "https://asdf"
+                    },
+                    "ancillary_data": {
+                        "grade": "excellent",
+                        "ref": "https://asdf"
+                    }
+                },
+                "product_generation": {
+                    "radiometric_calibration_algorithm": {
+                        "grade": "good",
+                        "ref": "https://asdf"
+                    },
+                    "geometric_processing": {
+                        "grade": "good",
+                        "ref": "https://asdf"
+                    },
+                    "retrieval_algorithm": {
+                        "grade": "excellent",
+                        "ref": "https://asdf"
+                    },
+                    "mission_specific_processing": {
+                        "grade": "good",
+                        "ref": "https://asdf"
+                    }
+                }
+            },
+            "result_vocab": "vocab/url",
+            "check_datetime": "2024-10-07T16:43:38.679352Z",
+            "check_date_validity_end": "2025-10-07T16:43:38.679401Z",
+            "check_author": "S Malone",
+            "check_version": "1.0",
+            "ref_url": {
+                "documentation_1": "url",
+                "documentation_2": "url"
+            }
+        }
+    },
+    "links": [
+        {
+            "type": "application/json",
+            "rel": "self",
+            "href": "qa_check_doc_review.json"
+        },
+        {
+            "type": "application/json",
+            "rel": "parent",
+            "href": "catalog.json"
+        },
+        {
+            "type": "application/json",
+            "rel": "root",
+            "href": "catalog.json"
+        }
+    ],
+    "assets": {
+        "qa_check_doc_review": {
+            "roles": [
+                "data"
+            ],
+            "href": "qa_check_doc_review"
+        }
+    }
+}
