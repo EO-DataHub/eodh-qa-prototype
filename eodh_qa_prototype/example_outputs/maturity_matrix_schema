@@ -1,0 +1,25 @@
+# maturity matrix as a nested dict
+maturity_matrix_dict = {
+    "product_information":
+        {
+            "product_details": {"grade": "good", "ref": "https://asdf"},
+            "availability_and_accessability": {"grade": "basic", "ref": "https://asdf"},
+            "product_format_flags_and_metadata": {"grade": "excellent", "ref": "https://asdf"},
+            "user_documentation": {"grade": "ideal", "ref": "https://asdf"}
+        },
+    "metrology":
+        {
+            "radiometric_calibration_and_characterisation)": {"grade": "excellent", "ref": "https://asdf"},
+            "geometric_calibration_and_characterisation": {"grade": "excellent", "ref": "https://asdf"},
+            "metrological_traceability_documentation": {"grade": "basic", "ref": "https://asdf"},
+            "uncertainty_characterisation": {"grade": "good", "ref": "https://asdf"},
+            "ancillary_data": {"grade": "excellent", "ref": "https://asdf"}
+        },
+    "product_generation":
+        {
+            "radiometric_calibration_algorithm": {"grade": "good", "ref": "https://asdf"},
+            "geometric_processing": {"grade": "good", "ref": "https://asdf"},
+            "retrieval_algorithm": {"grade": "excellent", "ref": "https://asdf"},
+            "mission_specific_processing": {"grade": "good", "ref": "https://asdf"},
+        },
+}
