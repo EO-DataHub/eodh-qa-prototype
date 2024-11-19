@@ -2,7 +2,8 @@
 maturity_matrix_dict = {
     "product_information":
         {
-            "product_details": {"grade": "good",
+            "product_details": {"metric": "https://eodatahub.org.uk/api/ontologies/qa/metrics/product-information/product-details",  # Or a well-known existing URI if one exists
+                                "value": "good",
                                 "links": [
                                     {
                                         "rel": "https://eodatahub.org.uk/api/ontologies/qa/qa-documentation",
@@ -12,7 +13,8 @@ maturity_matrix_dict = {
                                     }
                                 ]
                                 },
-            "availability_and_accessability": {"grade": "basic",
+            "availability_and_accessability": {"metric": "https://eodatahub.org.uk/api/ontologies/qa/metrics/product-information/availability-and-accessability",
+                                               "value": "basic",
                                                "links": [
                                                    {
                                                        "rel": "https://eodatahub.org.uk/api/ontologies/qa/qa-documentation",
@@ -22,7 +24,8 @@ maturity_matrix_dict = {
                                                    }
                                                ]
                                                },
-            "product_format_flags_and_metadata": {"grade": "excellent",
+            "product_format_flags_and_metadata": {"metric": "https://eodatahub.org.uk/api/ontologies/qa/metrics/product-information/product-format-flags-and-metadata",
+                                                  "value": "excellent",
                                                   "links": [
                                                       {
                                                           "rel": "https://eodatahub.org.uk/api/ontologies/qa/qa-documentation",
@@ -32,7 +35,8 @@ maturity_matrix_dict = {
                                                       }
                                                   ]
                                                   },
-            "user_documentation": {"grade": "ideal",
+            "user_documentation": {"metric": "https://eodatahub.org.uk/api/ontologies/qa/metrics/product-information/user-documentation",
+                                   "value": "ideal",
                                    "links": [
                                        {
                                            "rel": "https://eodatahub.org.uk/api/ontologies/qa/qa-documentation",
@@ -45,7 +49,8 @@ maturity_matrix_dict = {
         },
     "metrology":
         {
-            "radiometric_calibration_and_characterisation)": {"grade": "excellent",
+            "radiometric_calibration_and_characterisation)": {"metric": "https://eodatahub.org.uk/api/ontologies/qa/metrics/metrology/radiometric-calibration-and-characterisation",
+                                                              "value": "excellent",
                                                               "links": [
                                                                   {
                                                                       "rel": "https://eodatahub.org.uk/api/ontologies/qa/qa-documentation",
@@ -55,7 +60,8 @@ maturity_matrix_dict = {
                                                                   }
                                                               ]
                                                               },
-            "geometric_calibration_and_characterisation": {"grade": "excellent",
+            "geometric_calibration_and_characterisation": {"metric": "https://eodatahub.org.uk/api/ontologies/qa/metrics/metrology/geometric-calibration-and-characterisation",
+                                                           "value": "excellent",
                                                            "links": [
                                                                {
                                                                    "rel": "https://eodatahub.org.uk/api/ontologies/qa/qa-documentation",
@@ -65,7 +71,8 @@ maturity_matrix_dict = {
                                                                }
                                                            ]
                                                            },
-            "metrological_traceability_documentation": {"grade": "basic",
+            "metrological_traceability_documentation": {"metric": "https://eodatahub.org.uk/api/ontologies/qa/metrics/metrology/metrological-traceability-documentation",
+                                                        "value": "basic",
                                                         "links": [
                                                             {
                                                                 "rel": "https://eodatahub.org.uk/api/ontologies/qa/qa-documentation",
@@ -75,7 +82,8 @@ maturity_matrix_dict = {
                                                             }
                                                         ]
                                                         },
-            "uncertainty_characterisation": {"grade": "good",
+            "uncertainty_characterisation": {"metric": "https://eodatahub.org.uk/api/ontologies/qa/metrics/metrology/uncertainty-characterisation",
+                                             "value": "good",
                                              "links": [
                                                  {
                                                      "rel": "https://eodatahub.org.uk/api/ontologies/qa/qa-documentation",
@@ -85,7 +93,8 @@ maturity_matrix_dict = {
                                                  }
                                              ]
                                              },
-            "ancillary_data": {"grade": "excellent",
+            "ancillary_data": {"metric": "https://eodatahub.org.uk/api/ontologies/qa/metrics/metrology/ancillary-data",
+                               "value": "excellent",
                                "links": [
                                    {
                                        "rel": "https://eodatahub.org.uk/api/ontologies/qa/qa-documentation",
@@ -98,7 +107,8 @@ maturity_matrix_dict = {
         },
     "product_generation":
         {
-            "radiometric_calibration_algorithm": {"grade": "good",
+            "radiometric_calibration_algorithm": {"metric": "https://eodatahub.org.uk/api/ontologies/qa/metrics/product-generation/radiometric-calibration-algorithm",
+                                                  "value": "good",
                                                   "links": [
                                                       {
                                                           "rel": "https://eodatahub.org.uk/api/ontologies/qa/qa-documentation",
@@ -108,7 +118,8 @@ maturity_matrix_dict = {
                                                       }
                                                   ]
                                                   },
-            "geometric_processing": {"grade": "good",
+            "geometric_processing": {"metric": "https://eodatahub.org.uk/api/ontologies/qa/metrics/product-generation/geometric-processing",
+                                     "value": "good",
                                      "links": [
                                          {
                                              "rel": "https://eodatahub.org.uk/api/ontologies/qa/qa-documentation",
@@ -118,7 +129,8 @@ maturity_matrix_dict = {
                                          }
                                      ]
                                      },
-            "retrieval_algorithm": {"grade": "excellent",
+            "retrieval_algorithm": {"metric": "https://eodatahub.org.uk/api/ontologies/qa/metrics/product-generation/retrieval-algorithm",
+                                     "value": "excellent",
                                     "links": [
                                         {
                                             "rel": "https://eodatahub.org.uk/api/ontologies/qa/qa-documentation",
@@ -128,7 +140,8 @@ maturity_matrix_dict = {
                                         }
                                     ]
                                     },
-            "mission_specific_processing": {"grade": "good",
+            "mission_specific_processing": {"metric": "https://eodatahub.org.uk/api/ontologies/qa/metrics/product-generation/mission-specific-processing",
+                                            "value": "good",
                                             "links": [
                                                     {
                                                         "rel": "https://eodatahub.org.uk/api/ontologies/qa/qa-documentation",
@@ -140,4 +153,3 @@ maturity_matrix_dict = {
                                             },
         }
 }
-
