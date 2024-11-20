@@ -1,0 +1,118 @@
+@scheme = https
+@testeodh = workspaces.test.eodhp.eco-ke-staging.com
+@ades = test.eodatahub.org.uk/ades
+@username= sam_malone41
+@workspace = workspace
+@s3Endpoint = AccessPointName-AccountId.s3-accesspoint.region.amazonaws.com
+@fileName = <WORKSPACE NAME>/<FILENAME>.tif
+@logindetails = 454f4448f8f6774c8647a5b7f97bff37
+@deployStatus = {{deployProcessJson.response.headers.Location}}
+@executeStatus = {{executeProcess.response.headers.Location}}
+
+
+###
+# example from GitHub guide
+# @name accessFileInWorkspace
+GET /files/<bucket_name>/<path_to_file> HTTP/1.1
+Host: {{workspace}}.workspaces.test.eodhp.eco-ke-staging.com
+Authorization: Bearer {{logindetails}}
+
+###
+
+# @name TestUserDatasetsAccess
+GET /https://test.eodatahub.org.uk/api/catalogue/stac/catalogs/user-datasets/sam-malone41/processing-results
+Authorization: Bearer 454f4448f8f6774c8647a5b7f97bff37
+Accept: application/json
+
+###
+
+# @name deleteProcess
+DELETE https://test.eodatahub.org.uk/ades/sam_malone41/ogc-api/processes/qa-workflow-test HTTP/1.1
+Authorization: Bearer 454f4448f8f6774c8647a5b7f97bff37
+Accept: application/json
+
+
+###
+
+# @name listProcesses
+GET https://test.eodatahub.org.uk/ades/sam_malone41/ogc-api/processes HTTP/1.1
+Authorization: Bearer 454f4448f8f6774c8647a5b7f97bff37
+Accept: application/json
+
+
+###
+
+# @name deployProcessJson
+POST https://test.eodatahub.org.uk/ades/sam_malone41/ogc-api/processes HTTP/1.1
+Authorization: Bearer 454f4448f8f6774c8647a5b7f97bff37
+Accept: application/json
+Content-Type: application/cwl+yaml
+
+< qa-workflow-test.cwl
+
+
+###
+# need to update url
+# @name getDeployStatus
+GET deployProcessJson.response.headers.Location HTTP/1.1
+Authorization: Bearer 454f4448f8f6774c8647a5b7f97bff37
+Accept: application/json
+
+
+###
+
+# @name getProcessDetails
+GET https://test.eodatahub.org.uk/ades/sam_malone41/ogc-api/processes/qa-workflow-test HTTP/1.1
+Authorization: Bearer 454f4448f8f6774c8647a5b7f97bff37
+Accept: application/json
+
+
+###
+
+# @name executeProcess
+POST https://test.eodatahub.org.uk/ades/sam_malone41/ogc-api/processes/qa-workflow-test/execution HTTP/1.1
+Authorization: Bearer 454f4448f8f6774c8647a5b7f97bff37
+Accept: application/json
+Content-Type: application/json
+Prefer: respond-async
+
+{
+  "inputs": {
+  "s3_endpoint": "AccessPointName-AccountId.s3-accesspoint.region.amazonaws.com"
+  }
+}
+
+
+###
+# need to update url
+# @name getExecuteStatus
+GET {{executeStatus}} HTTP/1.1
+Authorization: Basic {{logindetails}}
+Accept: application/json
+
+
+###
+# need to update url
+# @name getProcessingResults
+GET {{executeStatus}}/results HTTP/1.1
+Authorization: Basic {{logindetails}}
+Accept: application/json
+
+
+###
+
+# @name undeployProcess
+DELETE https://test.eodatahub.org.uk/ades/sam_malone41/ogc-api/processes/qa-workflow-test HTTP/1.1
+Authorization: Bearer 454f4448f8f6774c8647a5b7f97bff37
+Accept: application/json
+
+
+###
+
+# @name listJobs
+GET https://test.eodatahub.org.uk/ades/sam_malone41/ogc-api/jobs HTTP/1.1
+Authorization: Bearer 454f4448f8f6774c8647a5b7f97bff37
+Accept: application/json
+
+
+###
