@@ -2,8 +2,8 @@ import os
 import sys
 import datetime as dt
 import json
-import pystac
 from pathlib import Path
+# import mimetypes
 
 import boto3
 
@@ -31,20 +31,22 @@ def qa_check_doc_review():
                 "product_details": {"grade": "good", "ref": "https://asdf"},
                 "availability_and_accessability": {"grade": "basic", "ref": "https://asdf"},
                 "product_format_flags_and_metadata": {"grade": "excellent", "ref": "https://asdf"},
-                "...": {"grade": "good", "ref": "https://asdf"}
+                "user_documentation": {"grade": "ideal", "ref": "https://asdf"}
             },
         "metrology":
             {
                 "radiometric_calibration_and_characterisation)": {"grade": "excellent", "ref": "https://asdf"},
                 "geometric_calibration_and_characterisation": {"grade": "excellent", "ref": "https://asdf"},
                 "metrological_traceability_documentation": {"grade": "basic", "ref": "https://asdf"},
-                "...": {"grade": "good", "ref": "https://asdf"}
+                "uncertainty_characterisation": {"grade": "good", "ref": "https://asdf"},
+                "ancillary_data": {"grade": "excellent", "ref": "https://asdf"}
             },
         "product_generation":
             {
                 "radiometric_calibration_algorithm": {"grade": "good", "ref": "https://asdf"},
                 "geometric_processing": {"grade": "good", "ref": "https://asdf"},
-                "...": {"grade": "good", "ref": "https://asdf"}
+                "retrieval_algorithm": {"grade": "excellent", "ref": "https://asdf"},
+                "mission_specific_processing": {"grade": "good", "ref": "https://asdf"},
             },
     }
 
@@ -54,11 +56,11 @@ def qa_check_doc_review():
         "check_name": "documentation review",
         "result": maturity_matrix_dict,
         "result_vocab": "vocab/url",
-        "check_datetime": dt.datetime.now().strftime("%Y%m%dT%H%M"),
-        "check_date_validity_end": (dt.datetime.now() + dt.timedelta(365)).strftime("%Y%m%dT%H%M"),  # approx. 12 months
+        "check_datetime": dt.datetime.now().strftime("%Y-%m-%dT%H:%M:%S.%f") + "Z",
+        "check_date_validity_end": (dt.datetime.now() + dt.timedelta(365)).strftime("%Y-%m-%dT%H:%M:%S.%f") + "Z",  # approx. 12 months
         "check_author": "S Malone",
         "check_version": "1.0",
-        "ref_url": {"documentation_1": "url", "documentation_2": "url", "...": "url"}
+        "ref_url": {"documentation_1": "url", "documentation_2": "url"}
     }
 
     # save to JSON
@@ -70,25 +72,37 @@ def qa_check_doc_review():
 def create_stac_item(out_name):
     qa_check_results_dict = json.loads(qa_check_doc_review())
     stem = Path(out_name).stem  # later for "id": f"{stem}-{now}"
-
-    # # create stac item manually
-    # STAC_item = pystac.item.Item(
-    #     id=qa_check_results_dict["data_collection"].replace(" ", "_")+'_qa_check_test',
-    #     geometry=None,
-    #     bbox=None,
-    #     datetime=qa_check_results_dict["check_datetime"],
-    #     # start_datetime=qa_check_results_dict["check_datetime"],
-    #     # end_datetime=qa_check_results_dict["check_date_validity_end"],
-    #     properties={'full_qa_check_result_output': qa_check_results_dict},
-    # )
+    # size = os.path.getsize(f"{out_name}")
+    # mime = mimetypes.guess_type(f"{out_name}")[0]
 
     data = dict(id = qa_check_results_dict["data_collection"].replace(" ", "_") + '_qa_check_test',
-                geometry=None,
-                bbox=None,
-                datetime=qa_check_results_dict["check_datetime"],
-                # start_datetime=qa_check_results_dict["check_datetime"],
-                # end_datetime=qa_check_results_dict["check_date_validity_end"],
-                properties={'full_qa_check_result_output': qa_check_results_dict}
+                type = "Feature",
+                stac_version = "1.0.0",
+                geometry={
+                    "type": "Polygon",
+                    "coordinates": [
+                        [[-180, -90], [-180, 90], [180, 90], [180, -90], [-180, -90]]
+                    ],
+                },
+                bbox=[-180, -90, 180, 90],
+                properties={"datetime": qa_check_results_dict["check_datetime"],
+                            # "start_datetime": qa_check_results_dict["check_datetime"],
+                            # "end_datetime": qa_check_results_dict["check_date_validity_end"],
+                            "full_qa_check_result_output": qa_check_results_dict,
+                            },
+                links = [
+                    {"type": "application/json", "rel": "self",  "href": f"{stem}.json"},
+                    {"type": "application/json", "rel": "parent", "href": "catalog.json"},
+                    {"type": "application/json", "rel": "root", "href": "catalog.json"},
+                ],
+                assets = {
+                    f"{stem}": {
+                        # "type": f"{mime}",
+                        # "file:size": size,
+                        "roles": ["data"],
+                        "href": f"{out_name}",
+                    }
+                },
                 )
 
     with open(f"{out_dir}/{stem}.json", "w", encoding="utf-8") as f:
@@ -112,4 +126,5 @@ def create_stac_catalog_root(out_name):
 
 
 if __name__ == "__main__":
+    # sys_argv = ['/opt/project/qa_workflow_test/qa-workflow-test/__main__.py', 's3_endpoint']  # for testing locally
     do_func(sys.argv)

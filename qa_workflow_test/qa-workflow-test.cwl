@@ -33,8 +33,8 @@ $graph:
     id: qa-workflow-test
     hints:
       DockerRequirement:
-        dockerPull: docker.io/sm41/qa-workflow-test5:latest
-    baseCommand: ["/venv/bin/python", "-m", "qa-workflow-test"]
+        dockerPull: docker.io/sm41/qa-workflow-test8:latest
+    baseCommand: ["/usr/local/bin/python3", "-m", "qa-workflow-test"] # or "/venv/bin/python" ?
     inputs:
       s3_endpoint:
         type: string

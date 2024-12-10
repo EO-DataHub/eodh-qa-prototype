@@ -8,6 +8,8 @@ RUN python3 -m pip install --upgrade pip
 WORKDIR /app
 
 COPY requirements.txt /app
+COPY ./qa-workflow-test /app/qa-workflow-test
+
 RUN python -m pip install -r requirements.txt
 
 ENTRYPOINT ["/venv/bin/python", "-m", "qa-workflow-test"]
