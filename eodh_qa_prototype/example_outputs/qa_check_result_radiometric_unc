@@ -1,1 +1,0 @@
-{"data_collection": "Sentinel-2 L1C", "UUID": "uuid", "check_name": "radiometric uncertainty", "result": "pass", "result_vocab": "vocab/url", "check_datetime": "20240726T1610", "check_datetime_validity_end": "20250125T0410", "check_author": "S Malone", "check_version": 1.0, "ref_url": {"detailed_results": "url", "results_visualisation": "url"}}
