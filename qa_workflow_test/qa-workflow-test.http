@@ -1,7 +1,7 @@
 @scheme = https
 @testeodh = workspaces.test.eodhp.eco-ke-staging.com
 @ades = test.eodatahub.org.uk/ades
-@username= sam_malone41
+@username= sam-malone41
 @workspace = workspace
 @s3Endpoint = AccessPointName-AccountId.s3-accesspoint.region.amazonaws.com
 @fileName = <WORKSPACE NAME>/<FILENAME>.tif
@@ -27,7 +27,7 @@ Accept: application/json
 ###
 
 # @name deleteProcess
-DELETE https://test.eodatahub.org.uk/ades/sam_malone41/ogc-api/processes/qa-workflow-test HTTP/1.1
+DELETE https://test.eodatahub.org.uk/ades/sam-malone41/ogc-api/processes/qa-workflow-test HTTP/1.1
 Authorization: Bearer 454f44482c4c3dae5a4c52913e7a2dea
 Accept: application/json
 
@@ -102,7 +102,7 @@ Accept: application/json
 ###
 
 # @name undeployProcess
-DELETE https://test.eodatahub.org.uk/ades/sam_malone41/ogc-api/processes/qa-workflow-test HTTP/1.1
+DELETE https://test.eodatahub.org.uk/ades/sam-malone41/ogc-api/processes/qa-workflow-test HTTP/1.1
 Authorization: Bearer 454f44482c4c3dae5a4c52913e7a2dea
 Accept: application/json
 
