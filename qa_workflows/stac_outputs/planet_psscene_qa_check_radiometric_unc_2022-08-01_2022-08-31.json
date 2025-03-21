@@ -1,5 +1,5 @@
 {
-    "id": "planet_superdove_qa_check_radiometric_unc_2022-10-01_2022-10-31",
+    "id": "planet_psscene_qa_check_radiometric_unc_2022-08-01_2022-08-31",
     "type": "Feature",
     "stac_version": "1.0.0",
     "geometry": {
@@ -36,15 +36,15 @@
         -23.59451068
     ],
     "properties": {
-        "datetime": "20250321T132241.968707",
-        "check_validity_start_datetime": "20221001T000000.000000",
-        "check_validity_end_datetime": "20221031T000000.000000"
+        "datetime": "20250321T135806.480227",
+        "check_validity_start_datetime": "20220801T000000.000000",
+        "check_validity_end_datetime": "20220831T000000.000000"
     },
     "links": [
         {
             "type": "application/json",
             "rel": "self",
-            "href": "planet_superdove_qa_check_radiometric_unc_2022-10-01_2022-10-31.json"
+            "href": "planet_psscene_qa_check_radiometric_unc_2022-08-01_2022-08-31.json"
         },
         {
             "type": "application/json",
@@ -58,14 +58,14 @@
         }
     ],
     "assets": {
-        "planet_superdove_qa_check_radiometric_unc": {
+        "planet_psscene_qa_check_radiometric_unc": {
             "roles": [
                 "data"
             ],
-            "href": "planet_superdove_qa_check_radiometric_unc"
+            "href": "planet_psscene_qa_check_radiometric_unc"
         },
         "qa-outputs": {
-            "href": "output_planet_superdove_qa_check_radiometric_unc_2022-10-01_2022-10-31.json",
+            "href": "output_planet_psscene_qa_check_radiometric_unc_2022-08-01_2022-08-31.json",
             "type": "application/json"
         }
     }

@@ -26,7 +26,7 @@ def do_func(args):
     os.environ["AWS_S3_ENDPOINT"] = s3_endpoint
 
     # name stac item/catalog after qa check
-    base_name = 'planet_superdove_qa_check_radiometric_unc'
+    base_name = 'planet_psscene_qa_check_radiometric_unc'
 
     # get matchups for that time period
     sat = 'planet'
@@ -269,7 +269,7 @@ if __name__ == "__main__":
     # sys_argv = ['/opt/project/qa_workflow_test/qa-workflow-test/__main__.py', 's3_endpoint']  # for testing locally
     do_func(sys.argv)
 
-    #TEST CHECK WORKS LOCALLY
+    # # TEST CHECK WORKS LOCALLY
     # do_func([None, "AccessPointName-AccountId.s3-accesspoint.region.amazonaws.com", "2022-01-01,2022-12-31", "planet"])
 
     # daterange = '2022-01-01,2022-12-31'
@@ -291,7 +291,7 @@ if __name__ == "__main__":
     #               ]
     #
     # # name stac item/catalog after qa check
-    # base_name = 'planet_superdove_qa_check_radiometric_unc'
+    # base_name = 'planet_psscene_qa_check_radiometric_unc'
     #
     # # get matchups for that time period
     # # sat = 'planet'

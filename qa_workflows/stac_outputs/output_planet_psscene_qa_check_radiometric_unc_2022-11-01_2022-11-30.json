@@ -27,7 +27,7 @@
                     {
                         "rel": "https://eodatahub.org.uk/api/ontologies/qa/data-visualisation",
                         "type": "application/pdf",
-                        "href": "http://ceos-dashboard.eba-krpcapwh.eu-west-2.elasticbeanstalk.com/ceos-dashboard?sat=planet&refs=RCN-GONA&bands=490,565,665&date=2022-08-01,2022-08-31",
+                        "href": "http://ceos-dashboard.eba-krpcapwh.eu-west-2.elasticbeanstalk.com/ceos-dashboard?sat=planet&refs=RCN-GONA&bands=490,565,665&date=2022-11-01,2022-11-30",
                         "title": "Dashboard displaying detailed QA information for the radiometric uncertainty check"
                     }
                 ]
@@ -35,9 +35,9 @@
         }
     },
     "result_vocab": "vocab/url",
-    "check_datetime": "20250321T132241.940351",
-    "check_datetime_validity_start": "20220801T000000.000000",
-    "check_datetime_validity_end": "20220831T000000.000000",
+    "check_datetime": "20250321T135806.519155",
+    "check_datetime_validity_start": "20221101T000000.000000",
+    "check_datetime_validity_end": "20221130T000000.000000",
     "check_creator": "S Malone",
     "contact_point": "samantha.malone@npl.co.uk",
     "publisher": "Climate and Earth Observation Group, National Physical Laboratory",
