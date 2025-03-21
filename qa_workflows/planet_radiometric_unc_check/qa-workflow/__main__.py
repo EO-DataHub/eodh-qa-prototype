@@ -228,13 +228,13 @@ def create_stac_items(out_name, mup_ds, daterange, dates_list):
             json.dump(data, f, ensure_ascii=False, indent=4)
 
         # define asset object related to the stac item
-        data = {
+        asset_data = {
             "stac_version": "1.0.0",
-            "id": f"output_{stem}_{dates.replace(',', '_')}",  # f"{stem}_catalog_{daterange.replace(',', '_')}
-            "type": "Asset",
-            "description": "Item assets",
-            "roles": ["data"],
             "href": f"output_{stem}_{dates.replace(',', '_')}.json",
+            "title": f"output_{stem}_{dates.replace(',', '_')}",  # f"{stem}_catalog_{daterange.replace(',', '_')}
+            "description": "Item assets",
+            "type": "Asset",
+            "roles": ["data"],
             "links": [
                 {"type": "application/json", "rel": "item", "href": f"{stem}_{dates.replace(',', '_')}.json"},
                 {"type": "application/json", "rel": "self", "href": f"output_{stem}_{dates.replace(',', '_')}.json"},
@@ -242,8 +242,8 @@ def create_stac_items(out_name, mup_ds, daterange, dates_list):
                 # f"{stem}_catalog_{daterange.replace(',', '_')}
             ],
         }
-        with open(f"{out_dir}/output_qa_check_radiometric_unc.json", "w", encoding="utf-8") as f:
-            json.dump(data, f, ensure_ascii=False, indent=4)
+        with open(f"{out_dir}/output_{stem}_{dates.replace(',', '_')}.json", "w", encoding="utf-8") as f:
+            json.dump(asset_data, f, ensure_ascii=False, indent=4)
 
 
 def create_stac_catalog_root(out_name, daterange, dates_list):
