@@ -110,6 +110,7 @@ def qa_check_rad_val(mup_ds, date_range):
     rad_unc_report_title = "PLANET L1 DATA QUALITY REPORT, SUPERDOVE 8-BAND GENERAL AVAILABILITY: Status of Calibration and Data Quality for the SuperDove 8-Band GA, 15/06/21"
     rad_unc_report_ref = "https://support.planet.com/hc/en-us/articles/360037649554-L1-Data-Quality-Reports-for-the-PlanetScope-Constellation"
     sat_checked = "planet"
+    doi ="https://staging.eodatahub.org.uk/api/catalogue/stac/catalogs/supported-datasets/catalogs/planet/collections/PSScene"
 
 
     comp_unc_vals = np.ones(len(sat_mean_unc)) * 2  # todo: update based on what comp unc should be
@@ -138,7 +139,7 @@ def qa_check_rad_val(mup_ds, date_range):
 
     qa_radiometric_check_result_output = {  # output dict of radiometric test result
         "data_collection": "PSScene",
-        "data_id_field": "https://staging.eodatahub.org.uk/api/catalogue/stac/catalogs/supported-datasets/catalogs/planet/collections/PSScene ",
+        "data_id_field": doi,
         "uuid": "uuid",
         "check_name": "radiometric uncertainty",
         "results": {
@@ -189,6 +190,10 @@ def create_stac_items(out_name, mup_ds, daterange, dates_list):
         # size = os.path.getsize(f"{out_name}")
         # mime = mimetypes.guess_type(f"{out_name}")[0]
 
+        # dump qa result file
+        with open(f"{out_dir}/output_{stem}_{dates.replace(',', '_')}.json", "w", encoding="utf-8") as f:
+            json.dump(qa_check_results_dict, f, ensure_ascii=False, indent=4)
+
         data = dict(id = f"{stem}_{dates.replace(',', '_')}", #qa_check_results_dict["data_collection"].replace(" ", "_") + '_qa_check_test',
                     type = "Feature",
                     stac_version = "1.0.0",
@@ -203,7 +208,7 @@ def create_stac_items(out_name, mup_ds, daterange, dates_list):
                         ],
                     },
                     bbox=[15.10274,-23.60723694, 15.13462891,-23.59451068],  # GONA coords
-                    properties={"check_datetime": qa_check_results_dict["check_datetime"],
+                    properties={"datetime": qa_check_results_dict["check_datetime"],
                                 "check_validity_start_datetime": qa_check_results_dict["check_datetime_validity_start"],
                                 "check_validity_end_datetime": qa_check_results_dict["check_datetime_validity_end"]
                                 },
@@ -219,19 +224,19 @@ def create_stac_items(out_name, mup_ds, daterange, dates_list):
                             "roles": ["data"],
                             "href": f"{out_name}",
                         },
-                        f"output_{stem}_{dates.replace(',', '_')}": {
-                            "check result": qa_check_results_dict,
+                        f"qa-outputs": {
                             "href": f"output_{stem}_{dates.replace(',', '_')}.json",
-                            "title": f"output_{stem}_{dates.replace(',', '_')}",  # f"{stem}_catalog_{daterange.replace(',', '_')}
-                            "description": "Item assets",
-                            "type": "JSON",
-                            "roles": ["data"],
+                            # "title": f"output_{stem}_{dates.replace(',', '_')}",  # f"{stem}_catalog_{daterange.replace(',', '_')}
+                            # "description": f"qa result output for {stem}_{dates.replace(',', '_')}",
+                            "type": "application/json",
+                            # "roles": ["data"],
                         },
                     },
                     )
 
         with open(f"{out_dir}/{stem}_{dates.replace(',', '_')}.json", "w", encoding="utf-8") as f:
             json.dump(data, f, ensure_ascii=False, indent=4)
+
 
         # # define asset object related to the stac item
         # asset_data = {
@@ -272,18 +277,18 @@ def create_stac_catalog_root(out_name, daterange, dates_list):
             {"type": "application/json", "rel": "item", "href": f"{stem}_{dates_list[9].replace(',', '_')}.json"},
             {"type": "application/json", "rel": "item", "href": f"{stem}_{dates_list[10].replace(',', '_')}.json"},
             {"type": "application/json", "rel": "item", "href": f"{stem}_{dates_list[11].replace(',', '_')}.json"},
-            {"type": "application/json", "rel": "asset", "href": f"output_{stem}_{dates_list[0].replace(',', '_')}.json"},
-            {"type": "application/json", "rel": "asset", "href": f"output_{stem}_{dates_list[1].replace(',', '_')}.json"},
-            {"type": "application/json", "rel": "asset", "href": f"output_{stem}_{dates_list[2].replace(',', '_')}.json"},
-            {"type": "application/json", "rel": "asset", "href": f"output_{stem}_{dates_list[3].replace(',', '_')}.json"},
-            {"type": "application/json", "rel": "asset", "href": f"output_{stem}_{dates_list[4].replace(',', '_')}.json"},
-            {"type": "application/json", "rel": "asset", "href": f"output_{stem}_{dates_list[5].replace(',', '_')}.json"},
-            {"type": "application/json", "rel": "asset", "href": f"output_{stem}_{dates_list[6].replace(',', '_')}.json"},
-            {"type": "application/json", "rel": "asset", "href": f"output_{stem}_{dates_list[7].replace(',', '_')}.json"},
-            {"type": "application/json", "rel": "asset", "href": f"output_{stem}_{dates_list[8].replace(',', '_')}.json"},
-            {"type": "application/json", "rel": "asset", "href": f"output_{stem}_{dates_list[9].replace(',', '_')}.json"},
-            {"type": "application/json", "rel": "asset", "href": f"output_{stem}_{dates_list[10].replace(',', '_')}.json"},
-            {"type": "application/json", "rel": "asset", "href": f"output_{stem}_{dates_list[11].replace(',', '_')}.json"},
+            # {"type": "application/json", "rel": "asset", "href": f"output_{stem}_{dates_list[0].replace(',', '_')}.json"},
+            # {"type": "application/json", "rel": "asset", "href": f"output_{stem}_{dates_list[1].replace(',', '_')}.json"},
+            # {"type": "application/json", "rel": "asset", "href": f"output_{stem}_{dates_list[2].replace(',', '_')}.json"},
+            # {"type": "application/json", "rel": "asset", "href": f"output_{stem}_{dates_list[3].replace(',', '_')}.json"},
+            # {"type": "application/json", "rel": "asset", "href": f"output_{stem}_{dates_list[4].replace(',', '_')}.json"},
+            # {"type": "application/json", "rel": "asset", "href": f"output_{stem}_{dates_list[5].replace(',', '_')}.json"},
+            # {"type": "application/json", "rel": "asset", "href": f"output_{stem}_{dates_list[6].replace(',', '_')}.json"},
+            # {"type": "application/json", "rel": "asset", "href": f"output_{stem}_{dates_list[7].replace(',', '_')}.json"},
+            # {"type": "application/json", "rel": "asset", "href": f"output_{stem}_{dates_list[8].replace(',', '_')}.json"},
+            # {"type": "application/json", "rel": "asset", "href": f"output_{stem}_{dates_list[9].replace(',', '_')}.json"},
+            # {"type": "application/json", "rel": "asset", "href": f"output_{stem}_{dates_list[10].replace(',', '_')}.json"},
+            # {"type": "application/json", "rel": "asset", "href": f"output_{stem}_{dates_list[11].replace(',', '_')}.json"},
             {"type": "application/json", "rel": "self", "href": f"catalog.json"}, #f"{stem}_catalog_{daterange.replace(',', '_')}
         ],
     }
