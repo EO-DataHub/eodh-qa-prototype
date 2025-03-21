@@ -1,8 +1,8 @@
 {
     "stac_version": "1.0.0",
-    "id": "catalog",
+    "id": "qa_radiometric",
     "type": "Catalog",
-    "description": "Root catalog",
+    "description": "collection for radiometric QA checks",
     "links": [
         {
             "type": "application/json",
@@ -66,8 +66,18 @@
         },
         {
             "type": "application/json",
-            "rel": "self",
+            "rel": "root",
             "href": "catalog.json"
+        },
+        {
+            "type": "application/json",
+            "rel": "parent",
+            "href": "catalog.json"
+        },
+        {
+            "type": "application/json",
+            "rel": "self",
+            "href": "qa_radiometric.json"
         }
     ]
 }

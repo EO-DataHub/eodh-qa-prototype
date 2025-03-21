@@ -38,7 +38,7 @@ def do_func(args):
 
     if mup_ds:
         create_stac_items(base_name, mup_ds, daterange, dates_list)
-
+        # create_stac_collection(base_name, daterange, dates_list)
         create_stac_catalog_root(base_name, daterange, dates_list)
     else:
         return
@@ -183,18 +183,19 @@ def qa_check_rad_val(mup_ds, date_range):
 
 
 def create_stac_items(out_name, mup_ds, daterange, dates_list):
+    stem = Path(out_name).stem  # later for "id": f"{stem}-{now}"
+    # size = os.path.getsize(f"{out_name}")
+    # mime = mimetypes.guess_type(f"{out_name}")[0]
+    catalog_name = '_'.join(stem.split('_')[0:3])
+
     for dates in dates_list:
         qa_check_results_dict = qa_check_rad_val(mup_ds, dates)
-
-        stem = Path(out_name).stem  # later for "id": f"{stem}-{now}"
-        # size = os.path.getsize(f"{out_name}")
-        # mime = mimetypes.guess_type(f"{out_name}")[0]
 
         # dump qa result file
         with open(f"{out_dir}/output_{stem}_{dates.replace(',', '_')}.json", "w", encoding="utf-8") as f:
             json.dump(qa_check_results_dict, f, ensure_ascii=False, indent=4)
 
-        data = dict(id = f"{stem}_{dates.replace(',', '_')}", #qa_check_results_dict["data_collection"].replace(" ", "_") + '_qa_check_test',
+        item_data = dict(id = f"{stem}_{dates.replace(',', '_')}", #qa_check_results_dict["data_collection"].replace(" ", "_") + '_qa_check_test',
                     type = "Feature",
                     stac_version = "1.0.0",
                     geometry={  # GONA coords
@@ -214,8 +215,8 @@ def create_stac_items(out_name, mup_ds, daterange, dates_list):
                                 },
                     links = [
                         {"type": "application/json", "rel": "self",  "href": f"{stem}_{dates.replace(',', '_')}.json"},
-                        {"type": "application/json", "rel": "parent", "href": f"catalog.json"}, #f"{stem}_catalog_{daterange.replace(',', '_')}
-                        {"type": "application/json", "rel": "root", "href": f"catalog.json"}, #f"{stem}_catalog_{daterange.replace(',', '_')}
+                        {"type": "application/json", "rel": "parent", "href": f"catalog.json"}, #f"qa_radiometric.json"}
+                        {"type": "application/json", "rel": "root", "href": f"catalog.json"}, # catalog_name  #f"{stem}_catalog_{daterange.replace(',', '_')}
                     ],
                     assets = {
                         f"{stem}": {
@@ -235,14 +236,44 @@ def create_stac_items(out_name, mup_ds, daterange, dates_list):
                     )
 
         with open(f"{out_dir}/{stem}_{dates.replace(',', '_')}.json", "w", encoding="utf-8") as f:
-            json.dump(data, f, ensure_ascii=False, indent=4)
+            json.dump(item_data, f, ensure_ascii=False, indent=4)
+
+# def create_stac_collection(out_name, daterange, dates_list):
+#     stem = Path(out_name).stem
+#     catalog_name = '_'.join(stem.split('_')[0:3])
+#     collection_data = {
+#         "stac_version": "1.0.0",
+#         "id": f"qa_radiometric",
+#         "type": "Catalog",
+#         "description": "collection for radiometric QA checks",
+#         "links": [
+#             {"type": "application/json", "rel": "item", "href": f"{stem}_{dates_list[0].replace(',', '_')}.json"},
+#             {"type": "application/json", "rel": "item", "href": f"{stem}_{dates_list[1].replace(',', '_')}.json"},
+#             {"type": "application/json", "rel": "item", "href": f"{stem}_{dates_list[1].replace(',', '_')}.json"},
+#             {"type": "application/json", "rel": "item", "href": f"{stem}_{dates_list[3].replace(',', '_')}.json"},
+#             {"type": "application/json", "rel": "item", "href": f"{stem}_{dates_list[4].replace(',', '_')}.json"},
+#             {"type": "application/json", "rel": "item", "href": f"{stem}_{dates_list[5].replace(',', '_')}.json"},
+#             {"type": "application/json", "rel": "item", "href": f"{stem}_{dates_list[6].replace(',', '_')}.json"},
+#             {"type": "application/json", "rel": "item", "href": f"{stem}_{dates_list[7].replace(',', '_')}.json"},
+#             {"type": "application/json", "rel": "item", "href": f"{stem}_{dates_list[8].replace(',', '_')}.json"},
+#             {"type": "application/json", "rel": "item", "href": f"{stem}_{dates_list[9].replace(',', '_')}.json"},
+#             {"type": "application/json", "rel": "item", "href": f"{stem}_{dates_list[10].replace(',', '_')}.json"},
+#             {"type": "application/json", "rel": "item", "href": f"{stem}_{dates_list[11].replace(',', '_')}.json"},
+#             {"type": "application/json", "rel": "root", "href": f"catalog.json"}, # catalog_name  #f"{stem}_catalog_{daterange.replace(',', '_')}
+#             {"type": "application/json", "rel": "parent", "href": f"catalog.json"}, # catalog_name  # f"{stem}_catalog_{daterange.replace(',', '_')}
+#             {"type": "application/json", "rel": "self", "href": f"qa_radiometric.json"},
+#         ],
+#     }
+#     with open(f"{out_dir}/catalog.json", "w", encoding="utf-8") as f:
+#         json.dump(collection_data, f, ensure_ascii=False, indent=4)
 
 
 def create_stac_catalog_root(out_name, daterange, dates_list):
     stem = Path(out_name).stem
-    data = {
+    catalog_name = '_'.join(stem.split('_')[0:3])
+    catalog_data = {
         "stac_version": "1.0.0",
-        "id": f"catalog", #f"{stem}_catalog_{daterange.replace(',', '_')}
+        "id": f"catalog", # catalog_name #f"{stem}_catalog_{daterange.replace(',', '_')}
         "type": "Catalog",
         "description": "Root catalog",
         "links": [
@@ -258,11 +289,12 @@ def create_stac_catalog_root(out_name, daterange, dates_list):
             {"type": "application/json", "rel": "item", "href": f"{stem}_{dates_list[9].replace(',', '_')}.json"},
             {"type": "application/json", "rel": "item", "href": f"{stem}_{dates_list[10].replace(',', '_')}.json"},
             {"type": "application/json", "rel": "item", "href": f"{stem}_{dates_list[11].replace(',', '_')}.json"},
-            {"type": "application/json", "rel": "self", "href": f"catalog.json"}, #f"{stem}_catalog_{daterange.replace(',', '_')}
+            {"type": "application/json", "rel": "self", "href": f"catalog.json"}, # catalog_name #f"{stem}_catalog_{daterange.replace(',', '_')}
+            # {"type": "application/json", "rel": "child", "href": f"qa_radiometric.json"},
         ],
     }
     with open(f"{out_dir}/catalog.json", "w", encoding="utf-8") as f:
-        json.dump(data, f, ensure_ascii=False, indent=4)
+        json.dump(catalog_data, f, ensure_ascii=False, indent=4)
 
 
 if __name__ == "__main__":
