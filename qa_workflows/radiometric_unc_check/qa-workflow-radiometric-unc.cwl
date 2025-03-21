@@ -7,7 +7,7 @@ schemas:
 $graph:
   # Workflow entrypoint
   - class: Workflow
-    id: qa-workflow
+    id: qa-workflow-radiometric-unc
     label: Planet SuperDove QA radiometric unc test
     doc: Planet SuperDove QA radiometric unc test
     inputs:
@@ -27,10 +27,10 @@ $graph:
       - id: results
         type: Directory
         outputSource:
-          - qa-workflow/results
+          - qa-workflow-radiometric-unc/results
     steps:
       qa-workflow:
-        run: "#qa-workflow"
+        run: "#qa-workflow-radiometric-unc"
         in:
           s3_endpoint: s3_endpoint
           date_range: date_range
@@ -40,11 +40,11 @@ $graph:
 
   # Main Python script execution
   - class: CommandLineTool
-    id: qa-workflow
+    id: qa-workflow-radiometric-unc
     hints:
       DockerRequirement:
-        dockerPull: docker.io/sm41/qa-workflow-planet
-    baseCommand: ["/usr/local/bin/python3", "-m", "qa-workflow"] # or "/venv/bin/python" ?
+        dockerPull: docker.io/sm41/qa-workflow-radiometric-unc
+    baseCommand: ["/usr/local/bin/python3", "-m", "qa-workflow-radiometric-unc"] # or "/venv/bin/python" ?
     inputs:
       s3_endpoint:
         type: string

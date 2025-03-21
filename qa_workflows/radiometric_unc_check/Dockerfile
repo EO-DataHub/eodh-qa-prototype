@@ -8,7 +8,7 @@ RUN python3 -m pip install --upgrade pip
 WORKDIR /app
 
 COPY requirements.txt /app
-COPY ./qa-workflow /app/qa-workflow
+COPY ./qa-workflow-radiometric-unc /app/qa-workflow-radiometric-unc
 
 RUN python -m pip install -r requirements.txt
 

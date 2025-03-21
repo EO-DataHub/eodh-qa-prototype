@@ -27,7 +27,7 @@ Accept: application/json
 ###
 
 # @name deleteProcess
-DELETE https://staging.eodatahub.org.uk/ades/sam-malone41/ogc-api/processes/qa-workflow HTTP/1.1
+DELETE https://staging.eodatahub.org.uk/ades/sam-malone41/ogc-api/processes/qa-workflow-radiometric-unc HTTP/1.1
 Authorization: Bearer 454f4448998b714d82b537b3b19da87e
 Accept: application/json
 
@@ -50,7 +50,7 @@ Authorization: Bearer 454f4448998b714d82b537b3b19da87e
 Accept: application/json
 Content-Type: application/cwl+yaml
 
-< qa-workflow.cwl
+< qa-workflow-radiometric-unc.cwl
 
 
 ###
@@ -64,7 +64,7 @@ Accept: application/json
 ###
 
 # @name getProcessDetails
-GET https://staging.eodatahub.org.uk/ades/sam-malone41/ogc-api/processes/qa-workflow HTTP/1.1
+GET https://staging.eodatahub.org.uk/ades/sam-malone41/ogc-api/processes/qa-workflow-radiometric-unc HTTP/1.1
 Authorization: Bearer 454f4448998b714d82b537b3b19da87e
 Accept: application/json
 
@@ -72,7 +72,7 @@ Accept: application/json
 ###
 
 # @name executeProcess
-POST https://staging.eodatahub.org.uk/ades/sam-malone41/ogc-api/processes/qa-workflow/execution HTTP/1.1
+POST https://staging.eodatahub.org.uk/ades/sam-malone41/ogc-api/processes/qa-workflow-radiometric-unc/execution HTTP/1.1
 Authorization: Bearer 454f4448998b714d82b537b3b19da87e
 Accept: application/json
 Content-Type: application/json
@@ -106,7 +106,7 @@ Accept: application/json
 ###
 
 # @name undeployProcess
-DELETE https://staging.eodatahub.org.uk/ades/sam-malone41/ogc-api/processes/qa-workflow HTTP/1.1
+DELETE https://staging.eodatahub.org.uk/ades/sam-malone41/ogc-api/processes/qa-workflow-radiometric-unc HTTP/1.1
 Authorization: Bearer 454f4448998b714d82b537b3b19da87e
 Accept: application/json
 

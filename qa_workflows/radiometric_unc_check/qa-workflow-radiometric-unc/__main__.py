@@ -331,7 +331,7 @@ def create_stac_catalog_root(out_name, daterange, dates_list):
 
 
 if __name__ == "__main__":
-    # sys_argv = ['/opt/project/qa_workflow_test/qa-workflow-test/__main__.py', 's3_endpoint']  # for testing locally
+    # sys_argv = ['/opt/project/qa_workflow_test/qa-workflow-radiometric-unc-test/__main__.py', 's3_endpoint']  # for testing locally
     do_func(sys.argv)
 
     # # TEST CHECK WORKS LOCALLY
