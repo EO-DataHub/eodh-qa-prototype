@@ -15,6 +15,14 @@ $graph:
         label: https s3 endpoint
         doc: https s3 endpoint
         type: string
+      date_range:
+        label: date range for checks
+        doc: date range for checks
+        type: string
+      data_collection:
+        label: data collection tested
+        doc: data collection tested
+        type: string
     outputs:
       - id: results
         type: Directory
@@ -25,6 +33,8 @@ $graph:
         run: "#qa-workflow"
         in:
           s3_endpoint: s3_endpoint
+          date_range: date_range
+          data_collection: data_collection
         out:
           - results
 
@@ -40,6 +50,14 @@ $graph:
         type: string
         inputBinding:
           position: 1
+      date_range:
+        type: string
+        inputBinding:
+          position: 2
+      data_collection:
+        type: string
+        inputBinding:
+          position: 3
     outputs:
       results:
         type: Directory

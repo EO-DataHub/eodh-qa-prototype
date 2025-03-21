@@ -14,10 +14,10 @@ out_dir = os.getcwd()
 
 
 def do_func(args):
-    s3 = boto3.client("s3") #- not needed?
+    s3 = boto3.client("s3")  #- not needed?
     s3_endpoint = args[1]
-    daterange = '2022-01-01,2022-12-31' # args[2] #
-    data_collection = 'planet' #args[3]
+    daterange = args[2]  # '2022-01-01,2022-12-31'
+    data_collection = args[3]  # 'planet'
 
     # get from date range
     dates_list = get_dates_list(daterange)
@@ -238,25 +238,6 @@ def create_stac_items(out_name, mup_ds, daterange, dates_list):
             json.dump(data, f, ensure_ascii=False, indent=4)
 
 
-        # # define asset object related to the stac item
-        # asset_data = {
-        #     "stac_version": "1.0.0",
-        #     "href": f"output_{stem}_{dates.replace(',', '_')}.json",
-        #     "title": f"output_{stem}_{dates.replace(',', '_')}",  # f"{stem}_catalog_{daterange.replace(',', '_')}
-        #     "description": "Item assets",
-        #     "type": "Asset",
-        #     "roles": ["data"],
-        #     "links": [
-        #         {"type": "application/json", "rel": "item", "href": f"{stem}_{dates.replace(',', '_')}.json"},
-        #         {"type": "application/json", "rel": "self", "href": f"output_{stem}_{dates.replace(',', '_')}.json"},
-        #         {"type": "application/json", "rel": "root", "href": f"catalog.json"},
-        #         # f"{stem}_catalog_{daterange.replace(',', '_')}
-        #     ],
-        # }
-        # with open(f"{out_dir}/output_{stem}_{dates.replace(',', '_')}.json", "w", encoding="utf-8") as f:
-        #     json.dump(asset_data, f, ensure_ascii=False, indent=4)
-
-
 def create_stac_catalog_root(out_name, daterange, dates_list):
     stem = Path(out_name).stem
     data = {
@@ -277,18 +258,6 @@ def create_stac_catalog_root(out_name, daterange, dates_list):
             {"type": "application/json", "rel": "item", "href": f"{stem}_{dates_list[9].replace(',', '_')}.json"},
             {"type": "application/json", "rel": "item", "href": f"{stem}_{dates_list[10].replace(',', '_')}.json"},
             {"type": "application/json", "rel": "item", "href": f"{stem}_{dates_list[11].replace(',', '_')}.json"},
-            # {"type": "application/json", "rel": "asset", "href": f"output_{stem}_{dates_list[0].replace(',', '_')}.json"},
-            # {"type": "application/json", "rel": "asset", "href": f"output_{stem}_{dates_list[1].replace(',', '_')}.json"},
-            # {"type": "application/json", "rel": "asset", "href": f"output_{stem}_{dates_list[2].replace(',', '_')}.json"},
-            # {"type": "application/json", "rel": "asset", "href": f"output_{stem}_{dates_list[3].replace(',', '_')}.json"},
-            # {"type": "application/json", "rel": "asset", "href": f"output_{stem}_{dates_list[4].replace(',', '_')}.json"},
-            # {"type": "application/json", "rel": "asset", "href": f"output_{stem}_{dates_list[5].replace(',', '_')}.json"},
-            # {"type": "application/json", "rel": "asset", "href": f"output_{stem}_{dates_list[6].replace(',', '_')}.json"},
-            # {"type": "application/json", "rel": "asset", "href": f"output_{stem}_{dates_list[7].replace(',', '_')}.json"},
-            # {"type": "application/json", "rel": "asset", "href": f"output_{stem}_{dates_list[8].replace(',', '_')}.json"},
-            # {"type": "application/json", "rel": "asset", "href": f"output_{stem}_{dates_list[9].replace(',', '_')}.json"},
-            # {"type": "application/json", "rel": "asset", "href": f"output_{stem}_{dates_list[10].replace(',', '_')}.json"},
-            # {"type": "application/json", "rel": "asset", "href": f"output_{stem}_{dates_list[11].replace(',', '_')}.json"},
             {"type": "application/json", "rel": "self", "href": f"catalog.json"}, #f"{stem}_catalog_{daterange.replace(',', '_')}
         ],
     }
@@ -301,6 +270,8 @@ if __name__ == "__main__":
     do_func(sys.argv)
 
     #TEST CHECK WORKS LOCALLY
+    # do_func([None, "AccessPointName-AccountId.s3-accesspoint.region.amazonaws.com", "2022-01-01,2022-12-31", "planet"])
+
     # daterange = '2022-01-01,2022-12-31'
     # data_collection = 'planet'
     #
