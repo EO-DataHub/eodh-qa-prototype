@@ -12,24 +12,15 @@ import boto3
 
 out_dir = os.getcwd()
 
-dates_list = ['2022-01-01,2022-01-31',
-              '2022-02-01,2022-02-28',
-              '2022-03-01,2022-03-31',
-              '2022-04-01,2022-04-30',
-              '2022-05-01,2022-05-31',
-              '2022-06-01,2022-06-30',
-              '2022-07-01,2022-07-31',
-              '2022-08-01,2022-08-31',
-              '2022-09-01,2022-09-30',
-              '2022-10-01,2022-10-31',
-              '2022-11-01,2022-11-30',
-              '2022-12-01,2022-12-31',
-              ]
-daterange = '2022-01-01,2022-12-31'
 
 def do_func(args):
     s3 = boto3.client("s3") #- not needed?
     s3_endpoint = args[1]
+    daterange = '2022-01-01,2022-12-31' # args[2] #
+    data_collection = 'planet' #args[3]
+
+    # get from date range
+    dates_list = get_dates_list(daterange)
 
     # set the environment variable for the S3 endpoint, in the future this will be set outside of the code.
     os.environ["AWS_S3_ENDPOINT"] = s3_endpoint
@@ -40,15 +31,30 @@ def do_func(args):
     # get matchups for that time period
     sat = 'planet'
     site = 'RCN-GONA'
-    url = f'http://db-api.eba-3ean8bmb.eu-west-2.elasticbeanstalk.com/matchups?sensor1={sat}&sensor2={site}&dates={daterange}'
+    url = f'http://db-api.eba-3ean8bmb.eu-west-2.elasticbeanstalk.com/matchups?sensor1={data_collection}&sensor2={site}&dates={daterange}'
     response = requests.get(url)
     mup_dict = json.loads(response.text)
     mup_ds = xr.Dataset.from_dict(mup_dict)
 
-    create_stac_items(base_name, mup_ds)
+    create_stac_items(base_name, mup_ds, daterange, dates_list)
 
-    create_stac_catalog_root(base_name)
+    create_stac_catalog_root(base_name, daterange, dates_list)
 
+# get dates list from daterange input
+def get_dates_list(daterange):
+    return ['2022-01-01,2022-01-31',
+            '2022-02-01,2022-02-28',
+            '2022-03-01,2022-03-31',
+            '2022-04-01,2022-04-30',
+            '2022-05-01,2022-05-31',
+            '2022-06-01,2022-06-30',
+            '2022-07-01,2022-07-31',
+            '2022-08-01,2022-08-31',
+            '2022-09-01,2022-09-30',
+            '2022-10-01,2022-10-31',
+            '2022-11-01,2022-11-30',
+            '2022-12-01,2022-12-31',
+            ]
 
 def qa_check_rad_val(mup_ds, date_range):
 
@@ -172,7 +178,7 @@ def qa_check_rad_val(mup_ds, date_range):
     return qa_radiometric_check_result_output
 
 
-def create_stac_items(out_name, mup_ds):
+def create_stac_items(out_name, mup_ds, daterange, dates_list):
     for dates in dates_list:
         qa_check_results_dict = qa_check_rad_val(mup_ds, dates)
 
@@ -200,8 +206,8 @@ def create_stac_items(out_name, mup_ds):
                                 },
                     links = [
                         {"type": "application/json", "rel": "self",  "href": f"{stem}_{dates.replace(',', '_')}.json"},
-                        {"type": "application/json", "rel": "parent", "href": f"{stem}_catalog_{daterange.replace(',', '_')}.json"},
-                        {"type": "application/json", "rel": "root", "href": f"{stem}_catalog_{daterange.replace(',', '_')}.json"},
+                        {"type": "application/json", "rel": "parent", "href": f"catalog.json"}, #f"{stem}_catalog_{daterange.replace(',', '_')}
+                        {"type": "application/json", "rel": "root", "href": f"catalog.json"}, #f"{stem}_catalog_{daterange.replace(',', '_')}
                     ],
                     assets = {
                         f"{stem}": {
@@ -210,7 +216,8 @@ def create_stac_items(out_name, mup_ds):
                             "roles": ["data"],
                             "href": f"{out_name}",
                         },
-                        "output_qa_check_radiometric_unc": qa_check_results_dict,
+                        "output_qa_check_radiometric_unc": {"check result": qa_check_results_dict,
+                                                            "href": f"{out_name}"},
                     },
                     )
 
@@ -218,11 +225,11 @@ def create_stac_items(out_name, mup_ds):
             json.dump(data, f, ensure_ascii=False, indent=4)
 
 
-def create_stac_catalog_root(out_name):
+def create_stac_catalog_root(out_name, daterange, dates_list):
     stem = Path(out_name).stem
     data = {
         "stac_version": "1.0.0",
-        "id": f"{stem}_catalog_{daterange.replace(',', '_')}",
+        "id": f"catalog", #f"{stem}_catalog_{daterange.replace(',', '_')}
         "type": "Catalog",
         "description": "Root catalog",
         "links": [
@@ -238,13 +245,46 @@ def create_stac_catalog_root(out_name):
             {"type": "application/json", "rel": "item", "href": f"{stem}_{dates_list[9].replace(',', '_')}.json"},
             {"type": "application/json", "rel": "item", "href": f"{stem}_{dates_list[10].replace(',', '_')}.json"},
             {"type": "application/json", "rel": "item", "href": f"{stem}_{dates_list[11].replace(',', '_')}.json"},
-            {"type": "application/json", "rel": "self", "href": f"{stem}_catalog_{daterange.replace(',', '_')}.json"},
+            {"type": "application/json", "rel": "self", "href": f"catalog.json"}, #f"{stem}_catalog_{daterange.replace(',', '_')}
         ],
     }
-    with open(f"{out_dir}/{stem}_catalog_{daterange.replace(',', '_')}.json", "w", encoding="utf-8") as f:
+    with open(f"{out_dir}/catalog.json", "w", encoding="utf-8") as f:
         json.dump(data, f, ensure_ascii=False, indent=4)
 
 
 if __name__ == "__main__":
     # sys_argv = ['/opt/project/qa_workflow_test/qa-workflow-test/__main__.py', 's3_endpoint']  # for testing locally
     do_func(sys.argv)
+
+    # daterange = '2022-01-01,2022-12-31'
+    # data_collection = 'planet'
+    #
+    # # get from date range
+    # dates_list = ['2022-01-01,2022-01-31',
+    #               '2022-02-01,2022-02-28',
+    #               '2022-03-01,2022-03-31',
+    #               '2022-04-01,2022-04-30',
+    #               '2022-05-01,2022-05-31',
+    #               '2022-06-01,2022-06-30',
+    #               '2022-07-01,2022-07-31',
+    #               '2022-08-01,2022-08-31',
+    #               '2022-09-01,2022-09-30',
+    #               '2022-10-01,2022-10-31',
+    #               '2022-11-01,2022-11-30',
+    #               '2022-12-01,2022-12-31',
+    #               ]
+    #
+    # # name stac item/catalog after qa check
+    # base_name = 'planet_superdove_qa_check_radiometric_unc'
+    #
+    # # get matchups for that time period
+    # # sat = 'planet'
+    # site = 'RCN-GONA'
+    # url = f'http://db-api.eba-3ean8bmb.eu-west-2.elasticbeanstalk.com/matchups?sensor1={data_collection}&sensor2={site}&dates={daterange}'
+    # response = requests.get(url)
+    # mup_dict = json.loads(response.text)
+    # mup_ds = xr.Dataset.from_dict(mup_dict)
+    #
+    # create_stac_items(base_name, mup_ds, daterange, dates_list)
+    #
+    # create_stac_catalog_root(base_name, daterange, dates_list)
