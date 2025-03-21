@@ -1,0 +1,113 @@
+{
+    "id": "planet_superdove_qa_check_radiometric_unc_2022-09-01_2022-09-30",
+    "type": "Feature",
+    "stac_version": "1.0.0",
+    "geometry": {
+        "type": "Polygon",
+        "coordinates": [
+            [
+                [
+                    15.10274,
+                    -23.60723694
+                ],
+                [
+                    15.13462891,
+                    -23.60723694
+                ],
+                [
+                    15.13462891,
+                    -23.59451068
+                ],
+                [
+                    15.10274,
+                    -23.59451068
+                ],
+                [
+                    15.10274,
+                    -23.60723694
+                ]
+            ]
+        ]
+    },
+    "bbox": [
+        15.10274,
+        -23.60723694,
+        15.13462891,
+        -23.59451068
+    ],
+    "properties": {
+        "check_datetime": "20250321T093930.902300",
+        "check_validity_start_datetime": "20220901T000000.000000",
+        "check_validity_end_datetime": "20220930T000000.000000"
+    },
+    "links": [
+        {
+            "type": "application/json",
+            "rel": "self",
+            "href": "planet_superdove_qa_check_radiometric_unc_2022-09-01_2022-09-30.json"
+        },
+        {
+            "type": "application/json",
+            "rel": "parent",
+            "href": "catalog.json"
+        },
+        {
+            "type": "application/json",
+            "rel": "root",
+            "href": "catalog.json"
+        }
+    ],
+    "assets": {
+        "planet_superdove_qa_check_radiometric_unc": {
+            "roles": [
+                "data"
+            ],
+            "href": "planet_superdove_qa_check_radiometric_unc"
+        },
+        "output_qa_check_radiometric_unc": {
+            "data_collection": "Planet SuperDove",
+            "data_id_field": "doi or STAC url etc",
+            "uuid": "uuid",
+            "check_name": "radiometric uncertainty",
+            "results": {
+                "data validation": {
+                    "radiometric uncertainty": {
+                        "metric": "https://eodatahub.org.uk/api/ontologies/qa/metrics/data-validation/radiometric-uncertainty",
+                        "value": "pass",
+                        "stated_value": [
+                            "8.0% (coastal blue), 6.8% (blue), 6.2% (green_i), 5.6% (green_ii), 5.8% (yellow), 6.3% (red), 8.7% (red edge), 9.2% (NIR)"
+                        ],
+                        "links": [
+                            {
+                                "rel": "https://eodatahub.org.uk/api/ontologies/qa/detailed-result-report",
+                                "type": "application/pdf",
+                                "href": "https://npl-qa-workspace.eodatahub-worksapces.org.uk/files/qa-reports/detailed-report.pdf",
+                                "title": "Detailed QA Check Report for radiometric uncertainty"
+                            },
+                            {
+                                "rel": "https://eodatahub.org.uk/api/ontologies/qa/data_product_report",
+                                "type": "application/pdf",
+                                "href": "https://support.planet.com/hc/en-us/articles/360037649554-L1-Data-Quality-Reports-for-the-PlanetScope-Constellation",
+                                "title": "PLANET L1 DATA QUALITY REPORT, SUPERDOVE 8-BAND GENERAL AVAILABILITY: Status of Calibration and Data Quality for the SuperDove 8-Band GA, 15/06/21"
+                            },
+                            {
+                                "rel": "https://eodatahub.org.uk/api/ontologies/qa/data-visualisation",
+                                "type": "application/pdf",
+                                "href": "http://ceos-dashboard.eba-krpcapwh.eu-west-2.elasticbeanstalk.com/ceos-dashboard?sat=planet&refs=RCN-GONA&bands=490,565,665&date=2022-09-01,2022-09-30",
+                                "title": "Dashboard displaying detailed QA information for the radiometric uncertainty check"
+                            }
+                        ]
+                    }
+                }
+            },
+            "result_vocab": "vocab/url",
+            "check_datetime": "20250321T093930.902300",
+            "check_datetime_validity_start": "20220901T000000.000000",
+            "check_datetime_validity_end": "20220930T000000.000000",
+            "check_creator": "S Malone",
+            "contact_point": "samantha.malone@npl.co.uk",
+            "publisher": "Climate and Earth Observation Group, National Physical Laboratory",
+            "eodh_qa_check_version": 1.0
+        }
+    }
+}
