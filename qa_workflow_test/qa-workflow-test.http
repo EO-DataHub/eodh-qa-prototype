@@ -20,31 +20,33 @@ Authorization: Bearer {{logindetails}}
 ###
 
 # @name TestUserDatasetsAccess
-GET /https://test.eodatahub.org.uk/api/catalogue/stac/catalogs/user-datasets/sam-malone41/processing-results
-Authorization: Bearer 454f44482c4c3dae5a4c52913e7a2dea
+GET /https://staging.eodatahub.org.uk/api/catalogue/stac/catalogs/user-datasets/sam-malone41/processing-results
+Authorization: Bearer 454f44484ce535b586bb088c4e35d9fb
 Accept: application/json
 
 ###
 
 # @name deleteProcess
-DELETE https://test.eodatahub.org.uk/ades/sam-malone41/ogc-api/processes/qa-workflow-test HTTP/1.1
-Authorization: Bearer 454f44482c4c3dae5a4c52913e7a2dea
+DELETE https://staging.eodatahub.org.uk/ades/sam-malone41/ogc-api/processes/qa-workflow-test HTTP/1.1
+Authorization: Bearer 454f4448998b714d82b537b3b19da87e
 Accept: application/json
 
 
 ###
 
 # @name listProcesses
-GET https://test.eodatahub.org.uk/ades/sam-malone41/ogc-api/processes HTTP/1.1
-Authorization: Bearer 454f44482c4c3dae5a4c52913e7a2dea
+GET https://staging.eodatahub.org.uk/ades/sam-malone41/ogc-api/processes HTTP/1.1
+Authorization: Bearer 454f4448998b714d82b537b3b19da87e
 Accept: application/json
 
 
 ###
+#https://staging.eodatahub.org.uk/ades/npl/ogc-api/processes
+#https://npl.staging.eodatahub-workspaces.org.uk/ogc-api/processes
 
 # @name deployProcessJson
-POST https://test.eodatahub.org.uk/ades/sam-malone41/ogc-api/processes HTTP/1.1
-Authorization: Bearer 454f44482c4c3dae5a4c52913e7a2dea
+POST https://staging.eodatahub.org.uk/ades/sam-malone41/ogc-api/processes HTTP/1.1
+Authorization: Bearer 454f4448998b714d82b537b3b19da87e
 Accept: application/json
 Content-Type: application/cwl+yaml
 
@@ -55,23 +57,23 @@ Content-Type: application/cwl+yaml
 # need to update url
 # @name getDeployStatus
 GET deployProcessJson.response.headers.Location HTTP/1.1
-Authorization: Bearer 454f44482c4c3dae5a4c52913e7a2dea
+Authorization: Bearer 454f4448998b714d82b537b3b19da87e
 Accept: application/json
 
 
 ###
 
 # @name getProcessDetails
-GET https://test.eodatahub.org.uk/ades/sam-malone41/ogc-api/processes/qa-workflow-test HTTP/1.1
-Authorization: Bearer 454f44482c4c3dae5a4c52913e7a2dea
+GET https://staging.eodatahub.org.uk/ades/sam-malone41/ogc-api/processes/qa-workflow-test HTTP/1.1
+Authorization: Bearer 454f4448998b714d82b537b3b19da87e
 Accept: application/json
 
 
 ###
 
 # @name executeProcess
-POST https://test.eodatahub.org.uk/ades/sam-malone41/ogc-api/processes/qa-workflow-test/execution HTTP/1.1
-Authorization: Bearer 454f44482c4c3dae5a4c52913e7a2dea
+POST https://staging.eodatahub.org.uk/ades/sam-malone41/ogc-api/processes/qa-workflow-test/execution HTTP/1.1
+Authorization: Bearer 454f4448998b714d82b537b3b19da87e #454f44484ce535b586bb088c4e35d9fb
 Accept: application/json
 Content-Type: application/json
 Prefer: respond-async
@@ -94,24 +96,24 @@ Accept: application/json
 ###
 # need to update url to include correct job code
 # @name getProcessingResults
-GET https://test.eodatahub.org.uk/ades/sam-malone41/ogc-api/jobs/30d5befe-da3e-11ef-9969-2686da013a64/results HTTP/1.1
-Authorization: Bearer 454f44482c4c3dae5a4c52913e7a2dea
+GET https://staging.eodatahub.org.uk/ades/sam-malone41/ogc-api/jobs/69e707d4-05ae-11f0-ae39-eadd75232b79/results HTTP/1.1
+Authorization: Bearer 454f4448998b714d82b537b3b19da87e
 Accept: application/json
 
 
 ###
 
 # @name undeployProcess
-DELETE https://test.eodatahub.org.uk/ades/sam-malone41/ogc-api/processes/qa-workflow-test HTTP/1.1
-Authorization: Bearer 454f44482c4c3dae5a4c52913e7a2dea
+DELETE https://staging.eodatahub.org.uk/ades/sam-malone41/ogc-api/processes/qa-workflow-test HTTP/1.1
+Authorization: Bearer 454f4448998b714d82b537b3b19da87e
 Accept: application/json
 
 
 ###
 
 # @name listJobs
-GET https://test.eodatahub.org.uk/ades/sam-malone41/ogc-api/jobs HTTP/1.1
-Authorization: Bearer 454f44482c4c3dae5a4c52913e7a2dea
+GET https://staging.eodatahub.org.uk/ades/sam-malone41/ogc-api/jobs HTTP/1.1
+Authorization: Bearer 454f4448998b714d82b537b3b19da87e
 Accept: application/json
 
 

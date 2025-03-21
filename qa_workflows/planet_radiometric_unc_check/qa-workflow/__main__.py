@@ -36,9 +36,12 @@ def do_func(args):
     mup_dict = json.loads(response.text)
     mup_ds = xr.Dataset.from_dict(mup_dict)
 
-    create_stac_items(base_name, mup_ds, daterange, dates_list)
+    if mup_ds:
+        create_stac_items(base_name, mup_ds, daterange, dates_list)
 
-    create_stac_catalog_root(base_name, daterange, dates_list)
+        create_stac_catalog_root(base_name, daterange, dates_list)
+    else:
+        return
 
 # get dates list from daterange input
 def get_dates_list(daterange):
@@ -95,7 +98,7 @@ def qa_check_rad_val(mup_ds, date_range):
     rcn_refl_vals_mean_unc = np.ones(len(bias_vals)) * np.nan  # todo: get rcn refl vals uncs through pipeline
 
     for k in range(len(bias_vals)):
-        rcn_bias_vals_mean[k] = round(sum(bias_vals[k]) / len(bias_vals[k]), 2)  # todo: planet Feb has nans for all bias vals - need to remove those from calc?
+        rcn_bias_vals_mean[k] = round(sum(bias_vals[k]) / len(bias_vals[k]), 2)
         rcn_refl_vals_mean_unc[k] = round(sum(rcn_meas_unc_vals[k]) / len(rcn_meas_unc_vals[k]), 2)  # todo: update once rcn refl uncs are through the pipeline
 
 
