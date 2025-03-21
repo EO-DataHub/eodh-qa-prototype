@@ -1,0 +1,120 @@
+@scheme = https
+@testeodh = workspaces.test.eodhp.eco-ke-staging.com
+@ades = test.eodatahub.org.uk/ades
+@username= sam-malone41
+@workspace = workspace
+@s3Endpoint = AccessPointName-AccountId.s3-accesspoint.region.amazonaws.com
+@fileName = <WORKSPACE NAME>/<FILENAME>.tif
+@logindetails = 454f44482c4c3dae5a4c52913e7a2dea
+@deployStatus = {{deployProcessJson.response.headers.Location}}
+@executeStatus = {{executeProcess.response.headers.Location}}
+
+
+###
+# example from GitHub guide
+# @name accessFileInWorkspace
+GET /files/<bucket_name>/<path_to_file> HTTP/1.1
+Host: {{workspace}}.workspaces.test.eodhp.eco-ke-staging.com
+Authorization: Bearer {{logindetails}}
+
+###
+
+# @name TestUserDatasetsAccess
+GET /https://staging.eodatahub.org.uk/api/catalogue/stac/catalogs/user-datasets/sam-malone41/processing-results
+Authorization: Bearer 454f44484ce535b586bb088c4e35d9fb
+Accept: application/json
+
+###
+
+# @name deleteProcess
+DELETE https://staging.eodatahub.org.uk/ades/sam-malone41/ogc-api/processes/qa-workflow HTTP/1.1
+Authorization: Bearer 454f4448998b714d82b537b3b19da87e
+Accept: application/json
+
+
+###
+
+# @name listProcesses
+GET https://staging.eodatahub.org.uk/ades/sam-malone41/ogc-api/processes HTTP/1.1
+Authorization: Bearer 454f4448998b714d82b537b3b19da87e
+Accept: application/json
+
+
+###
+#https://staging.eodatahub.org.uk/ades/npl/ogc-api/processes
+#https://npl.staging.eodatahub-workspaces.org.uk/ogc-api/processes
+
+# @name deployProcessJson
+POST https://staging.eodatahub.org.uk/ades/sam-malone41/ogc-api/processes HTTP/1.1
+Authorization: Bearer 454f4448998b714d82b537b3b19da87e
+Accept: application/json
+Content-Type: application/cwl+yaml
+
+< qa-workflow.cwl
+
+
+###
+# need to update url
+# @name getDeployStatus
+GET deployProcessJson.response.headers.Location HTTP/1.1
+Authorization: Bearer 454f4448998b714d82b537b3b19da87e
+Accept: application/json
+
+
+###
+
+# @name getProcessDetails
+GET https://staging.eodatahub.org.uk/ades/sam-malone41/ogc-api/processes/qa-workflow HTTP/1.1
+Authorization: Bearer 454f4448998b714d82b537b3b19da87e
+Accept: application/json
+
+
+###
+
+# @name executeProcess
+POST https://staging.eodatahub.org.uk/ades/sam-malone41/ogc-api/processes/qa-workflow/execution HTTP/1.1
+Authorization: Bearer 454f4448998b714d82b537b3b19da87e
+Accept: application/json
+Content-Type: application/json
+Prefer: respond-async
+
+{
+  "inputs": {
+  "s3_endpoint": "AccessPointName-AccountId.s3-accesspoint.region.amazonaws.com"
+  }
+}
+
+
+###
+# need to update url
+# @name getExecuteStatus
+GET {{executeStatus}} HTTP/1.1
+Authorization: Basic {{logindetails}}
+Accept: application/json
+
+
+###
+# need to update url to include correct job code a88a2af4-05ca-11f0-bbc3-eadd75232b79
+# @name getProcessingResults
+GET 8iu970fcf1314-05c6-11f0-b647-eadd75232b79/results HTTP/1.1
+Authorization: Bearer 454f4448998b714d82b537b3b19da87e
+Accept: application/json
+
+
+###
+
+# @name undeployProcess
+DELETE https://staging.eodatahub.org.uk/ades/sam-malone41/ogc-api/processes/qa-workflow HTTP/1.1
+Authorization: Bearer 454f4448998b714d82b537b3b19da87e
+Accept: application/json
+
+
+###
+
+# @name listJobs
+GET https://staging.eodatahub.org.uk/ades/sam-malone41/ogc-api/jobs HTTP/1.1
+Authorization: Bearer 454f4448998b714d82b537b3b19da87e
+Accept: application/json
+
+
+###
