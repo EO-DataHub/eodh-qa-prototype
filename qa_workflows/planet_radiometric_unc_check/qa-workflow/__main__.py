@@ -137,8 +137,8 @@ def qa_check_rad_val(mup_ds, date_range):
         result = 'partial pass'
 
     qa_radiometric_check_result_output = {  # output dict of radiometric test result
-        "data_collection": "Planet SuperDove",
-        "data_id_field": "doi or STAC url etc",
+        "data_collection": "PSScene",
+        "data_id_field": "https://staging.eodatahub.org.uk/api/catalogue/stac/catalogs/supported-datasets/catalogs/planet/collections/PSScene ",
         "uuid": "uuid",
         "check_name": "radiometric uncertainty",
         "results": {
@@ -219,12 +219,30 @@ def create_stac_items(out_name, mup_ds, daterange, dates_list):
                             "roles": ["data"],
                             "href": f"{out_name}",
                         },
-                        "output_qa_check_radiometric_unc": {"check result": qa_check_results_dict,
-                                                            "href": f"{out_name}"},
+                        f"output_{stem}_{dates.replace(',', '_')}": {"check result": qa_check_results_dict,
+                                                            "href": f"output_{stem}_{dates.replace(',', '_')}"},
                     },
                     )
 
         with open(f"{out_dir}/{stem}_{dates.replace(',', '_')}.json", "w", encoding="utf-8") as f:
+            json.dump(data, f, ensure_ascii=False, indent=4)
+
+        # define asset object related to the stac item
+        data = {
+            "stac_version": "1.0.0",
+            "id": f"output_{stem}_{dates.replace(',', '_')}",  # f"{stem}_catalog_{daterange.replace(',', '_')}
+            "type": "Asset",
+            "description": "Item assets",
+            "roles": ["data"],
+            "href": f"output_{stem}_{dates.replace(',', '_')}.json",
+            "links": [
+                {"type": "application/json", "rel": "item", "href": f"{stem}_{dates.replace(',', '_')}.json"},
+                {"type": "application/json", "rel": "self", "href": f"output_{stem}_{dates.replace(',', '_')}.json"},
+                {"type": "application/json", "rel": "root", "href": f"catalog.json"},
+                # f"{stem}_catalog_{daterange.replace(',', '_')}
+            ],
+        }
+        with open(f"{out_dir}/output_qa_check_radiometric_unc.json", "w", encoding="utf-8") as f:
             json.dump(data, f, ensure_ascii=False, indent=4)
 
 
@@ -248,6 +266,18 @@ def create_stac_catalog_root(out_name, daterange, dates_list):
             {"type": "application/json", "rel": "item", "href": f"{stem}_{dates_list[9].replace(',', '_')}.json"},
             {"type": "application/json", "rel": "item", "href": f"{stem}_{dates_list[10].replace(',', '_')}.json"},
             {"type": "application/json", "rel": "item", "href": f"{stem}_{dates_list[11].replace(',', '_')}.json"},
+            {"type": "application/json", "rel": "asset", "href": f"output_{stem}_{dates_list[0].replace(',', '_')}.json"},
+            {"type": "application/json", "rel": "asset", "href": f"output_{stem}_{dates_list[1].replace(',', '_')}.json"},
+            {"type": "application/json", "rel": "asset", "href": f"output_{stem}_{dates_list[2].replace(',', '_')}.json"},
+            {"type": "application/json", "rel": "asset", "href": f"output_{stem}_{dates_list[3].replace(',', '_')}.json"},
+            {"type": "application/json", "rel": "asset", "href": f"output_{stem}_{dates_list[4].replace(',', '_')}.json"},
+            {"type": "application/json", "rel": "asset", "href": f"output_{stem}_{dates_list[5].replace(',', '_')}.json"},
+            {"type": "application/json", "rel": "asset", "href": f"output_{stem}_{dates_list[6].replace(',', '_')}.json"},
+            {"type": "application/json", "rel": "asset", "href": f"output_{stem}_{dates_list[7].replace(',', '_')}.json"},
+            {"type": "application/json", "rel": "asset", "href": f"output_{stem}_{dates_list[8].replace(',', '_')}.json"},
+            {"type": "application/json", "rel": "asset", "href": f"output_{stem}_{dates_list[9].replace(',', '_')}.json"},
+            {"type": "application/json", "rel": "asset", "href": f"output_{stem}_{dates_list[10].replace(',', '_')}.json"},
+            {"type": "application/json", "rel": "asset", "href": f"output_{stem}_{dates_list[11].replace(',', '_')}.json"},
             {"type": "application/json", "rel": "self", "href": f"catalog.json"}, #f"{stem}_catalog_{daterange.replace(',', '_')}
         ],
     }
