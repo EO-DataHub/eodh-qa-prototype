@@ -256,6 +256,7 @@ if __name__ == "__main__":
     # sys_argv = ['/opt/project/qa_workflow_test/qa-workflow-test/__main__.py', 's3_endpoint']  # for testing locally
     do_func(sys.argv)
 
+    #TEST CHECK WORKS LOCALLY
     # daterange = '2022-01-01,2022-12-31'
     # data_collection = 'planet'
     #
