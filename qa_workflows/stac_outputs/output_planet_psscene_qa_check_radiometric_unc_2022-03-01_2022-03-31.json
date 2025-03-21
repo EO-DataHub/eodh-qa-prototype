@@ -7,9 +7,30 @@
         "data validation": {
             "radiometric uncertainty": {
                 "metric": "https://eodatahub.org.uk/api/ontologies/qa/metrics/data-validation/radiometric-uncertainty",
-                "value": "pass",
+                "value": [
+                    "pass",
+                    [
+                        "pass",
+                        "pass",
+                        "pass",
+                        "pass",
+                        "pass",
+                        "pass",
+                        "pass",
+                        "pass"
+                    ]
+                ],
                 "stated_value": [
-                    "8.0% (coastal blue), 6.8% (blue), 6.2% (green_i), 5.6% (green_ii), 5.8% (yellow), 6.3% (red), 8.7% (red edge), 9.2% (NIR)"
+                    [
+                        "8.0% (coastal blue)",
+                        "6.8% (blue)",
+                        "6.2% (green_i)",
+                        "5.6% (green_ii)",
+                        "5.8% (yellow)",
+                        "6.3% (red)",
+                        "8.7% (red edge)",
+                        "9.2% (NIR)"
+                    ]
                 ],
                 "links": [
                     {
@@ -35,7 +56,7 @@
         }
     },
     "result_vocab": "vocab/url",
-    "check_datetime": "20250321T141648.195318",
+    "check_datetime": "20250321T153304.987742",
     "check_datetime_validity_start": "20220301T000000.000000",
     "check_datetime_validity_end": "20220331T000000.000000",
     "check_creator": "S Malone",

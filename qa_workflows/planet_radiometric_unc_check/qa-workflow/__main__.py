@@ -25,13 +25,19 @@ def do_func(args):
     # set the environment variable for the S3 endpoint, in the future this will be set outside of the code.
     os.environ["AWS_S3_ENDPOINT"] = s3_endpoint
 
+    eodh_colls_rel_dict = {'planet': 'planet_psscene',
+                           'airbus_phr': 'airbus_phr',
+                           's2a': 'sentinel2_L1C',
+                           's2b': 'sentinel2_L1C',
+                           's2': 'sentinel2_L1C'}
+
+    eodh_data_coll = eodh_colls_rel_dict[data_collection]
+
     # name stac item/catalog after qa check
-    base_name = 'planet_psscene_qa_check_radiometric_unc'
+    base_name = f'{eodh_data_coll}_qa_check_radiometric_unc'
 
     # get matchups for that time period
-    sat = 'planet'
-    site = 'RCN-GONA'
-    url = f'http://db-api.eba-3ean8bmb.eu-west-2.elasticbeanstalk.com/matchups?sensor1={data_collection}&sensor2={site}&dates={daterange}'
+    url = f'http://db-api.eba-3ean8bmb.eu-west-2.elasticbeanstalk.com/matchups?sensor1={data_collection}&sensor2=RCN-GONA&dates={daterange}'
     response = requests.get(url)
     mup_dict = json.loads(response.text)
     mup_ds = xr.Dataset.from_dict(mup_dict)
@@ -44,22 +50,29 @@ def do_func(args):
         return
 
 # get dates list from daterange input
-def get_dates_list(daterange):
-    return ['2022-01-01,2022-01-31',
-            '2022-02-01,2022-02-28',
-            '2022-03-01,2022-03-31',
-            '2022-04-01,2022-04-30',
-            '2022-05-01,2022-05-31',
-            '2022-06-01,2022-06-30',
-            '2022-07-01,2022-07-31',
-            '2022-08-01,2022-08-31',
-            '2022-09-01,2022-09-30',
-            '2022-10-01,2022-10-31',
-            '2022-11-01,2022-11-30',
-            '2022-12-01,2022-12-31',
-            ]
+def get_dates_list(date_string):  # may need to update if not always doing 1yr
+    year = int(date_string[0:4])
+    date_list = []
+    for month in range(11):  # up to Nov as Dec would break due to month+2
+        date_list.append(dt.datetime(year, month + 1, 1).strftime("%Y-%m-%d")+','+(dt.datetime(year, month + 2, 1) - dt.timedelta(
+            1)).strftime("%Y-%m-%d"))
+    date_list.append(dt.datetime(year, 12, 1).strftime("%Y-%m-%d")+','+dt.datetime(year, 12, 31).strftime("%Y-%m-%d"))
 
-def qa_check_rad_val(mup_ds, date_range):
+    return date_list #['2022-01-01,2022-01-31',
+            # '2022-02-01,2022-02-28',
+            # '2022-03-01,2022-03-31',
+            # '2022-04-01,2022-04-30',
+            # '2022-05-01,2022-05-31',
+            # '2022-06-01,2022-06-30',
+            # '2022-07-01,2022-07-31',
+            # '2022-08-01,2022-08-31',
+            # '2022-09-01,2022-09-30',
+            # '2022-10-01,2022-10-31',
+            # '2022-11-01,2022-11-30',
+            # '2022-12-01,2022-12-31',
+            # ]
+
+def qa_check_rad_val(out_name, mup_ds, date_range):
 
     dates = [date_range.split(',')[0], date_range.split(',')[1]]
     datetimes_range = [dt.datetime.strptime(dates[0], "%Y-%m-%d"), dt.datetime.strptime(dates[1], "%Y-%m-%d")]
@@ -88,11 +101,42 @@ def qa_check_rad_val(mup_ds, date_range):
             rcn_meas_vals[j][k] = mup_ds_rcn_meas_vals[k][j]
             # rcn_meas_unc_vals[j][k] = mup_ds_rcn_meas_unc_vals[k][j]
 
-    # first keep only 8 bands for planet
-    bias_vals = bias_vals[:8]
-    # bias_unc_vals = bias_unc_vals[:8]
-    rcn_meas_vals = rcn_meas_vals[:8]
-    rcn_meas_unc_vals = np.ones(rcn_meas_vals.shape) * 0.9
+    if 'planet' in out_name:
+        # first keep only 8 bands for planet
+        bias_vals = bias_vals[:8]
+        # bias_unc_vals = bias_unc_vals[:8]
+        rcn_meas_vals = rcn_meas_vals[:8]
+        rcn_meas_unc_vals = np.ones(rcn_meas_vals.shape) * 0.9
+
+        sat_mean_unc = np.array([8.013, 6.798, 6.244, 5.636, 5.771, 6.277, 8.736, 9.229])
+        stated_value = ["8.0% (coastal blue)", "6.8% (blue)", "6.2% (green_i)", "5.6% (green_ii)", "5.8% (yellow)", "6.3% (red)", "8.7% (red edge)", "9.2% (NIR)"],  # abs rad unc from doc: https://support.planet.com/hc/en-us/article_attachments/4403255608849 (log in here https://support.planet.com/hc/en-us/articles/360037649554-L1-Data-Quality-Reports-for-the-PlanetScope-Constellation)
+        rad_unc_report_title = "PLANET L1 DATA QUALITY REPORT, SUPERDOVE 8-BAND GENERAL AVAILABILITY: Status of Calibration and Data Quality for the SuperDove 8-Band GA, 15/06/21"
+        rad_unc_report_ref = "https://support.planet.com/hc/en-us/articles/360037649554-L1-Data-Quality-Reports-for-the-PlanetScope-Constellation"
+        sat_checked = "planet"
+        eodh_data_coll = 'PSScene'
+        doi ="https://staging.eodatahub.org.uk/api/catalogue/stac/catalogs/supported-datasets/catalogs/planet/collections/PSScene"
+    elif 'airbus_phr' in out_name:
+        # first keep only 4 bands for airbus_phr
+        bias_vals = bias_vals[:4]
+        # bias_unc_vals = bias_unc_vals[:4]
+        rcn_meas_vals = rcn_meas_vals[:4]
+        rcn_meas_unc_vals = np.ones(rcn_meas_vals.shape) * 0.9
+
+        sat_mean_unc = np.ones(4) * 5
+        stated_value = ["5% (blue)", "5% (green)", "5% (red)", "5% (NIR)"]
+        rad_unc_report_title = "PleiadesUserGuide-18072019.pdf"
+        rad_unc_report_ref = "https://www.intelligence-airbusds.com/en/8718-user-guides"
+        sat_checked = "airbus_phr"
+        eodh_data_coll = "Airbus_Pleiades"
+        doi = "https://staging.eodatahub.org.uk/api/catalogue/stac/catalogs/supported-datasets/catalogs/airbus/collections/airbus_phr_data"
+    elif 's2' in out_name:  # or sentinel2
+        sat_mean_unc = np.ones(13) * 5
+        stated_value = ["5% (B1)", "5% (B2)", "5% (B3)", "5% (B4)","5% (B5)", "5% (B6)", "5% (B7)", "5% (B8)","5% (B9)", "5% (B10)", "5% (B11)", "5% (B12)", "5% (B8A)"]
+        rad_unc_report_title = "Data Quality Report Sentinel-2 L1C MSI January 2023"
+        rad_unc_report_ref = "https://sentinel.esa.int/documents/247904/4868341/OMPC.CS.DQR.001.12-2022+-+i83r0+-+MSI+L1C+DQR+January+2023.pdf"
+        sat_checked = "s2a" #or s2b - update dashboard to accept s2 so can keep s2 in general here
+        eodh_data_coll = "Sentinel-2_L1C"
+        doi = "https://staging.eodatahub.org.uk/api/catalogue/stac/catalogs/supported-datasets/catalogs/ceda-stac-catalogue/collections/sentinel2_ard"
 
     rcn_bias_vals_mean = np.ones(len(bias_vals)) * np.nan
     rcn_refl_vals_mean_unc = np.ones(len(bias_vals)) * np.nan  # todo: get rcn refl vals uncs through pipeline
@@ -100,18 +144,6 @@ def qa_check_rad_val(mup_ds, date_range):
     for k in range(len(bias_vals)):
         rcn_bias_vals_mean[k] = round(sum(bias_vals[k]) / len(bias_vals[k]), 2)
         rcn_refl_vals_mean_unc[k] = round(sum(rcn_meas_unc_vals[k]) / len(rcn_meas_unc_vals[k]), 2)  # todo: update once rcn refl uncs are through the pipeline
-
-
-    psd_mean_unc = np.array([8.013, 6.798, 6.244, 5.636, 5.771, 6.277, 8.736, 9.229])
-    psd_exp_val = "8.0% (coastal blue), 6.8% (blue), 6.2% (green_i), 5.6% (green_ii), 5.8% (yellow), 6.3% (red), 8.7% (red edge), 9.2% (NIR)",  # abs rad unc from doc: https://support.planet.com/hc/en-us/article_attachments/4403255608849 (log in here https://support.planet.com/hc/en-us/articles/360037649554-L1-Data-Quality-Reports-for-the-PlanetScope-Constellation)
-
-    sat_mean_unc = psd_mean_unc
-    stated_value = psd_exp_val
-    rad_unc_report_title = "PLANET L1 DATA QUALITY REPORT, SUPERDOVE 8-BAND GENERAL AVAILABILITY: Status of Calibration and Data Quality for the SuperDove 8-Band GA, 15/06/21"
-    rad_unc_report_ref = "https://support.planet.com/hc/en-us/articles/360037649554-L1-Data-Quality-Reports-for-the-PlanetScope-Constellation"
-    sat_checked = "planet"
-    doi ="https://staging.eodatahub.org.uk/api/catalogue/stac/catalogs/supported-datasets/catalogs/planet/collections/PSScene"
-
 
     comp_unc_vals = np.ones(len(sat_mean_unc)) * 2  # todo: update based on what comp unc should be
 
@@ -121,24 +153,24 @@ def qa_check_rad_val(mup_ds, date_range):
     # calc E
     e_val = rcn_bias_vals_mean / total_unc
 
-    result_list = []
+    bands_result_list = []
     for val in range(len(rcn_bias_vals_mean)):
         if abs(e_val[val]) <= 1:
-            result_list.append('pass')
+            bands_result_list.append('pass')
         elif abs(e_val[val]) <= 2:
-            result_list.append('partial')
+            bands_result_list.append('partial')
         else:  # if >2
-            result_list.append('fail')
+            bands_result_list.append('fail')
 
-    if all([result_list[i] == 'pass' for i in range(len(result_list))]):
-        result = 'pass'
-    elif all([result_list[i] == 'fail' for i in range(len(result_list))]):
-        result = 'fail'
+    if all([bands_result_list[i] == 'pass' for i in range(len(bands_result_list))]):
+        overall_result = 'pass'
+    elif all([bands_result_list[i] == 'fail' for i in range(len(bands_result_list))]):
+        overall_result = 'fail'
     else:
-        result = 'partial pass'
+        overall_result = 'partial pass'
 
     qa_radiometric_check_result_output = {  # output dict of radiometric test result
-        "data_collection": "PSScene",
+        "data_collection": eodh_data_coll,
         "data_id_field": doi,
         "uuid": "uuid",
         "check_name": "radiometric uncertainty",
@@ -146,7 +178,7 @@ def qa_check_rad_val(mup_ds, date_range):
             'data validation': {
                 'radiometric uncertainty': {
                     "metric": "https://eodatahub.org.uk/api/ontologies/qa/metrics/data-validation/radiometric-uncertainty",
-                    "value": result,
+                    "value": [overall_result, bands_result_list],
                     "stated_value": stated_value,
                     "links": [
                         {"rel": "https://eodatahub.org.uk/api/ontologies/qa/detailed-result-report",
@@ -189,7 +221,7 @@ def create_stac_items(out_name, mup_ds, daterange, dates_list):
     catalog_name = '_'.join(stem.split('_')[0:3])
 
     for dates in dates_list:
-        qa_check_results_dict = qa_check_rad_val(mup_ds, dates)
+        qa_check_results_dict = qa_check_rad_val(out_name, mup_ds, dates)
 
         # dump qa result file
         with open(f"{out_dir}/output_{stem}_{dates.replace(',', '_')}.json", "w", encoding="utf-8") as f:
@@ -238,6 +270,7 @@ def create_stac_items(out_name, mup_ds, daterange, dates_list):
         with open(f"{out_dir}/{stem}_{dates.replace(',', '_')}.json", "w", encoding="utf-8") as f:
             json.dump(item_data, f, ensure_ascii=False, indent=4)
 
+# todo: ADD IN AFTER TPZ UPDATES & update all catalog/item rel refs to parents
 # def create_stac_collection(out_name, daterange, dates_list):
 #     stem = Path(out_name).stem
 #     catalog_name = '_'.join(stem.split('_')[0:3])
@@ -303,36 +336,3 @@ if __name__ == "__main__":
 
     # # TEST CHECK WORKS LOCALLY
     # do_func([None, "AccessPointName-AccountId.s3-accesspoint.region.amazonaws.com", "2022-01-01,2022-12-31", "planet"])
-
-    # daterange = '2022-01-01,2022-12-31'
-    # data_collection = 'planet'
-    #
-    # # get from date range
-    # dates_list = ['2022-01-01,2022-01-31',
-    #               '2022-02-01,2022-02-28',
-    #               '2022-03-01,2022-03-31',
-    #               '2022-04-01,2022-04-30',
-    #               '2022-05-01,2022-05-31',
-    #               '2022-06-01,2022-06-30',
-    #               '2022-07-01,2022-07-31',
-    #               '2022-08-01,2022-08-31',
-    #               '2022-09-01,2022-09-30',
-    #               '2022-10-01,2022-10-31',
-    #               '2022-11-01,2022-11-30',
-    #               '2022-12-01,2022-12-31',
-    #               ]
-    #
-    # # name stac item/catalog after qa check
-    # base_name = 'planet_psscene_qa_check_radiometric_unc'
-    #
-    # # get matchups for that time period
-    # # sat = 'planet'
-    # site = 'RCN-GONA'
-    # url = f'http://db-api.eba-3ean8bmb.eu-west-2.elasticbeanstalk.com/matchups?sensor1={data_collection}&sensor2={site}&dates={daterange}'
-    # response = requests.get(url)
-    # mup_dict = json.loads(response.text)
-    # mup_ds = xr.Dataset.from_dict(mup_dict)
-    #
-    # create_stac_items(base_name, mup_ds, daterange, dates_list)
-    #
-    # create_stac_catalog_root(base_name, daterange, dates_list)
