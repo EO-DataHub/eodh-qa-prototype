@@ -90,7 +90,131 @@ def get_dates_list(date_string):  # may need to update if not always doing 1 ful
 
 def qa_check_doc_review(data_collection):
     if data_collection == 'planet':
-        matmat = {'planet': 'doc_review'}  # todo add matmats
+        matmat = {
+            "product_information": {
+                "product_details": {
+                    "value": "excellent",
+                    "links": [
+                        {
+                            "type": "application/pdf",
+                            "href": "https://assets.planet.com/docs/Planet_PSScene_Imagery_Product_Spec_letter_screen.pdf",
+                            "title": "PlanetScope Product Specifications, 2023"
+                        },
+                        {
+                            "type": "application/pdf",
+                            "href": "https://support.planet.com/hc/en-us/articles/360037649554-L1-Data-Quality-Reports-for-the-PlanetScope-Constellation",
+                            "title": "Planet L1 Data Quality Report Superdove 8-Band General Availability, 2021"
+                        }
+                    ]
+                },
+                "availability_and_accessability": {
+                    "value": "basic",
+                    "links": []
+                },
+                "product_format_flags_and_metadata": {
+                    "value": "good",
+                    "links": []
+                },
+                "user_documentation": {
+                    "value": "good",
+                    "links": [
+                        {
+                            "type": "application/pdf",
+                            "href": "https://assets.planet.com/docs/Planet_PSScene_Imagery_Product_Spec_letter_screen.pdf",
+                            "title": "PlanetScope Product Specifications, 2023"
+                        },
+                        {
+                            "type": "application/pdf",
+                            "href": "https://developers.planet.com/docs/data/planetscope/",
+                            "title": "PlanetScope Overview"
+                        }
+                    ]
+                }
+            },
+            "metrology":
+                {
+                    "radiometric_calibration_and_characterisation": {
+                        "value": "good",
+                        "links": [
+                            {
+                                "type": "application/pdf",
+                                "href": "https://assets.planet.com/docs/radiometric_calibration_white_paper.pdf",
+                                "title": "On-Orbit Radiometric Calibration of the Planet Satellite Fleet, Radiometric Calibration White paper, January 2022"
+                            }
+                        ]
+                    },
+                    "geometric_calibration_and_characterisation": {
+                        "value": "good",
+                        "links": [
+                            {
+                                "type": "application/pdf",
+                                "href": "https://assets.planet.com/docs/Planet_PSScene_Imagery_Product_Spec_June_2021.pdf",
+                                "title": "PlanetScope Product Specifications, PSScene Imagery Product Spec FINAL | June 2021, June 2021"
+                            }
+                        ]
+                    },
+                    "metrological_traceability_documentation": {
+                        "value": "not assessable",
+                        "links": []
+                    },
+                    "uncertainty_characterisation": {
+                        "value": "basic",
+                        "links": [
+                            {
+                                "type": "application/pdf",
+                                "href": "https://support.planet.com/hc/en-us/articles/360037649554-L1-Data-Quality-Reports-for-the-PlanetScope-Constellation",
+                                "title": "Planet L1 Data Quality Report Superdove 8-Band General Availability, 2021"
+                            }
+                        ]
+                    },
+                    "ancillary_data": {
+                        "value": "basic",
+                        "links": [
+                            {
+                                "type": "application/pdf",
+                                "href": "https://support.planet.com/hc/en-us/articles/360037649554-L1-Data-Quality-Reports-for-the-PlanetScope-Constellation",
+                                "title": "Planet L1 Data Quality Report Superdove 8-Band General Availability, 2021"
+                            }
+                        ]
+                    }
+                },
+            "product_generation":
+                {
+                    "calibration_algorithm": {
+                        "value": "good",
+                        "links": [
+                            {
+                                "type": "application/pdf",
+                                "href": "https://assets.planet.com/docs/radiometric_calibration_white_paper.pdf",
+                                "title": "On-Orbit Radiometric Calibration of the Planet Satellite Fleet, Radiometric Calibration White paper, January 2022"
+                            },
+                            {
+                                "type": "application/pdf",
+                                "href": "https://assets.planet.com/docs/Planet_PSScene_Imagery_Product_Spec_June_2021.pdf",
+                                "title": "Planet Imagery Product Specifications : combined-imagery-product-spec-final-august-2019.pdf, August 2019"
+                            }
+                        ]
+                    },
+                    "geometric_processing": {
+                        "value": "good",
+                        "links": [
+                            {
+                                "type": "application/pdf",
+                                "href": "https://assets.planet.com/docs/Planet_PSScene_Imagery_Product_Spec_June_2021.pdf",
+                                "title": "Planet Imagery Product Specifications : combined-imagery-product-spec-final-august-2019.pdf, August 2019"
+                            }
+                        ]
+                    },
+                    "retrieval_algorithm": {
+                        "value": "not assessed",
+                        "links": []
+                    },
+                    "mission_specific_processing": {
+                        "value": "not assessed",
+                        "links": []
+                    },
+                }
+        }
     elif data_collection == 'airbus_phr':
         matmat = {'airbus_phr': 'doc_review'}
     elif data_collection in ['s2', 's2a', 's2b']:
