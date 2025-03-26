@@ -118,8 +118,8 @@ def create_stac_item_doc_review(data_collection, out_name, review_date):
                                  },
                      links=[
                          {"type": "application/geo+json", "rel": "self", "href": f"{stem}.json"},
-                         {"type": "application/json", "rel": "collection", "href": f"qa_documentation.json"},
-                         {"type": "application/json", "rel": "root", "href": f"catalog.json"},
+                         {"type": "application/json", "rel": "collection", "href": "qa_documentation.json"},
+                         {"type": "application/json", "rel": "root", "href": "catalog.json"},
                      ],
                      assets={
                          f"{stem}": {
@@ -318,8 +318,8 @@ def create_stac_items_rad_unc(data_collection, out_name, mup_ds, daterange, date
                                 },
                     links = [
                         {"type": "application/geo+json", "rel": "self",  "href": f"{stem}_{dates.replace(',', '_')}.json"},
-                        {"type": "application/json", "rel": "collection", "href": f"qa_radiometric.json"}, # catalog #f"qa_radiometric.json"}
-                        {"type": "application/json", "rel": "root", "href": f"catalog.json"}, # catalog  #f"{stem}_catalog_{daterange.replace(',', '_')}
+                        {"type": "application/json", "rel": "collection", "href": "qa_radiometric.json"}, # catalog #f"qa_radiometric.json"}
+                        {"type": "application/json", "rel": "root", "href": "catalog.json"}, # catalog  #f"{stem}_catalog_{daterange.replace(',', '_')}
                     ],
                     assets = {
                         f"{stem}": {
@@ -357,9 +357,9 @@ def create_stac_collection(out_name, dates_list):
             },
             "links": [
                 {"type": "application/geo+json", "rel": "item", "href": f"{stem}.json"},
-                {"type": "application/json", "rel": "root", "href": f"catalog.json"},
-                {"type": "application/json", "rel": "parent", "href": f"catalog.json"},
-                {"type": "application/json", "rel": "self", "href": f"qa_documentation.json"},
+                {"type": "application/json", "rel": "root", "href": "catalog.json"},
+                {"type": "application/json", "rel": "parent", "href": "catalog.json"},
+                {"type": "application/json", "rel": "self", "href": "qa_documentation.json"},
             ],
         }
         with open(f"{out_dir}/qa_documentation.json", "w", encoding="utf-8") as f:
@@ -388,9 +388,9 @@ def create_stac_collection(out_name, dates_list):
                 {"type": "application/geo+json", "rel": "item", "href": f"{stem}_{dates_list[9].replace(',', '_')}.json"},
                 {"type": "application/geo+json", "rel": "item", "href": f"{stem}_{dates_list[10].replace(',', '_')}.json"},
                 {"type": "application/geo+json", "rel": "item", "href": f"{stem}_{dates_list[11].replace(',', '_')}.json"},
-                {"type": "application/json", "rel": "root", "href": f"catalog.json"}, # catalog  #f"{stem}_catalog_{daterange.replace(',', '_')}
-                {"type": "application/json", "rel": "parent", "href": f"catalog.json"}, # catalog  # f"{stem}_catalog_{daterange.replace(',', '_')}
-                {"type": "application/json", "rel": "self", "href": f"qa_radiometric.json"},
+                {"type": "application/json", "rel": "root", "href": "catalog.json"}, # catalog  #f"{stem}_catalog_{daterange.replace(',', '_')}
+                {"type": "application/json", "rel": "parent", "href": "catalog.json"}, # catalog  # f"{stem}_catalog_{daterange.replace(',', '_')}
+                {"type": "application/json", "rel": "self", "href": "qa_radiometric.json"},
             ],
         }
         with open(f"{out_dir}/qa_radiometric.json", "w", encoding="utf-8") as f:
@@ -412,7 +412,7 @@ def create_stac_catalog_root(out_name):
         "type": "Catalog",
         "description": f"Root catalog for {coll_checked} QA checks",
         "links": [
-            {"type": "application/json", "rel": "self", "href": f"catalog.json"},
+            {"type": "application/json", "rel": "self", "href": "catalog.json"},
             {"type": "application/json", "rel": "child", "href": f"{collection_name}.json"},
         ],
     }
