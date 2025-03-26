@@ -29,9 +29,9 @@ def run_check(args):
 
     eodh_coll_rel_dict = {'planet': 'planet_psscene',
                            'airbus_phr': 'airbus_phr',
-                           's2a': 'sentinel2_L1C',
-                           's2b': 'sentinel2_L1C',
-                           's2': 'sentinel2_L1C'}
+                           's2a': 'sentinel-2_l1c',
+                           's2b': 'sentinel-2_l1c',
+                           's2': 'sentinel-2_l1c'}
 
     eodh_data_coll = eodh_coll_rel_dict[data_collection]
 
@@ -201,7 +201,7 @@ def qa_check_rad_val(data_collection, out_name, mup_ds, date_range):
         sat_checked = "airbus_phr"
         eodh_data_coll = "Airbus_Pleiades"
         doi = "https://staging.eodatahub.org.uk/api/catalogue/stac/catalogs/supported-datasets/catalogs/airbus/collections/airbus_phr_data"
-    elif 's2' in out_name:  # or sentinel2
+    elif 'sentinel-2' in out_name:  # or sentinel2
         sat_mean_unc = np.ones(13) * 5
         stated_value = ["5% (B1)", "5% (B2)", "5% (B3)", "5% (B4)","5% (B5)", "5% (B6)", "5% (B7)", "5% (B8)","5% (B9)", "5% (B10)", "5% (B11)", "5% (B12)", "5% (B8A)"]
         rad_unc_report_title = "Data Quality Report Sentinel-2 L1C MSI January 2023"
@@ -455,6 +455,6 @@ if __name__ == "__main__":
 
     # # TEST CHECK WORKS LOCALLY
     # run_check([None, "AccessPointName-AccountId.s3-accesspoint.region.amazonaws.com", "radiometric_unc",
-    #          "2022-01-01,2022-12-31", "airbus_phr"])
+    #          "2022-01-01,2022-12-31", "s2"])
     # run_check([None, "AccessPointName-AccountId.s3-accesspoint.region.amazonaws.com", "doc_review",
-    #          '2025-03-25', "airbus_phr"])
+    #          '2025-03-25', "s2"])
