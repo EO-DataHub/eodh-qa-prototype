@@ -30,7 +30,7 @@ Accept: application/json
 
 # @name deleteProcess
 DELETE https://staging.eodatahub.org.uk/api/catalogue/stac/catalogs/user/catalogs/npl/processes/qa-workflow HTTP/1.1
-Authorization: Bearer 454f4448fee5bf012bb0564812b99dc5
+Authorization: Bearer 454f44484825776640981a114e64ed67
 Accept: application/json
 
 
@@ -38,7 +38,7 @@ Accept: application/json
 
 # @name listProcesses
 GET https://staging.eodatahub.org.uk/api/catalogue/stac/catalogs/user/catalogs/npl/processes HTTP/1.1
-Authorization: Bearer 454f4448fee5bf012bb0564812b99dc5
+Authorization: Bearer 454f44484825776640981a114e64ed67
 Accept: application/json
 
 
@@ -49,7 +49,7 @@ Accept: application/json
 
 # @name deployProcessJson
 POST https://staging.eodatahub.org.uk/api/catalogue/stac/catalogs/user/catalogs/npl/processes HTTP/1.1
-Authorization: Bearer 454f4448fee5bf012bb0564812b99dc5
+Authorization: Bearer 454f44484825776640981a114e64ed67
 Accept: application/json
 Content-Type: application/cwl+yaml
 
@@ -67,7 +67,7 @@ Accept: application/json
 ###
 # @name executeProcess
 POST https://staging.eodatahub.org.uk/api/catalogue/stac/catalogs/user/catalogs/npl/processes/qa-workflow/execution HTTP/1.1
-Authorization: Bearer 454f444802ef284517a40af4fae5a4de
+Authorization: Bearer 454f44484825776640981a114e64ed67
 Accept: application/json
 Content-Type: application/json
 Prefer: respond-async
@@ -84,8 +84,8 @@ Prefer: respond-async
 ###
 # need to update url with job id
 # @name getExecuteStatus
-GET https://staging.eodatahub.org.uk/api/catalogue/stac/catalogs/user/catalogs/npl/jobs/1589ba30-0a66-11f0-b48d-c2b2cf885f54 HTTP/1.1
-Authorization: Bearer 454f444802ef284517a40af4fae5a4de
+GET https://staging.eodatahub.org.uk/api/catalogue/stac/catalogs/user/catalogs/npl/jobs/891a2d92-0a6e-11f0-b9a3-c2b2cf885f54 HTTP/1.1
+Authorization: Bearer 454f44484825776640981a114e64ed67
 Accept: application/json
 
 
@@ -142,7 +142,7 @@ Accept: application/json
 
 # @name getDocReviewResults
 GET https://npl.staging.eodatahub-workspaces.org.uk/files/workspaces-eodhp-staging/processing-results/qa-workflow/planet_psscene_qa/qa_documentation/output_planet_psscene_qa_check_doc_review.json HTTP/1.1
-Authorization: Bearer 454f4448b51f097304fd2fc42b66a394
+Authorization: Bearer 454f44484825776640981a114e64ed67
 Accept: application/json
 
 

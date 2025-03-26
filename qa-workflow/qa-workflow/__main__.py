@@ -109,7 +109,13 @@ def qa_check_doc_review(data_collection):
                 },
                 "availability_and_accessability": {
                     "value": "basic",
-                    "links": []
+                    "links": [
+                        {
+                            "type": "application/pdf",
+                            "href": "https://doi.org/10.1038/sdata.2016.18",
+                            "title": "Wilkinson, M., Dumontier, M., Aalbersberg, I. et al. The FAIR Guiding Principles for scientific data management and stewardship. Sci Data 3, 160018 (2016)"
+                        },
+                    ]
                 },
                 "product_format_flags_and_metadata": {
                     "value": "good",
@@ -216,9 +222,306 @@ def qa_check_doc_review(data_collection):
                 }
         }
     elif data_collection == 'airbus_phr':
-        matmat = {'airbus_phr': 'doc_review'}
+        matmat = {
+            "product_information": {
+                "product_details": {
+                    "value": "excellent",
+                    "links": [
+                        {
+                            "type": "application/pdf",
+                            "href": "https://storage.googleapis.com/p-oaf-ibe-back-00e-strapi-uploads/210415_Airbus_Pleiades_Imagery_user_guide_be12b8f35b/210415_Airbus_Pleiades_Imagery_user_guide_be12b8f35b.pdf",
+                            "title": "Airbus Pléiades Imagery User Guide. (Report Number: USRPHR-DT-125-SPOT-2.0, Date of issue: October, 18, 2012)"
+                        },
+                    ]
+                },
+                "availability_and_accessability": {
+                    "value": "basic",
+                    "links": [
+                        {
+                            "type": "application/pdf",
+                            "href": "https://doi.org/10.1038/sdata.2016.18",
+                            "title": "Wilkinson, M., Dumontier, M., Aalbersberg, I. et al. The FAIR Guiding Principles for scientific data management and stewardship. Sci Data 3, 160018 (2016)"
+                        },
+                    ]
+                },
+                "product_format_flags_and_metadata": {
+                    "value": "good",
+                    "links": [
+                        {
+                            "type": "application/pdf",
+                            "href": "https://storage.googleapis.com/p-oaf-ibe-back-00e-strapi-uploads/210415_Airbus_Pleiades_Imagery_user_guide_be12b8f35b/210415_Airbus_Pleiades_Imagery_user_guide_be12b8f35b.pdf",
+                            "title": "Airbus Pléiades Imagery User Guide. (Report Number: USRPHR-DT-125-SPOT-2.0, Date of issue: October, 18, 2012)"
+                        },
+                    ]
+                },
+                "user_documentation": {
+                    "value": "good",
+                    "links": [
+                        {
+                            "type": "application/pdf",
+                            "href": "https://storage.googleapis.com/p-oaf-ibe-back-00e-strapi-uploads/210415_Airbus_Pleiades_Imagery_user_guide_be12b8f35b/210415_Airbus_Pleiades_Imagery_user_guide_be12b8f35b.pdf",
+                            "title": "Airbus Pléiades Imagery User Guide. (Report Number: USRPHR-DT-125-SPOT-2.0, Date of issue: October, 18, 2012)"
+                        },
+                    ]
+                }
+            },
+            "metrology":
+                {
+                    "radiometric_calibration_and_characterisation": {
+                        "value": "basic",
+                        "links": [
+                            {
+                                "type": "application/pdf",
+                                "href": "https://storage.googleapis.com/p-oaf-ibe-back-00e-strapi-uploads/210415_Airbus_Pleiades_Imagery_user_guide_be12b8f35b/210415_Airbus_Pleiades_Imagery_user_guide_be12b8f35b.pdf",
+                                "title": "Airbus Pléiades Imagery User Guide. (Report Number: USRPHR-DT-125-SPOT-2.0, Date of issue: October, 18, 2012)"
+                            },
+                        ]
+                    },
+                    "geometric_calibration_and_characterisation": {
+                        "value": "basic",
+                        "links": [
+                            {
+                                "type": "application/pdf",
+                                "href": "https://storage.googleapis.com/p-oaf-ibe-back-00e-strapi-uploads/210415_Airbus_Pleiades_Imagery_user_guide_be12b8f35b/210415_Airbus_Pleiades_Imagery_user_guide_be12b8f35b.pdf",
+                                "title": "Airbus Pléiades Imagery User Guide. (Report Number: USRPHR-DT-125-SPOT-2.0, Date of issue: October, 18, 2012)"
+                            },
+                        ]
+                    },
+                    "metrological_traceability_documentation": {
+                        "value": "not assessable",
+                        "links": []
+                    },
+                    "uncertainty_characterisation": {
+                        "value": "not assessable",
+                        "links": []
+                    },
+                    "ancillary_data": {
+                        "value": "good",
+                        "links": [
+                            {
+                                "type": "application/pdf",
+                                "href": "https://storage.googleapis.com/p-oaf-ibe-back-00e-strapi-uploads/210415_Airbus_Pleiades_Imagery_user_guide_be12b8f35b/210415_Airbus_Pleiades_Imagery_user_guide_be12b8f35b.pdf",
+                                "title": "Airbus Pléiades Imagery User Guide. (Report Number: USRPHR-DT-125-SPOT-2.0, Date of issue: October, 18, 2012)"
+                            },
+                        ]
+                    }
+                },
+            "product_generation":
+                {
+                    "calibration_algorithm": {
+                        "value": "not assessable",
+                        "links": [
+                            {
+                                "type": "application/pdf",
+                                "href": "https://doi.org/10.1117/12.2023337",
+                                "title": f"Latry, Laurent Lebegue, Florie Lenoir, Florence Porez-Nadal. PLEIADES-HR 1A&1B image quality commissioning: innovative radiometric calibration methods and results, Proc. SPIE 8866, Earth Observing Systems XVIII, 886610 (23 September 2013)"
+                            },
+                        ]
+                    },
+                    "geometric_processing": {
+                        "value": "not assessable",
+                        "links": []
+                    },
+                    "retrieval_algorithm": {
+                        "value": "not assessed",
+                        "links": []
+                    },
+                    "mission_specific_processing": {
+                        "value": "not assessed",
+                        "links": []
+                    },
+                }
+        }
     elif data_collection in ['s2', 's2a', 's2b']:
-        matmat = {'s2_l1c': 'doc_review'}
+        matmat = {
+            "product_information": {
+                "product_details": {
+                    "value": "ideal",
+                    "links": [
+                        {
+                            "type": "application/pdf",
+                            "href": "https://sentiwiki.copernicus.eu/web/sentinel-2",
+                            "title": "SentiWiki"
+                        },
+                    ]
+                },
+                "availability_and_accessability": {
+                    "value": "ideal",
+                    "links": [
+                        {
+                            "type": "application/pdf",
+                            "href": "https://doi.org/10.1038/sdata.2016.18",
+                            "title": "Wilkinson, M., Dumontier, M., Aalbersberg, I. et al. The FAIR Guiding Principles for scientific data management and stewardship. Sci Data 3, 160018 (2016)"
+                        },
+                    ]
+                },
+                "product_format_flags_and_metadata": {
+                    "value": "ideal",
+                    "links": [
+                        {
+                            "type": "application/pdf",
+                            "href": "https://sentiwiki.copernicus.eu/__attachments/1692737/S2-PDGS-CS-DI-PSD%20-%20S2%20Product%20Specification%20Document%202024%20-%2015.0.pdf?inst-v=31732265-f315-437d-93c5-06068d410876",
+                            "title": "CS team Sentinel-2 Product Specification Document v15, S2-PDGS-CS-DI-PSD, 2024."
+                        },
+                        {
+                            "type": "application/pdf",
+                            "href": "https://ceos.org/ard/files/Self%20Assessments/SR/v5.0/WGCV_CARD4L_Evaluation_for_ESA-S2_SR_at_Threshold_PFS_v5.pdf",
+                            "title": "ESA CARD4L self-assessment of Sentinel-2 Surface Reflectance PFS v5"
+                        },
+                    ]
+                },
+                "user_documentation": {
+                    "value": "ideal",
+                    "links": [
+                        {
+                            "type": "application/pdf",
+                            "href": "https://sentiwiki.copernicus.eu/web/sentinel-2",
+                            "title": "SentiWiki"
+                        },
+                        {
+                            "type": "application/pdf",
+                            "href": "https://sentiwiki.copernicus.eu/__attachments/1692737/S2-PDGS-MPC-ATBD-L1%20-%20Sentinel-2%20Level%201%20Algorithm%20Theoretical%20Bases%20Document%202023%20-%201.1.pdf?inst-v=31732265-f315-437d-93c5-06068d410876",
+                            "title": "S2-MPC, Level-1 Algorithm Theoretical Basis Document v1.1, S2-PDGS-MPC_ATBD-L1_V1.1, 2023."
+                        },
+                        {
+                            "type": "application/pdf",
+                            "href": "https://sentiwiki.copernicus.eu/__attachments/1692737/S2-PDGS-CS-DI-PSD%20-%20S2%20Product%20Specification%20Document%202024%20-%2015.0.pdf?inst-v=31732265-f315-437d-93c5-06068d410876",
+                            "title": "CS team Sentinel-2 Product Specification Document v15, S2-PDGS-CS-DI-PSD, 2024."
+                        },
+                    ]
+                }
+            },
+            "metrology":
+                {
+                    "radiometric_calibration_and_characterisation": {
+                        "value": "excellent",
+                        "links": [
+                            {
+                                "type": "application/pdf",
+                                "href": "https://doi.org/10.1117/12.2028854",
+                                "title": "E. Mazy, et al. Sentinel-2 diffuser on-ground calibration, Proc. SPIE 8889, Sensors, Systems, and Next-Generation Satellites XVII, 88890W (24 October 2013)"
+                            },
+                            {
+                                "type": "application/pdf",
+                                "href": "https://sentiwiki.copernicus.eu/__attachments/1673423/OMPC.CS.DQR.001.12-2024%20-%20MSI%20L1C%20DQR%20January%202025%20-%20107.0.pdf?inst-v=31732265-f315-437d-93c5-06068d410876",
+                                "title": "OPT-MPC, Data Quality Report Sentinel-2 MSI L1C January 2025, OMPC.CS.DQR.002.12-2024, 2025."
+                            },
+                            {
+                                "type": "application/pdf",
+                                "href": "https://doi.org/10.3390/rs11202401",
+                                "title": "Bouvet, M. et al. RadCalNet: A Radiometric Calibration Network for Earth Observing Imagers Operating in the Visible to Shortwave Infrared Spectral Range. Remote Sens. 2019, 11, 2401."
+                            },
+                            {
+                                "type": "application/pdf",
+                                "href": "https://doi.org/10.1016/j.rse.2019.111369",
+                                "title": "Lamquin, N. et al. (2019). An inter-comparison exercise of Sentinel-2 radiometric validations assessed by independent expert groups. Remote Sens. of Env. 2019, 233, 111369."
+                            }
+                        ]
+                    },
+                    "geometric_calibration_and_characterisation": {
+                        "value": "excellent",
+                        "links": [
+                            {
+                                "type": "application/pdf",
+                                "href": "https://sentiwiki.copernicus.eu/__attachments/1673423/OMPC.CS.DQR.001.12-2024%20-%20MSI%20L1C%20DQR%20January%202025%20-%20107.0.pdf?inst-v=31732265-f315-437d-93c5-06068d410876",
+                                "title": "OPT-MPC, Data Quality Report Sentinel-2 MSI L1C January 2025, OMPC.CS.DQR.002.12-2024, 2025."
+                            },
+                            {
+                                "type": "application/pdf",
+                                "href": "https://sentiwiki.copernicus.eu/__attachments/1692737/S2-MPC_PHB_GCP_L1B_L1C_GRI_V3.pdf?inst-v=31732265-f315-437d-93c5-06068d410876",
+                                "title": "S2-MPC, Copernicus Sentinel-2 GRI as Database of GCPs in L1B & L1C - Product Handbook v3, S2-MPC_PHB_GCP_L1B_L1C_GRI, 2023."
+                            },
+                            {
+                                "type": "application/pdf",
+                                "href": "https://sentiwiki.copernicus.eu/__attachments/1692737/S2-MPC_VAL_GCP_L1B_L1C_GRI_V3.pdf?inst-v=31732265-f315-437d-93c5-06068d410876",
+                                "title": "S2-MPC, Copernicus Sentinel-2 GRI as Database of GCPs in L1B & L1C - Validation Report, S2-MPC_VAL_GCP_L1B_L1C_GRI, 2023"
+                            },
+                        ]
+                    },
+                    "metrological_traceability_documentation": {
+                        "value": "excellent",
+                        "links": [
+                            {
+                                "type": "application/pdf",
+                                "href": "https://doi.org/10.1117/12.2028854",
+                                "title": "E. Mazy, et al. Sentinel-2 diffuser on-ground calibration, Proc. SPIE 8889, Sensors, Systems, and Next-Generation Satellites XVII, 88890W (24 October 2013)"
+                            },
+                            {
+                                "type": "application/pdf",
+                                "href": "https://sentiwiki.copernicus.eu/__attachments/1673423/OMPC.CS.DQR.001.12-2024%20-%20MSI%20L1C%20DQR%20January%202025%20-%20107.0.pdf?inst-v=31732265-f315-437d-93c5-06068d410876",
+                                "title": "OPT-MPC, Data Quality Report Sentinel-2 MSI L1C January 2025, OMPC.CS.DQR.002.12-2024, 2025."
+                            },
+                        ]
+                    },
+                    "uncertainty_characterisation": {
+                        "value": "excellent",
+                        "links": [
+                            {
+                                "type": "application/pdf",
+                                "href": "https://doi.org/10.3390/rs9020178",
+                                "title": "Gorroño, J. et al., A Radiometric Uncertainty Tool for the Sentinel 2 Mission. Remote Sens. 2017, 9, 178."
+                            },
+                            {
+                                "type": "application/pdf",
+                                "href": "https://doi.org/10.1080/22797254.2018.1471739",
+                                "title": "Gorroño, J.,et al. (2018). Providing uncertainty estimates of the Sentinel-2 top-of-atmosphere measurements for radiometric validation activities. European Journal of Remote Sensing, 51(1), 650–666."
+                            }
+                        ]
+                    },
+                    "ancillary_data": {
+                        "value": "excellent",
+                        "links": [
+                            {
+                                "type": "application/pdf",
+                                "href": "https://sentiwiki.copernicus.eu/__attachments/1692737/S2-MPC_PHB_GCP_L1B_L1C_GRI_V3.pdf?inst-v=31732265-f315-437d-93c5-06068d410876",
+                                "title": "S2-MPC, Copernicus Sentinel-2 GRI as Database of GCPs in L1B & L1C - Product Handbook v3, S2-MPC_PHB_GCP_L1B_L1C_GRI, 2023."
+                            },
+                            {
+                                "type": "application/pdf",
+                                "href": "https://s3.waw3-1.cloudferro.com/swift/v1/portal_uploads_prod/GEO1988-CopernicusDEM-RP-001_ValidationReport_I3.0_08.2024.pdf",
+                                "title": "Vera Leister-Taylor, Copernicus Digital Elevation Model Validation Report v3, GEO.2018-1988-2, 2020."
+                            },
+                        ]
+                    }
+                },
+            "product_generation":
+                {
+                    "calibration_algorithm": {
+                        "value": "ideal",
+                        "links": [
+                            {
+                                "type": "application/pdf",
+                                "href": "https://sentiwiki.copernicus.eu/__attachments/1692737/S2-PDGS-MPC-ATBD-L1%20-%20Sentinel-2%20Level%201%20Algorithm%20Theoretical%20Bases%20Document%202023%20-%201.1.pdf?inst-v=31732265-f315-437d-93c5-06068d410876",
+                                "title": "S2-MPC, Level-1 Algorithm Theoretical Basis Document v1.1, S2-PDGS-MPC_ATBD-L1_V1.1, 2023."
+                            },
+                        ]
+                    },
+                    "geometric_processing": {
+                        "value": "ideal",
+                        "links": [
+                            {
+                                "type": "application/pdf",
+                                "href": "https://sentiwiki.copernicus.eu/__attachments/1692737/S2-PDGS-MPC-ATBD-L1%20-%20Sentinel-2%20Level%201%20Algorithm%20Theoretical%20Bases%20Document%202023%20-%201.1.pdf?inst-v=31732265-f315-437d-93c5-06068d410876",
+                                "title": "S2-MPC, Level-1 Algorithm Theoretical Basis Document v1.1, S2-PDGS-MPC_ATBD-L1_V1.1, 2023."
+                            },
+                        ]
+                    },
+                    "retrieval_algorithm": {
+                        "value": "not assessed",
+                        "links": []
+                    },
+                    "mission_specific_processing": {
+                        "value": "ideal",
+                        "links": [
+                            {
+                                "type": "application/pdf",
+                                "href": "https://sentiwiki.copernicus.eu/__attachments/1692737/S2-PDGS-MPC-ATBD-L1%20-%20Sentinel-2%20Level%201%20Algorithm%20Theoretical%20Bases%20Document%202023%20-%201.1.pdf?inst-v=31732265-f315-437d-93c5-06068d410876",
+                                "title": "S2-MPC, Level-1 Algorithm Theoretical Basis Document v1.1, S2-PDGS-MPC_ATBD-L1_V1.1, 2023."
+                            },
+                        ]
+                    },
+                }
+        }
     return matmat
 
 def create_stac_item_doc_review(data_collection, out_name, review_date):
@@ -581,4 +884,4 @@ if __name__ == "__main__":
     # run_check([None, "AccessPointName-AccountId.s3-accesspoint.region.amazonaws.com", "radiometric_unc",
     #          "2022-01-01,2022-12-31", "s2"])
     # run_check([None, "AccessPointName-AccountId.s3-accesspoint.region.amazonaws.com", "doc_review",
-    #          '2025-03-25', "s2"])
+    #          '2025-03-25', "planet"])
