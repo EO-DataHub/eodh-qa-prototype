@@ -48,6 +48,7 @@ def run_check(args):
         if mup_ds:
             create_stac_items_rad_unc(data_collection, base_name, mup_ds, dates, dates_list)
             create_stac_collection(base_name, dates_list)
+            # create_stac_catalog(base_name)
             create_stac_catalog_root(base_name)
         else:
             return
@@ -56,6 +57,7 @@ def run_check(args):
         base_name = f'{eodh_data_coll}_qa_check_doc_review'
         create_stac_item_doc_review(data_collection, base_name, dates)
         create_stac_collection(base_name, None)
+        # create_stac_catalog(base_name)
         create_stac_catalog_root(base_name)
 
 
@@ -353,14 +355,14 @@ def create_stac_collection(out_name, dates_list):
             "description": "Collection for radiometric QA checks",
             "license": "other",
             "extent": {
-                "spatial": {"bbox": [[0, 0, 0, 0]]},
+                "spatial": {"bbox": [[-180.0, -90.0, 180.0, 90.0]]},
                 "temporal": {
                     "interval": [[None, None]]}
             },
             "links": [
                 {"type": "application/geo+json", "rel": "item", "href": f"{stem}.json"},
                 {"type": "application/json", "rel": "root", "href": "catalog.json"},
-                {"type": "application/json", "rel": "parent", "href": "catalog.json"},
+                {"type": "application/json", "rel": "parent", "href": "catalog.json"}, #f"{root_catalog_name}.json
                 {"type": "application/json", "rel": "self", "href": "qa_documentation.json"},
             ],
         }
@@ -375,7 +377,7 @@ def create_stac_collection(out_name, dates_list):
             "description": "Collection for radiometric QA checks",
             "license": "other",
             "extent": {
-                "spatial": {"bbox": [[0, 0, 0, 0]]},
+                "spatial": {"bbox": [[-180.0, -90.0, 180.0, 90.0]]},
                 "temporal": {
                     "interval": [[None, None]]}
             },
@@ -400,6 +402,29 @@ def create_stac_collection(out_name, dates_list):
         with open(f"{out_dir}/qa_radiometric.json", "w", encoding="utf-8") as f:
             json.dump(collection_data, f, ensure_ascii=False, indent=4)
 
+# def create_stac_catalog(out_name):
+#     stem = Path(out_name).stem
+#     root_catalog_name = '_'.join(stem.split('_')[0:3])
+#     coll_checked = '_'.join(stem.split('_')[0:2])
+#     if 'doc_review' in out_name:
+#         collection_name = 'qa_documentation'
+#     elif 'radiometric_unc' in out_name:
+#         collection_name = 'qa_radiometric'
+#     # if 'doc_review' in out_name:
+#     catalog_data = {
+#         "stac_version": "1.0.0",
+#         "id": f"{root_catalog_name}",  # catalog_name #f"{stem}_catalog_{daterange.replace(',', '_')}
+#         "type": "Catalog",
+#         "description": f"Root catalog for {coll_checked} QA checks",
+#         "links": [
+#             {"type": "application/json", "rel": "root", "href": "catalog.json"},
+#             {"type": "application/json", "rel": "parent", "href": "catalog.json"},
+#             {"type": "application/json", "rel": "self", "href": f"{root_catalog_name}.json"},
+#             {"type": "application/json", "rel": "child", "href": f"{collection_name}.json"},
+#         ],
+#     }
+#     with open(f"{out_dir}/{root_catalog_name}.json", "w", encoding="utf-8") as f:
+#         json.dump(catalog_data, f, ensure_ascii=False, indent=4)
 
 def create_stac_catalog_root(out_name):
     stem = Path(out_name).stem
@@ -417,6 +442,7 @@ def create_stac_catalog_root(out_name):
         "description": f"Root catalog for {coll_checked} QA checks",
         "links": [
             {"type": "application/json", "rel": "self", "href": "catalog.json"},
+            # {"type": "application/json", "rel": "child", "href": f"{root_catalog_name}.json"},
             {"type": "application/json", "rel": "child", "href": f"{collection_name}.json"},
         ],
     }
