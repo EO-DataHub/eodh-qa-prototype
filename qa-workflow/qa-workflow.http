@@ -24,7 +24,9 @@ GET /https://staging.eodatahub.org.uk/api/catalogue/stac/catalogs/user-datasets/
 Authorization: Bearer 454f44481aef2c5f63a5491df2f82630
 Accept: application/json
 
-###
+########
+
+
 
 # @name deleteProcess
 DELETE https://staging.eodatahub.org.uk/api/catalogue/stac/catalogs/user/catalogs/sam-malone41/processes/qa-workflow HTTP/1.1
@@ -62,16 +64,7 @@ Authorization: Bearer 454f44481aef2c5f63a5491df2f82630
 Accept: application/json
 
 
-### /api/catalogue/stac/catalogs/user/catalogs/<workspace>/processes /api/catalogue/stac/catalogs/user/catalogs/<workspace>/jobs
-
-# @name getProcessDetails
-GET https://staging.eodatahub.org.uk/api/catalogue/stac/catalogs/user/catalogs/sam-malone41/processes/qa-workflow HTTP/1.1
-Authorization: Bearer 454f44481aef2c5f63a5491df2f82630
-Accept: application/json
-
-
 ###
-
 # @name executeProcess
 POST https://staging.eodatahub.org.uk/api/catalogue/stac/catalogs/user/catalogs/sam-malone41/processes/qa-workflow/execution HTTP/1.1
 Authorization: Bearer 454f44481aef2c5f63a5491df2f82630
@@ -91,7 +84,7 @@ Prefer: respond-async
 ###
 # need to update url with job id
 # @name getExecuteStatus
-GET https://staging.eodatahub.org.uk/api/catalogue/stac/catalogs/user/catalogs/sam-malone41/jobs/1d1ff3b0-0a37-11f0-873e-c2b2cf885f54 HTTP/1.1
+GET https://staging.eodatahub.org.uk/api/catalogue/stac/catalogs/user/catalogs/sam-malone41/jobs/9b6dee96-0a43-11f0-8dcf-c2b2cf885f54 HTTP/1.1
 Authorization: Bearer 454f44481aef2c5f63a5491df2f82630
 Accept: application/json
 
@@ -104,10 +97,10 @@ Authorization: Bearer 454f44481aef2c5f63a5491df2f82630
 Accept: application/json
 
 
-###
+### /api/catalogue/stac/catalogs/user/catalogs/<workspace>/processes /api/catalogue/stac/catalogs/user/catalogs/<workspace>/jobs
 
-# @name undeployProcess
-DELETE https://staging.eodatahub.org.uk/api/catalogue/stac/catalogs/user/catalogs/sam-malone41/processes/qa-workflow HTTP/1.1
+# @name getProcessDetails
+GET https://staging.eodatahub.org.uk/api/catalogue/stac/catalogs/user/catalogs/sam-malone41/processes/qa-workflow HTTP/1.1
 Authorization: Bearer 454f44481aef2c5f63a5491df2f82630
 Accept: application/json
 

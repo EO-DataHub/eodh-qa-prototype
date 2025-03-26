@@ -117,8 +117,8 @@ def create_stac_item_doc_review(data_collection, out_name, review_date):
                      properties={"datetime": dt.datetime.strptime(review_date,"%Y-%m-%d").strftime("%Y%m%dT%H%M%S.%f"),
                                  },
                      links=[
-                         {"type": "application/json", "rel": "self", "href": f"{stem}.json"},
-                         {"type": "application/json", "rel": "parent", "href": f"qa_documentation.json"},
+                         {"type": "application/geo+json", "rel": "self", "href": f"{stem}.json"},
+                         {"type": "application/json", "rel": "collection", "href": f"qa_documentation.json"},
                          {"type": "application/json", "rel": "root", "href": f"{root_catalog_name}.json"},
                      ],
                      assets={
@@ -317,8 +317,8 @@ def create_stac_items_rad_unc(data_collection, out_name, mup_ds, daterange, date
                                 "check_validity_end_datetime": qa_check_results_dict["check_datetime_validity_end"]
                                 },
                     links = [
-                        {"type": "application/json", "rel": "self",  "href": f"{stem}_{dates.replace(',', '_')}.json"},
-                        {"type": "application/json", "rel": "parent", "href": f"qa_radiometric.json"}, # catalog #f"qa_radiometric.json"}
+                        {"type": "application/geo+json", "rel": "self",  "href": f"{stem}_{dates.replace(',', '_')}.json"},
+                        {"type": "application/json", "rel": "collection", "href": f"qa_radiometric.json"}, # catalog #f"qa_radiometric.json"}
                         {"type": "application/json", "rel": "root", "href": f"{root_catalog_name}.json"}, # catalog  #f"{stem}_catalog_{daterange.replace(',', '_')}
                     ],
                     assets = {
@@ -349,10 +349,14 @@ def create_stac_collection(out_name, dates_list):
         collection_data = {
             "stac_version": "1.0.0",
             "id": f"qa_documentation",
-            "type": "Catalog",
+            "type": "Collection",
             "description": "Collection for radiometric QA checks",
+            "license": "other",
+            "extent": {
+                "spatial": {"bbox": [[0, 0, 0, 0]]}
+            },
             "links": [
-                {"type": "application/json", "rel": "item", "href": f"{stem}.json"},
+                {"type": "application/geo+json", "rel": "item", "href": f"{stem}.json"},
                 {"type": "application/json", "rel": "root", "href": f"{root_catalog_name}.json"},
                 {"type": "application/json", "rel": "parent", "href": f"{root_catalog_name}.json"},
                 {"type": "application/json", "rel": "self", "href": f"qa_documentation.json"},
@@ -365,21 +369,25 @@ def create_stac_collection(out_name, dates_list):
         collection_data = {
             "stac_version": "1.0.0",
             "id": f"qa_radiometric",
-            "type": "Catalog",
+            "type": "Collection",
             "description": "Collection for radiometric QA checks",
+            "license": "other",
+            "extent": {
+                "spatial": {"bbox": [[0, 0, 0, 0]]}
+            },
             "links": [
-                {"type": "application/json", "rel": "item", "href": f"{stem}_{dates_list[0].replace(',', '_')}.json"},
-                {"type": "application/json", "rel": "item", "href": f"{stem}_{dates_list[1].replace(',', '_')}.json"},
-                {"type": "application/json", "rel": "item", "href": f"{stem}_{dates_list[1].replace(',', '_')}.json"},
-                {"type": "application/json", "rel": "item", "href": f"{stem}_{dates_list[3].replace(',', '_')}.json"},
-                {"type": "application/json", "rel": "item", "href": f"{stem}_{dates_list[4].replace(',', '_')}.json"},
-                {"type": "application/json", "rel": "item", "href": f"{stem}_{dates_list[5].replace(',', '_')}.json"},
-                {"type": "application/json", "rel": "item", "href": f"{stem}_{dates_list[6].replace(',', '_')}.json"},
-                {"type": "application/json", "rel": "item", "href": f"{stem}_{dates_list[7].replace(',', '_')}.json"},
-                {"type": "application/json", "rel": "item", "href": f"{stem}_{dates_list[8].replace(',', '_')}.json"},
-                {"type": "application/json", "rel": "item", "href": f"{stem}_{dates_list[9].replace(',', '_')}.json"},
-                {"type": "application/json", "rel": "item", "href": f"{stem}_{dates_list[10].replace(',', '_')}.json"},
-                {"type": "application/json", "rel": "item", "href": f"{stem}_{dates_list[11].replace(',', '_')}.json"},
+                {"type": "application/geo+json", "rel": "item", "href": f"{stem}_{dates_list[0].replace(',', '_')}.json"},
+                {"type": "application/geo+json", "rel": "item", "href": f"{stem}_{dates_list[1].replace(',', '_')}.json"},
+                {"type": "application/geo+json", "rel": "item", "href": f"{stem}_{dates_list[1].replace(',', '_')}.json"},
+                {"type": "application/geo+json", "rel": "item", "href": f"{stem}_{dates_list[3].replace(',', '_')}.json"},
+                {"type": "application/geo+json", "rel": "item", "href": f"{stem}_{dates_list[4].replace(',', '_')}.json"},
+                {"type": "application/geo+json", "rel": "item", "href": f"{stem}_{dates_list[5].replace(',', '_')}.json"},
+                {"type": "application/geo+json", "rel": "item", "href": f"{stem}_{dates_list[6].replace(',', '_')}.json"},
+                {"type": "application/geo+json", "rel": "item", "href": f"{stem}_{dates_list[7].replace(',', '_')}.json"},
+                {"type": "application/geo+json", "rel": "item", "href": f"{stem}_{dates_list[8].replace(',', '_')}.json"},
+                {"type": "application/geo+json", "rel": "item", "href": f"{stem}_{dates_list[9].replace(',', '_')}.json"},
+                {"type": "application/geo+json", "rel": "item", "href": f"{stem}_{dates_list[10].replace(',', '_')}.json"},
+                {"type": "application/geo+json", "rel": "item", "href": f"{stem}_{dates_list[11].replace(',', '_')}.json"},
                 {"type": "application/json", "rel": "root", "href": f"{root_catalog_name}.json"}, # catalog  #f"{stem}_catalog_{daterange.replace(',', '_')}
                 {"type": "application/json", "rel": "parent", "href": f"{root_catalog_name}.json"}, # catalog  # f"{stem}_catalog_{daterange.replace(',', '_')}
                 {"type": "application/json", "rel": "self", "href": f"qa_radiometric.json"},
@@ -404,18 +412,6 @@ def create_stac_catalog_root(out_name):
         "type": "Catalog",
         "description": f"Root catalog for {coll_checked} QA checks",
         "links": [
-            # {"type": "application/json", "rel": "item", "href": f"{stem}_{dates_list[0].replace(',', '_')}.json"},
-            # {"type": "application/json", "rel": "item", "href": f"{stem}_{dates_list[1].replace(',', '_')}.json"},
-            # {"type": "application/json", "rel": "item", "href": f"{stem}_{dates_list[1].replace(',', '_')}.json"},
-            # {"type": "application/json", "rel": "item", "href": f"{stem}_{dates_list[3].replace(',', '_')}.json"},
-            # {"type": "application/json", "rel": "item", "href": f"{stem}_{dates_list[4].replace(',', '_')}.json"},
-            # {"type": "application/json", "rel": "item", "href": f"{stem}_{dates_list[5].replace(',', '_')}.json"},
-            # {"type": "application/json", "rel": "item", "href": f"{stem}_{dates_list[6].replace(',', '_')}.json"},
-            # {"type": "application/json", "rel": "item", "href": f"{stem}_{dates_list[7].replace(',', '_')}.json"},
-            # {"type": "application/json", "rel": "item", "href": f"{stem}_{dates_list[8].replace(',', '_')}.json"},
-            # {"type": "application/json", "rel": "item", "href": f"{stem}_{dates_list[9].replace(',', '_')}.json"},
-            # {"type": "application/json", "rel": "item", "href": f"{stem}_{dates_list[10].replace(',', '_')}.json"},
-            # {"type": "application/json", "rel": "item", "href": f"{stem}_{dates_list[11].replace(',', '_')}.json"},
             {"type": "application/json", "rel": "self", "href": f"{root_catalog_name}.json"},
             {"type": "application/json", "rel": "child", "href": f"{collection_name}.json"},
         ],
@@ -425,10 +421,10 @@ def create_stac_catalog_root(out_name):
 
 if __name__ == "__main__":
     # sys_argv = ['/opt/project/qa_workflow_test/qa-workflow-test/__main__.py', 's3_endpoint']  # for testing locally with cwltool
-    # run_check(sys.argv)
+    run_check(sys.argv)
 
-    # TEST CHECK WORKS LOCALLY
-    run_check([None, "AccessPointName-AccountId.s3-accesspoint.region.amazonaws.com", "radiometric_unc",
-             "2022-01-01,2022-12-31", "airbus_phr"])
-    run_check([None, "AccessPointName-AccountId.s3-accesspoint.region.amazonaws.com", "doc_review",
-             '2025-03-25', "airbus_phr"])
+    # # TEST CHECK WORKS LOCALLY
+    # run_check([None, "AccessPointName-AccountId.s3-accesspoint.region.amazonaws.com", "radiometric_unc",
+    #          "2022-01-01,2022-12-31", "airbus_phr"])
+    # run_check([None, "AccessPointName-AccountId.s3-accesspoint.region.amazonaws.com", "doc_review",
+    #          '2025-03-25', "airbus_phr"])
