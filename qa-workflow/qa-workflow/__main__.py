@@ -213,9 +213,9 @@ def qa_check_rad_val(data_collection, out_name, mup_ds, date_range):
 
     for k in range(len(bias_vals)):
         rcn_bias_vals_mean[k] = round(sum(bias_vals[k]) / len(bias_vals[k]), 2)
-        rcn_refl_vals_mean_unc[k] = round(sum(rcn_meas_unc_vals[k]) / len(rcn_meas_unc_vals[k]), 2)  # todo: update once rcn refl uncs are through the pipeline
+        rcn_refl_vals_mean_unc[k] = round(sum(rcn_meas_unc_vals[k]) / len(rcn_meas_unc_vals[k]), 2)
 
-    comp_unc_vals = np.ones(len(sat_mean_unc)) * 2  # todo: update based on what comp unc should be
+    comp_unc_vals = np.ones(len(sat_mean_unc)) * 2
 
     total_unc = np.sqrt(
         sat_mean_unc ** 2 + rcn_refl_vals_mean_unc ** 2 + comp_unc_vals ** 2)  # total unc combines unc from sat product, unc from RCN product, unc from comparison
@@ -353,7 +353,9 @@ def create_stac_collection(out_name, dates_list):
             "description": "Collection for radiometric QA checks",
             "license": "other",
             "extent": {
-                "spatial": {"bbox": [[0, 0, 0, 0]]}
+                "spatial": {"bbox": [[0, 0, 0, 0]]},
+                "temporal": {
+                    "interval": [[None, None]]}
             },
             "links": [
                 {"type": "application/geo+json", "rel": "item", "href": f"{stem}.json"},
@@ -373,7 +375,9 @@ def create_stac_collection(out_name, dates_list):
             "description": "Collection for radiometric QA checks",
             "license": "other",
             "extent": {
-                "spatial": {"bbox": [[0, 0, 0, 0]]}
+                "spatial": {"bbox": [[0, 0, 0, 0]]},
+                "temporal": {
+                    "interval": [[None, None]]}
             },
             "links": [
                 {"type": "application/geo+json", "rel": "item", "href": f"{stem}_{dates_list[0].replace(',', '_')}.json"},

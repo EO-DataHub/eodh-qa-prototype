@@ -21,7 +21,7 @@ Authorization: Bearer {{logindetails}}
 
 # @name TestUserDatasetsAccess
 GET /https://staging.eodatahub.org.uk/api/catalogue/stac/catalogs/user-datasets/sam-malone41/processing-results
-Authorization: Bearer 454f44481aef2c5f63a5491df2f82630
+Authorization: Bearer 454f4448b51f097304fd2fc42b66a394
 Accept: application/json
 
 ########
@@ -30,7 +30,7 @@ Accept: application/json
 
 # @name deleteProcess
 DELETE https://staging.eodatahub.org.uk/api/catalogue/stac/catalogs/user/catalogs/sam-malone41/processes/qa-workflow HTTP/1.1
-Authorization: Bearer 454f44481aef2c5f63a5491df2f82630
+Authorization: Bearer 454f4448b51f097304fd2fc42b66a394
 Accept: application/json
 
 
@@ -38,7 +38,7 @@ Accept: application/json
 
 # @name listProcesses
 GET https://staging.eodatahub.org.uk/api/catalogue/stac/catalogs/user/catalogs/sam-malone41/processes HTTP/1.1
-Authorization: Bearer 454f44481aef2c5f63a5491df2f82630
+Authorization: Bearer 454f4448b51f097304fd2fc42b66a394
 Accept: application/json
 
 
@@ -49,7 +49,7 @@ Accept: application/json
 
 # @name deployProcessJson
 POST https://staging.eodatahub.org.uk/api/catalogue/stac/catalogs/user/catalogs/sam-malone41/processes HTTP/1.1
-Authorization: Bearer 454f44481aef2c5f63a5491df2f82630
+Authorization: Bearer 454f4448b51f097304fd2fc42b66a394
 Accept: application/json
 Content-Type: application/cwl+yaml
 
@@ -60,22 +60,22 @@ Content-Type: application/cwl+yaml
 # need to update url
 # @name getDeployStatus
 GET deployProcessJson.response.headers.Location HTTP/1.1
-Authorization: Bearer 454f44481aef2c5f63a5491df2f82630
+Authorization: Bearer 454f4448b51f097304fd2fc42b66a394
 Accept: application/json
 
 
 ###
 # @name executeProcess
 POST https://staging.eodatahub.org.uk/api/catalogue/stac/catalogs/user/catalogs/sam-malone41/processes/qa-workflow/execution HTTP/1.1
-Authorization: Bearer 454f44481aef2c5f63a5491df2f82630
+Authorization: Bearer 454f4448b51f097304fd2fc42b66a394
 Accept: application/json
 Content-Type: application/json
 Prefer: respond-async
 
 {
   "inputs": {"s3_endpoint": "AccessPointName-AccountId.s3-accesspoint.region.amazonaws.com",
-   "qa_check_type": "radiometric_unc",
-   "date_range": "2022-01-01,2022-12-31",
+   "qa_check_type": "doc_review",
+   "date_range": "2025-03-25",
    "data_collection": "airbus_phr"
 }
 }
@@ -84,8 +84,8 @@ Prefer: respond-async
 ###
 # need to update url with job id
 # @name getExecuteStatus
-GET https://staging.eodatahub.org.uk/api/catalogue/stac/catalogs/user/catalogs/sam-malone41/jobs/f0f93aba-0a4c-11f0-80bb-c2b2cf885f54 HTTP/1.1
-Authorization: Bearer 454f44481aef2c5f63a5491df2f82630
+GET https://staging.eodatahub.org.uk/api/catalogue/stac/catalogs/user/catalogs/sam-malone41/jobs/fa3b3262-0a52-11f0-8c34-c2b2cf885f54 HTTP/1.1
+Authorization: Bearer 454f4448b51f097304fd2fc42b66a394
 Accept: application/json
 
 
@@ -93,7 +93,7 @@ Accept: application/json
 # need to update url to include correct job code a88a2af4-05ca-11f0-bbc3-eadd75232b79
 # @name getProcessingResults
 GET 8iu970fcf1314-05c6-11f0-b647-eadd75232b79/results HTTP/1.1
-Authorization: Bearer 454f44481aef2c5f63a5491df2f82630
+Authorization: Bearer 454f4448b51f097304fd2fc42b66a394
 Accept: application/json
 
 
@@ -101,7 +101,7 @@ Accept: application/json
 
 # @name getProcessDetails
 GET https://staging.eodatahub.org.uk/api/catalogue/stac/catalogs/user/catalogs/sam-malone41/processes/qa-workflow HTTP/1.1
-Authorization: Bearer 454f44481aef2c5f63a5491df2f82630
+Authorization: Bearer 454f4448b51f097304fd2fc42b66a394
 Accept: application/json
 
 
@@ -109,7 +109,7 @@ Accept: application/json
 
 # @name listJobs
 GET https://staging.eodatahub.org.uk//api/catalogue/stac/catalogs/user/catalogs/sam-malone41/jobs HTTP/1.1
-Authorization: Bearer 454f44481aef2c5f63a5491df2f82630
+Authorization: Bearer 454f4448b51f097304fd2fc42b66a394
 Accept: application/json
 
 
@@ -117,16 +117,34 @@ Accept: application/json
 
 # @name listJobResults
 GET https://staging.eodatahub.org.uk/api/catalogue/stac/catalogs/user/catalogs/sam-malone41/jobs/056c7570-0980-11f0-9416-fe2846126905/results HTTP/1.1
-Authorization: Bearer 454f44481aef2c5f63a5491df2f82630
+Authorization: Bearer 454f4448b51f097304fd2fc42b66a394
 Accept: application/json
 
 
 ###
 
 # @name listCatalogsAndCollections
-GET https://staging.eodatahub.org.uk/api/catalogue/stac/catalogs/user/catalogs/sam-malone41/catalogs/processing-results/catalogs/qa-workflow HTTP/1.1
-Authorization: Bearer 454f44481aef2c5f63a5491df2f82630
+GET https://staging.eodatahub.org.uk/api/catalogue/stac/catalogs/user/catalogs/sam-malone41/catalogs/processing-results/catalogs/qa-workflow/catalogs/airbus_phr_qa/catalogs HTTP/1.1
+Authorization: Bearer 454f4448b51f097304fd2fc42b66a394
 Accept: application/json
 
 
 ###
+
+# @name listoutputsinmyworkspace
+GET https://staging.eodatahub.org.uk/api/catalogue/stac/catalogs/user/catalogs/sam-malone41/search HTTP/1.1
+Authorization: Bearer 454f4448b51f097304fd2fc42b66a394
+Accept: application/json
+
+
+###
+
+
+# @name listCatalogsAndCollections2
+GET https://staging.eodatahub.org.uk/api/catalogue/stac/catalogs/user/catalogs/sam-malone41/catalogs/processing-results/catalogs/qa-workflow/catalogs/airbus_phr_qa/collections HTTP/1.1
+Authorization: Bearer 454f4448b51f097304fd2fc42b66a394
+Accept: application/json
+
+
+###
+https://sam-malone41.staging.eodatahub-workspaces.org.uk/files/workspaces-eodhp-staging/processing-results/catalogs/qa-workflow/catalogs/airbus_phr_qa/collections/qa_radiometric/items/planet_psscene_qa_check_radiometric_unc_2022-12-01_2022-12-31
