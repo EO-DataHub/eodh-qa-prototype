@@ -1,0 +1,18 @@
+{
+    "stac_version": "1.0.0",
+    "id": "airbus_phr_qa",
+    "type": "Catalog",
+    "description": "Root catalog for airbus_phr QA checks",
+    "links": [
+        {
+            "type": "application/json",
+            "rel": "self",
+            "href": "airbus_phr_qa.json"
+        },
+        {
+            "type": "application/json",
+            "rel": "child",
+            "href": "qa_documentation.json"
+        }
+    ]
+}

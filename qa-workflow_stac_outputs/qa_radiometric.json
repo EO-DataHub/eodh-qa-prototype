@@ -1,0 +1,104 @@
+{
+    "stac_version": "1.0.0",
+    "id": "qa_radiometric",
+    "type": "Collection",
+    "description": "Collection for radiometric QA checks",
+    "license": "other",
+    "extent": {
+        "spatial": {
+            "bbox": [
+                [
+                    -180.0,
+                    -90.0,
+                    180.0,
+                    90.0
+                ]
+            ]
+        },
+        "temporal": {
+            "interval": [
+                [
+                    null,
+                    null
+                ]
+            ]
+        }
+    },
+    "links": [
+        {
+            "type": "application/geo+json",
+            "rel": "item",
+            "href": "sentinel-2_l1c_qa_check_radiometric_unc_2022-01-01_2022-01-31.json"
+        },
+        {
+            "type": "application/geo+json",
+            "rel": "item",
+            "href": "sentinel-2_l1c_qa_check_radiometric_unc_2022-02-01_2022-02-28.json"
+        },
+        {
+            "type": "application/geo+json",
+            "rel": "item",
+            "href": "sentinel-2_l1c_qa_check_radiometric_unc_2022-02-01_2022-02-28.json"
+        },
+        {
+            "type": "application/geo+json",
+            "rel": "item",
+            "href": "sentinel-2_l1c_qa_check_radiometric_unc_2022-04-01_2022-04-30.json"
+        },
+        {
+            "type": "application/geo+json",
+            "rel": "item",
+            "href": "sentinel-2_l1c_qa_check_radiometric_unc_2022-05-01_2022-05-31.json"
+        },
+        {
+            "type": "application/geo+json",
+            "rel": "item",
+            "href": "sentinel-2_l1c_qa_check_radiometric_unc_2022-06-01_2022-06-30.json"
+        },
+        {
+            "type": "application/geo+json",
+            "rel": "item",
+            "href": "sentinel-2_l1c_qa_check_radiometric_unc_2022-07-01_2022-07-31.json"
+        },
+        {
+            "type": "application/geo+json",
+            "rel": "item",
+            "href": "sentinel-2_l1c_qa_check_radiometric_unc_2022-08-01_2022-08-31.json"
+        },
+        {
+            "type": "application/geo+json",
+            "rel": "item",
+            "href": "sentinel-2_l1c_qa_check_radiometric_unc_2022-09-01_2022-09-30.json"
+        },
+        {
+            "type": "application/geo+json",
+            "rel": "item",
+            "href": "sentinel-2_l1c_qa_check_radiometric_unc_2022-10-01_2022-10-31.json"
+        },
+        {
+            "type": "application/geo+json",
+            "rel": "item",
+            "href": "sentinel-2_l1c_qa_check_radiometric_unc_2022-11-01_2022-11-30.json"
+        },
+        {
+            "type": "application/geo+json",
+            "rel": "item",
+            "href": "sentinel-2_l1c_qa_check_radiometric_unc_2022-12-01_2022-12-31.json"
+        },
+        {
+            "type": "application/json",
+            "rel": "root",
+            "href": "catalog.json"
+        },
+        {
+            "type": "application/json",
+            "rel": "parent",
+            "href": "catalog.json"
+        },
+        {
+            "type": "application/json",
+            "rel": "self",
+            "href": "qa_radiometric.json"
+        }
+    ]
+}

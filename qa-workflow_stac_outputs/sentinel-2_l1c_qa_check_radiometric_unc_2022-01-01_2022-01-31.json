@@ -1,0 +1,42 @@
+{
+    "id": "sentinel-2_l1c_qa_check_radiometric_unc_2022-01-01_2022-01-31",
+    "type": "Feature",
+    "stac_version": "1.0.0",
+    "geometry": null,
+    "properties": {
+        "datetime": "20250326T171222.782658",
+        "check_validity_start_datetime": "20220101T000000.000000",
+        "check_validity_end_datetime": "20220131T000000.000000"
+    },
+    "links": [
+        {
+            "type": "application/geo+json",
+            "rel": "self",
+            "href": "sentinel-2_l1c_qa_check_radiometric_unc_2022-01-01_2022-01-31.json"
+        },
+        {
+            "type": "application/json",
+            "rel": "collection",
+            "href": "qa_radiometric.json"
+        },
+        {
+            "type": "application/json",
+            "rel": "root",
+            "href": "catalog.json"
+        }
+    ],
+    "assets": {
+        "sentinel-2_l1c_qa_check_radiometric_unc": {
+            "roles": [
+                "data"
+            ],
+            "href": "sentinel-2_l1c_qa_check_radiometric_unc"
+        },
+        "qa-outputs": {
+            "href": "output_sentinel-2_l1c_qa_check_radiometric_unc_2022-01-01_2022-01-31.json",
+            "title": "output_sentinel-2_l1c_qa_check_radiometric_unc_2022-01-01_2022-01-31.json",
+            "description": "QA radiometric uncertainty results output for sentinel-2_l1c_qa_check_radiometric_unc_2022-01-01_2022-01-31",
+            "type": "application/json"
+        }
+    }
+}

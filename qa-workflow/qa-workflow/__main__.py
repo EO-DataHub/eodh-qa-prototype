@@ -884,4 +884,4 @@ if __name__ == "__main__":
     # run_check([None, "AccessPointName-AccountId.s3-accesspoint.region.amazonaws.com", "radiometric_unc",
     #          "2022-01-01,2022-12-31", "s2"])
     # run_check([None, "AccessPointName-AccountId.s3-accesspoint.region.amazonaws.com", "doc_review",
-    #          '2025-03-25', "planet"])
+    #          '2025-03-25', "s2"])
