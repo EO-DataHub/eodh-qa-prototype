@@ -74,8 +74,8 @@ Prefer: respond-async
 
 {
   "inputs": {"s3_endpoint": "AccessPointName-AccountId.s3-accesspoint.region.amazonaws.com",
-   "qa_check_type": "doc_review",
-   "date_range": "2025-03-25",
+   "qa_check_type": "radiometric_unc",
+   "date_range": "2022-01-01,2022-12-31",
    "data_collection": "airbus_phr"
 }
 }
@@ -84,7 +84,7 @@ Prefer: respond-async
 ###
 # need to update url with job id
 # @name getExecuteStatus
-GET https://staging.eodatahub.org.uk/api/catalogue/stac/catalogs/user/catalogs/npl/jobs/fb473ce8-0ae6-11f0-b98a-de263ce83925 HTTP/1.1
+GET https://staging.eodatahub.org.uk/api/catalogue/stac/catalogs/user/catalogs/npl/jobs/a66638d2-0af0-11f0-b2a8-de263ce83925 HTTP/1.1
 Authorization: Bearer 454f4448c135f8695053f70d54fc5eb8
 Accept: application/json
 
@@ -132,7 +132,7 @@ Accept: application/json
 ###
 
 # @name listoutputsinmyworkspace
-GET https://staging.eodatahub.org.uk/api/catalogue/stac/catalogs/user/catalogs/npl/jobs/fb473ce8-0ae6-11f0-b98a-de263ce83925/results HTTP/1.1
+GET https://staging.eodatahub.org.uk/api/catalogue/stac/catalogs/user/catalogs/npl/jobs/a66638d2-0af0-11f0-b2a8-de263ce83925/results HTTP/1.1
 Authorization: Bearer 454f4448c135f8695053f70d54fc5eb8
 Accept: application/json
 
@@ -141,7 +141,7 @@ Accept: application/json
 
 
 # @name getDocReviewResults
-GET https://npl.staging.eodatahub-workspaces.org.uk/files/workspaces-eodhp-staging/processing-results/qa-workflow/sentinel-2_l1c_qa/qa_documentation/output_sentinel-2_l1c_qa_check_doc_review.json HTTP/1.1
+GET https://npl.staging.eodatahub-workspaces.org.uk/files/workspaces-eodhp-staging/processing-results/qa-workflow/planet_psscene_qa/qa_documentation/output_planet_psscene_qa_check_doc_review.json HTTP/1.1
 Authorization: Bearer 454f4448c135f8695053f70d54fc5eb8
 Accept: application/json
 
