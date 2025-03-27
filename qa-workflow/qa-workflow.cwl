@@ -49,7 +49,7 @@ $graph:
     hints:
       DockerRequirement:
         dockerPull: docker.io/sm41/qa-workflow:latest
-    baseCommand: ["/usr/local/bin/python3", "-m", "qa-workflow"] # or "/venv/bin/python" ?
+    baseCommand: ["/usr/local/bin/python3", "-m", "qa-workflow"]
     inputs:
       s3_endpoint:
         type: string

@@ -4,7 +4,7 @@
     "stac_version": "1.0.0",
     "geometry": null,
     "properties": {
-        "datetime": "20250326T171222.865126",
+        "datetime": "20250327T093513.901195",
         "check_validity_start_datetime": "20220801T000000.000000",
         "check_validity_end_datetime": "20220831T000000.000000"
     },

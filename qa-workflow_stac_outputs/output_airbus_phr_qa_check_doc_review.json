@@ -1,108 +1,120 @@
 {
-    "product_information": {
-        "product_details": {
-            "value": "excellent",
-            "links": [
-                {
-                    "type": "application/pdf",
-                    "href": "https://storage.googleapis.com/p-oaf-ibe-back-00e-strapi-uploads/210415_Airbus_Pleiades_Imagery_user_guide_be12b8f35b/210415_Airbus_Pleiades_Imagery_user_guide_be12b8f35b.pdf",
-                    "title": "Airbus Pléiades Imagery User Guide. (Report Number: USRPHR-DT-125-SPOT-2.0, Date of issue: October, 18, 2012)"
-                }
-            ]
+    "data_collection": "Airbus_Pleiades",
+    "data_id_field": "https://staging.eodatahub.org.uk/api/catalogue/stac/catalogs/supported-datasets/catalogs/airbus/collections/airbus_phr_data",
+    "uuid": "uuid",
+    "check_name": "documentation review",
+    "results": {
+        "product_information": {
+            "product_details": {
+                "value": "excellent",
+                "links": [
+                    {
+                        "type": "application/pdf",
+                        "href": "https://storage.googleapis.com/p-oaf-ibe-back-00e-strapi-uploads/210415_Airbus_Pleiades_Imagery_user_guide_be12b8f35b/210415_Airbus_Pleiades_Imagery_user_guide_be12b8f35b.pdf",
+                        "title": "Airbus Pléiades Imagery User Guide. (Report Number: USRPHR-DT-125-SPOT-2.0, Date of issue: October, 18, 2012)"
+                    }
+                ]
+            },
+            "availability_and_accessability": {
+                "value": "basic",
+                "links": [
+                    {
+                        "type": "application/pdf",
+                        "href": "https://doi.org/10.1038/sdata.2016.18",
+                        "title": "Wilkinson, M., Dumontier, M., Aalbersberg, I. et al. The FAIR Guiding Principles for scientific data management and stewardship. Sci Data 3, 160018 (2016)"
+                    }
+                ]
+            },
+            "product_format_flags_and_metadata": {
+                "value": "good",
+                "links": [
+                    {
+                        "type": "application/pdf",
+                        "href": "https://storage.googleapis.com/p-oaf-ibe-back-00e-strapi-uploads/210415_Airbus_Pleiades_Imagery_user_guide_be12b8f35b/210415_Airbus_Pleiades_Imagery_user_guide_be12b8f35b.pdf",
+                        "title": "Airbus Pléiades Imagery User Guide. (Report Number: USRPHR-DT-125-SPOT-2.0, Date of issue: October, 18, 2012)"
+                    }
+                ]
+            },
+            "user_documentation": {
+                "value": "good",
+                "links": [
+                    {
+                        "type": "application/pdf",
+                        "href": "https://storage.googleapis.com/p-oaf-ibe-back-00e-strapi-uploads/210415_Airbus_Pleiades_Imagery_user_guide_be12b8f35b/210415_Airbus_Pleiades_Imagery_user_guide_be12b8f35b.pdf",
+                        "title": "Airbus Pléiades Imagery User Guide. (Report Number: USRPHR-DT-125-SPOT-2.0, Date of issue: October, 18, 2012)"
+                    }
+                ]
+            }
         },
-        "availability_and_accessability": {
-            "value": "basic",
-            "links": [
-                {
-                    "type": "application/pdf",
-                    "href": "https://doi.org/10.1038/sdata.2016.18",
-                    "title": "Wilkinson, M., Dumontier, M., Aalbersberg, I. et al. The FAIR Guiding Principles for scientific data management and stewardship. Sci Data 3, 160018 (2016)"
-                }
-            ]
+        "metrology": {
+            "radiometric_calibration_and_characterisation": {
+                "value": "basic",
+                "links": [
+                    {
+                        "type": "application/pdf",
+                        "href": "https://storage.googleapis.com/p-oaf-ibe-back-00e-strapi-uploads/210415_Airbus_Pleiades_Imagery_user_guide_be12b8f35b/210415_Airbus_Pleiades_Imagery_user_guide_be12b8f35b.pdf",
+                        "title": "Airbus Pléiades Imagery User Guide. (Report Number: USRPHR-DT-125-SPOT-2.0, Date of issue: October, 18, 2012)"
+                    }
+                ]
+            },
+            "geometric_calibration_and_characterisation": {
+                "value": "basic",
+                "links": [
+                    {
+                        "type": "application/pdf",
+                        "href": "https://storage.googleapis.com/p-oaf-ibe-back-00e-strapi-uploads/210415_Airbus_Pleiades_Imagery_user_guide_be12b8f35b/210415_Airbus_Pleiades_Imagery_user_guide_be12b8f35b.pdf",
+                        "title": "Airbus Pléiades Imagery User Guide. (Report Number: USRPHR-DT-125-SPOT-2.0, Date of issue: October, 18, 2012)"
+                    }
+                ]
+            },
+            "metrological_traceability_documentation": {
+                "value": "not assessable",
+                "links": []
+            },
+            "uncertainty_characterisation": {
+                "value": "not assessable",
+                "links": []
+            },
+            "ancillary_data": {
+                "value": "good",
+                "links": [
+                    {
+                        "type": "application/pdf",
+                        "href": "https://storage.googleapis.com/p-oaf-ibe-back-00e-strapi-uploads/210415_Airbus_Pleiades_Imagery_user_guide_be12b8f35b/210415_Airbus_Pleiades_Imagery_user_guide_be12b8f35b.pdf",
+                        "title": "Airbus Pléiades Imagery User Guide. (Report Number: USRPHR-DT-125-SPOT-2.0, Date of issue: October, 18, 2012)"
+                    }
+                ]
+            }
         },
-        "product_format_flags_and_metadata": {
-            "value": "good",
-            "links": [
-                {
-                    "type": "application/pdf",
-                    "href": "https://storage.googleapis.com/p-oaf-ibe-back-00e-strapi-uploads/210415_Airbus_Pleiades_Imagery_user_guide_be12b8f35b/210415_Airbus_Pleiades_Imagery_user_guide_be12b8f35b.pdf",
-                    "title": "Airbus Pléiades Imagery User Guide. (Report Number: USRPHR-DT-125-SPOT-2.0, Date of issue: October, 18, 2012)"
-                }
-            ]
-        },
-        "user_documentation": {
-            "value": "good",
-            "links": [
-                {
-                    "type": "application/pdf",
-                    "href": "https://storage.googleapis.com/p-oaf-ibe-back-00e-strapi-uploads/210415_Airbus_Pleiades_Imagery_user_guide_be12b8f35b/210415_Airbus_Pleiades_Imagery_user_guide_be12b8f35b.pdf",
-                    "title": "Airbus Pléiades Imagery User Guide. (Report Number: USRPHR-DT-125-SPOT-2.0, Date of issue: October, 18, 2012)"
-                }
-            ]
+        "product_generation": {
+            "calibration_algorithm": {
+                "value": "not assessable",
+                "links": [
+                    {
+                        "type": "application/pdf",
+                        "href": "https://doi.org/10.1117/12.2023337",
+                        "title": "Latry, Laurent Lebegue, Florie Lenoir, Florence Porez-Nadal. PLEIADES-HR 1A&1B image quality commissioning: innovative radiometric calibration methods and results, Proc. SPIE 8866, Earth Observing Systems XVIII, 886610 (23 September 2013)"
+                    }
+                ]
+            },
+            "geometric_processing": {
+                "value": "not assessable",
+                "links": []
+            },
+            "retrieval_algorithm": {
+                "value": "not assessed",
+                "links": []
+            },
+            "mission_specific_processing": {
+                "value": "not assessed",
+                "links": []
+            }
         }
     },
-    "metrology": {
-        "radiometric_calibration_and_characterisation": {
-            "value": "basic",
-            "links": [
-                {
-                    "type": "application/pdf",
-                    "href": "https://storage.googleapis.com/p-oaf-ibe-back-00e-strapi-uploads/210415_Airbus_Pleiades_Imagery_user_guide_be12b8f35b/210415_Airbus_Pleiades_Imagery_user_guide_be12b8f35b.pdf",
-                    "title": "Airbus Pléiades Imagery User Guide. (Report Number: USRPHR-DT-125-SPOT-2.0, Date of issue: October, 18, 2012)"
-                }
-            ]
-        },
-        "geometric_calibration_and_characterisation": {
-            "value": "basic",
-            "links": [
-                {
-                    "type": "application/pdf",
-                    "href": "https://storage.googleapis.com/p-oaf-ibe-back-00e-strapi-uploads/210415_Airbus_Pleiades_Imagery_user_guide_be12b8f35b/210415_Airbus_Pleiades_Imagery_user_guide_be12b8f35b.pdf",
-                    "title": "Airbus Pléiades Imagery User Guide. (Report Number: USRPHR-DT-125-SPOT-2.0, Date of issue: October, 18, 2012)"
-                }
-            ]
-        },
-        "metrological_traceability_documentation": {
-            "value": "not assessable",
-            "links": []
-        },
-        "uncertainty_characterisation": {
-            "value": "not assessable",
-            "links": []
-        },
-        "ancillary_data": {
-            "value": "good",
-            "links": [
-                {
-                    "type": "application/pdf",
-                    "href": "https://storage.googleapis.com/p-oaf-ibe-back-00e-strapi-uploads/210415_Airbus_Pleiades_Imagery_user_guide_be12b8f35b/210415_Airbus_Pleiades_Imagery_user_guide_be12b8f35b.pdf",
-                    "title": "Airbus Pléiades Imagery User Guide. (Report Number: USRPHR-DT-125-SPOT-2.0, Date of issue: October, 18, 2012)"
-                }
-            ]
-        }
-    },
-    "product_generation": {
-        "calibration_algorithm": {
-            "value": "not assessable",
-            "links": [
-                {
-                    "type": "application/pdf",
-                    "href": "https://doi.org/10.1117/12.2023337",
-                    "title": "Latry, Laurent Lebegue, Florie Lenoir, Florence Porez-Nadal. PLEIADES-HR 1A&1B image quality commissioning: innovative radiometric calibration methods and results, Proc. SPIE 8866, Earth Observing Systems XVIII, 886610 (23 September 2013)"
-                }
-            ]
-        },
-        "geometric_processing": {
-            "value": "not assessable",
-            "links": []
-        },
-        "retrieval_algorithm": {
-            "value": "not assessed",
-            "links": []
-        },
-        "mission_specific_processing": {
-            "value": "not assessed",
-            "links": []
-        }
-    }
+    "result_vocab": "Result criteria follows EDAP EO Mission Quality Assessment Framework - Optical Guidelines, found at: https://earth.esa.int/eogateway/documents/20142/37627/Optical+Mission+Quality+Assessment+Guidelines.pdf/1c269f3f-9e54-9532-b30b-0c884de1431a",
+    "check_datetime": "20250327T093542.953385",
+    "check_creator": "S Malone",
+    "contact_point": "samantha.malone@npl.co.uk",
+    "publisher": "Climate and Earth Observation Group, National Physical Laboratory",
+    "eodh_qa_check_version": 1.0
 }

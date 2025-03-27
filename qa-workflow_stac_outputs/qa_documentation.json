@@ -28,7 +28,7 @@
         {
             "type": "application/geo+json",
             "rel": "item",
-            "href": "sentinel-2_l1c_qa_check_doc_review.json"
+            "href": "airbus_phr_qa_check_doc_review.json"
         },
         {
             "type": "application/json",

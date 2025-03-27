@@ -1,8 +1,8 @@
 {
     "stac_version": "1.0.0",
-    "id": "sentinel-2_l1c_qa",
+    "id": "airbus_phr_qa",
     "type": "Catalog",
-    "description": "Root catalog for sentinel-2_l1c QA checks",
+    "description": "Root catalog for airbus_phr QA checks",
     "links": [
         {
             "type": "application/json",
