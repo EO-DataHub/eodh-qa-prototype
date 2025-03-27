@@ -141,7 +141,7 @@ Accept: application/json
 
 
 # @name getDocReviewResults
-GET https://npl.staging.eodatahub-workspaces.org.uk/files/workspaces-eodhp-staging/processing-results/qa-workflow/planet_psscene_qa/qa_documentation/output_planet_psscene_qa_check_doc_review.json HTTP/1.1
+GET https://npl.staging.eodatahub-workspaces.org.uk/files/workspaces-eodhp-staging/processing-results/qa-workflow/sentinel-2_l1c_qa/qa_documentation/output_sentinel-2_l1c_qa_check_doc_review.json HTTP/1.1
 Authorization: Bearer 454f4448c135f8695053f70d54fc5eb8
 Accept: application/json
 
