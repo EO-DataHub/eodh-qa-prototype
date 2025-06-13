@@ -68,7 +68,7 @@
         "partial pass": "The bands have a mixture of pass, fail and partial pass results for the radiometric uncertainty check.",
         "fail": "All bands are failing the radiometric uncertainty check."
     },
-    "check_datetime": "20250327T093513.862647",
+    "check_datetime": "20250328T152537.143151",
     "check_datetime_validity_start": "20220501T000000.000000",
     "check_datetime_validity_end": "20220531T000000.000000",
     "check_creator": "S Malone",

@@ -21,16 +21,14 @@
                     ]
                 ],
                 "stated_value": [
-                    [
-                        "8.0% (coastal blue)",
-                        "6.8% (blue)",
-                        "6.2% (green_i)",
-                        "5.6% (green_ii)",
-                        "5.8% (yellow)",
-                        "6.3% (red)",
-                        "8.7% (red edge)",
-                        "9.2% (NIR)"
-                    ]
+                    "8.0% (coastal blue)",
+                    "6.8% (blue)",
+                    "6.2% (green_i)",
+                    "5.6% (green_ii)",
+                    "5.8% (yellow)",
+                    "6.3% (red)",
+                    "8.7% (red edge)",
+                    "9.2% (NIR)"
                 ],
                 "links": [
                     {
@@ -60,7 +58,7 @@
         "partial pass": "The bands have a mixture of pass, fail and partial pass results for the radiometric uncertainty check.",
         "fail": "All bands are failing the radiometric uncertainty check."
     },
-    "check_datetime": "20250327T093529.883832",
+    "check_datetime": "20250328T152356.696322",
     "check_datetime_validity_start": "20220701T000000.000000",
     "check_datetime_validity_end": "20220731T000000.000000",
     "check_creator": "S Malone",

@@ -1,8 +1,8 @@
 {
     "stac_version": "1.0.0",
-    "id": "airbus_phr_qa",
+    "id": "sentinel-2_l1c_qa",
     "type": "Catalog",
-    "description": "Root catalog for airbus_phr QA checks",
+    "description": "Root catalog for sentinel-2_l1c QA checks",
     "links": [
         {
             "type": "application/json",
@@ -12,7 +12,7 @@
         {
             "type": "application/json",
             "rel": "child",
-            "href": "qa_documentation.json"
+            "href": "qa_radiometric.json"
         }
     ]
 }

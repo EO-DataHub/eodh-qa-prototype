@@ -49,7 +49,7 @@ def run_check(args):
             create_stac_items_rad_unc(data_collection, base_name, mup_ds, dates_list)
             create_stac_collection(base_name, dates_list)
             create_stac_catalog_root(base_name)
-        else:
+        else: # if no data in the database - no STAC item will be made & workflow will fail
             return
     elif qa_check_type == 'doc_review':
         # name stac items & catalog after qa check
@@ -521,15 +521,15 @@ def create_stac_item_doc_review(data_collection, out_name, review_date):
     if 'planet' in out_name:
         sat_checked = "planet"
         eodh_data_coll = 'Planet_PSScene'
-        doi = "https://staging.eodatahub.org.uk/api/catalogue/stac/catalogs/supported-datasets/catalogs/planet/collections/PSScene"
+        doi = "https://eodatahub.org.uk/api/catalogue/stac/catalogs/supported-datasets/catalogs/planet/collections/PSScene"
     elif 'airbus_phr' in out_name:
         sat_checked = "airbus_phr"
         eodh_data_coll = "Airbus_Pleiades"
-        doi = "https://staging.eodatahub.org.uk/api/catalogue/stac/catalogs/supported-datasets/catalogs/airbus/collections/airbus_phr_data"
+        doi = "https://eodatahub.org.uk/api/catalogue/stac/catalogs/supported-datasets/catalogs/airbus/collections/airbus_phr_data"
     elif 'sentinel-2' in out_name:
         sat_checked = "s2a"  # or s2b
         eodh_data_coll = "Sentinel-2_L1C"
-        doi = "https://staging.eodatahub.org.uk/api/catalogue/stac/catalogs/supported-datasets/catalogs/ceda-stac-catalogue/collections/sentinel2_ard"
+        doi = "https://eodatahub.org.uk/api/catalogue/stac/catalogs/supported-datasets/catalogs/ceda-stac-catalogue/collections/sentinel2_ard"
 
     item_data = {  # output dict of radiometric test result
         "data_collection": eodh_data_coll,
@@ -614,12 +614,12 @@ def qa_check_rad_val(data_collection, out_name, mup_ds, date_range):
         rcn_meas_unc_vals = rcn_meas_unc_vals[:8]
 
         sat_mean_unc = np.array([8.013, 6.798, 6.244, 5.636, 5.771, 6.277, 8.736, 9.229])
-        stated_value = ["8.0% (coastal blue)", "6.8% (blue)", "6.2% (green_i)", "5.6% (green_ii)", "5.8% (yellow)", "6.3% (red)", "8.7% (red edge)", "9.2% (NIR)"],  # abs rad unc from doc: https://support.planet.com/hc/en-us/article_attachments/4403255608849 (log in here https://support.planet.com/hc/en-us/articles/360037649554-L1-Data-Quality-Reports-for-the-PlanetScope-Constellation)
+        stated_value = ["8.0% (coastal blue)", "6.8% (blue)", "6.2% (green_i)", "5.6% (green_ii)", "5.8% (yellow)", "6.3% (red)", "8.7% (red edge)", "9.2% (NIR)"]  # abs rad unc from doc: https://support.planet.com/hc/en-us/article_attachments/4403255608849 (log in here https://support.planet.com/hc/en-us/articles/360037649554-L1-Data-Quality-Reports-for-the-PlanetScope-Constellation)
         rad_unc_report_title = "PLANET L1 DATA QUALITY REPORT, SUPERDOVE 8-BAND GENERAL AVAILABILITY: Status of Calibration and Data Quality for the SuperDove 8-Band GA, 15/06/21"
         rad_unc_report_ref = "https://support.planet.com/hc/en-us/articles/360037649554-L1-Data-Quality-Reports-for-the-PlanetScope-Constellation"
         sat_checked = "planet"
         eodh_data_coll = 'Planet_PSScene'
-        doi ="https://staging.eodatahub.org.uk/api/catalogue/stac/catalogs/supported-datasets/catalogs/planet/collections/PSScene"
+        doi ="https://eodatahub.org.uk/api/catalogue/stac/catalogs/supported-datasets/catalogs/planet/collections/PSScene"
     elif 'airbus_phr' in out_name:
         # first keep only 4 bands for airbus_phr
         bias_vals = bias_vals[:4]
@@ -630,7 +630,7 @@ def qa_check_rad_val(data_collection, out_name, mup_ds, date_range):
         rad_unc_report_ref = "https://www.intelligence-airbusds.com/en/8718-user-guides"
         sat_checked = "airbus_phr"
         eodh_data_coll = "Airbus_Pleiades"
-        doi = "https://staging.eodatahub.org.uk/api/catalogue/stac/catalogs/supported-datasets/catalogs/airbus/collections/airbus_phr_data"
+        doi = "https://eodatahub.org.uk/api/catalogue/stac/catalogs/supported-datasets/catalogs/airbus/collections/airbus_phr_data"
     elif 'sentinel-2' in out_name:
         sat_mean_unc = np.ones(13) * 5
         stated_value = ["5% (B1)", "5% (B2)", "5% (B3)", "5% (B4)","5% (B5)", "5% (B6)", "5% (B7)", "5% (B8)","5% (B9)", "5% (B10)", "5% (B11)", "5% (B12)", "5% (B8A)"]
@@ -638,7 +638,7 @@ def qa_check_rad_val(data_collection, out_name, mup_ds, date_range):
         rad_unc_report_ref = "https://sentinel.esa.int/documents/247904/4868341/OMPC.CS.DQR.001.12-2022+-+i83r0+-+MSI+L1C+DQR+January+2023.pdf"
         sat_checked = "s2a" #or s2b
         eodh_data_coll = "Sentinel-2_L1C"
-        doi = "https://staging.eodatahub.org.uk/api/catalogue/stac/catalogs/supported-datasets/catalogs/ceda-stac-catalogue/collections/sentinel2_ard"
+        doi = "https://eodatahub.org.uk/api/catalogue/stac/catalogs/supported-datasets/catalogs/ceda-stac-catalogue/collections/sentinel2_ard"
 
     rcn_bias_vals_mean = np.ones(len(bias_vals)) * np.nan
     rcn_refl_vals_mean_unc = np.ones(len(bias_vals)) * np.nan
@@ -850,8 +850,8 @@ if __name__ == "__main__":
     #          "2022-01-01,2022-12-31", "s2"]  # for testing locally with cwltool
     run_check(sys.argv)
 
-    # test check locally
+    # # test check locally
     # run_check([None, "AccessPointName-AccountId.s3-accesspoint.region.amazonaws.com", "radiometric_unc",
-    #          "2022-01-01,2022-12-31", "airbus_phr"])
+    #          "2022-01-01,2022-12-31", "s2"])
     # run_check([None, "AccessPointName-AccountId.s3-accesspoint.region.amazonaws.com", "doc_review",
     #          '2025-03-25', "airbus_phr"])
