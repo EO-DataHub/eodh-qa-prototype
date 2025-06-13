@@ -1,0 +1,42 @@
+{
+    "id": "airbus_phr_qa_check_radiometric_unc_2022-07-01_2022-07-31",
+    "type": "Feature",
+    "stac_version": "1.0.0",
+    "geometry": null,
+    "properties": {
+        "datetime": "20250328T151650.580469",
+        "check_validity_start_datetime": "20220701T000000.000000",
+        "check_validity_end_datetime": "20220731T000000.000000"
+    },
+    "links": [
+        {
+            "type": "application/geo+json",
+            "rel": "self",
+            "href": "airbus_phr_qa_check_radiometric_unc_2022-07-01_2022-07-31.json"
+        },
+        {
+            "type": "application/json",
+            "rel": "collection",
+            "href": "qa_radiometric.json"
+        },
+        {
+            "type": "application/json",
+            "rel": "root",
+            "href": "catalog.json"
+        }
+    ],
+    "assets": {
+        "airbus_phr_qa_check_radiometric_unc": {
+            "roles": [
+                "data"
+            ],
+            "href": "airbus_phr_qa_check_radiometric_unc"
+        },
+        "qa-outputs": {
+            "href": "output_airbus_phr_qa_check_radiometric_unc_2022-07-01_2022-07-31.json",
+            "title": "output_airbus_phr_qa_check_radiometric_unc_2022-07-01_2022-07-31.json",
+            "description": "QA radiometric uncertainty results output for airbus_phr_qa_check_radiometric_unc_2022-07-01_2022-07-31",
+            "type": "application/json"
+        }
+    }
+}

@@ -1,0 +1,141 @@
+{
+    "data_collection": "Planet_PSScene",
+    "data_id_field": "https://staging.eodatahub.org.uk/api/catalogue/stac/catalogs/supported-datasets/catalogs/planet/collections/PSScene",
+    "uuid": "uuid",
+    "check_name": "documentation review",
+    "results": {
+        "product_information": {
+            "product_details": {
+                "value": "excellent",
+                "links": [
+                    {
+                        "type": "application/pdf",
+                        "href": "https://assets.planet.com/docs/Planet_PSScene_Imagery_Product_Spec_letter_screen.pdf",
+                        "title": "PlanetScope Product Specifications, 2023"
+                    },
+                    {
+                        "type": "application/pdf",
+                        "href": "https://support.planet.com/hc/en-us/articles/360037649554-L1-Data-Quality-Reports-for-the-PlanetScope-Constellation",
+                        "title": "Planet L1 Data Quality Report Superdove 8-Band General Availability, 2021"
+                    }
+                ]
+            },
+            "availability_and_accessability": {
+                "value": "basic",
+                "links": [
+                    {
+                        "type": "application/pdf",
+                        "href": "https://doi.org/10.1038/sdata.2016.18",
+                        "title": "Wilkinson, M., Dumontier, M., Aalbersberg, I. et al. The FAIR Guiding Principles for scientific data management and stewardship. Sci Data 3, 160018 (2016)"
+                    }
+                ]
+            },
+            "product_format_flags_and_metadata": {
+                "value": "good",
+                "links": []
+            },
+            "user_documentation": {
+                "value": "good",
+                "links": [
+                    {
+                        "type": "application/pdf",
+                        "href": "https://assets.planet.com/docs/Planet_PSScene_Imagery_Product_Spec_letter_screen.pdf",
+                        "title": "PlanetScope Product Specifications, 2023"
+                    },
+                    {
+                        "type": "application/pdf",
+                        "href": "https://developers.planet.com/docs/data/planetscope/",
+                        "title": "PlanetScope Overview"
+                    }
+                ]
+            }
+        },
+        "metrology": {
+            "radiometric_calibration_and_characterisation": {
+                "value": "good",
+                "links": [
+                    {
+                        "type": "application/pdf",
+                        "href": "https://assets.planet.com/docs/radiometric_calibration_white_paper.pdf",
+                        "title": "On-Orbit Radiometric Calibration of the Planet Satellite Fleet, Radiometric Calibration White paper, January 2022"
+                    }
+                ]
+            },
+            "geometric_calibration_and_characterisation": {
+                "value": "good",
+                "links": [
+                    {
+                        "type": "application/pdf",
+                        "href": "https://assets.planet.com/docs/Planet_PSScene_Imagery_Product_Spec_June_2021.pdf",
+                        "title": "PlanetScope Product Specifications, PSScene Imagery Product Spec FINAL | June 2021, June 2021"
+                    }
+                ]
+            },
+            "metrological_traceability_documentation": {
+                "value": "not assessable",
+                "links": []
+            },
+            "uncertainty_characterisation": {
+                "value": "basic",
+                "links": [
+                    {
+                        "type": "application/pdf",
+                        "href": "https://support.planet.com/hc/en-us/articles/360037649554-L1-Data-Quality-Reports-for-the-PlanetScope-Constellation",
+                        "title": "Planet L1 Data Quality Report Superdove 8-Band General Availability, 2021"
+                    }
+                ]
+            },
+            "ancillary_data": {
+                "value": "basic",
+                "links": [
+                    {
+                        "type": "application/pdf",
+                        "href": "https://support.planet.com/hc/en-us/articles/360037649554-L1-Data-Quality-Reports-for-the-PlanetScope-Constellation",
+                        "title": "Planet L1 Data Quality Report Superdove 8-Band General Availability, 2021"
+                    }
+                ]
+            }
+        },
+        "product_generation": {
+            "calibration_algorithm": {
+                "value": "good",
+                "links": [
+                    {
+                        "type": "application/pdf",
+                        "href": "https://assets.planet.com/docs/radiometric_calibration_white_paper.pdf",
+                        "title": "On-Orbit Radiometric Calibration of the Planet Satellite Fleet, Radiometric Calibration White paper, January 2022"
+                    },
+                    {
+                        "type": "application/pdf",
+                        "href": "https://assets.planet.com/docs/Planet_PSScene_Imagery_Product_Spec_June_2021.pdf",
+                        "title": "Planet Imagery Product Specifications : combined-imagery-product-spec-final-august-2019.pdf, August 2019"
+                    }
+                ]
+            },
+            "geometric_processing": {
+                "value": "good",
+                "links": [
+                    {
+                        "type": "application/pdf",
+                        "href": "https://assets.planet.com/docs/Planet_PSScene_Imagery_Product_Spec_June_2021.pdf",
+                        "title": "Planet Imagery Product Specifications : combined-imagery-product-spec-final-august-2019.pdf, August 2019"
+                    }
+                ]
+            },
+            "retrieval_algorithm": {
+                "value": "not assessed",
+                "links": []
+            },
+            "mission_specific_processing": {
+                "value": "not assessed",
+                "links": []
+            }
+        }
+    },
+    "result_vocab": "Result criteria follows EDAP EO Mission Quality Assessment Framework - Optical Guidelines, found at: https://earth.esa.int/eogateway/documents/20142/37627/Optical+Mission+Quality+Assessment+Guidelines.pdf/1c269f3f-9e54-9532-b30b-0c884de1431a",
+    "check_datetime": "20250327T093529.949234",
+    "check_creator": "S Malone",
+    "contact_point": "samantha.malone@npl.co.uk",
+    "publisher": "Climate and Earth Observation Group, National Physical Laboratory",
+    "eodh_qa_check_version": 1.0
+}

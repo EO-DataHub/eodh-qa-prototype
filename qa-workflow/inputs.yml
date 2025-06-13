@@ -1,0 +1,19 @@
+{"s3_endpoint": "AccessPointName-AccountId.s3-accesspoint.region.amazonaws.com",
+ "qa_check_type": "radiometric_unc",
+"date_range": "2022-01-01,2022-12-31",
+"data_collection": "airbus_phr"
+}
+#qa_check_type:
+#'doc_review'
+#'radiometric_unc'
+#
+#date_range:
+#"2022-01-01,2022-12-31"
+#"2025-03-25"
+#
+#data_collection:
+#'planet'
+#'airbus_phr'
+#'s2a'
+#'s2b'
+#'s2'

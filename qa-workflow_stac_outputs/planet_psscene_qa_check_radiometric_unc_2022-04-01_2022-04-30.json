@@ -1,0 +1,42 @@
+{
+    "id": "planet_psscene_qa_check_radiometric_unc_2022-04-01_2022-04-30",
+    "type": "Feature",
+    "stac_version": "1.0.0",
+    "geometry": null,
+    "properties": {
+        "datetime": "20250328T152356.665780",
+        "check_validity_start_datetime": "20220401T000000.000000",
+        "check_validity_end_datetime": "20220430T000000.000000"
+    },
+    "links": [
+        {
+            "type": "application/geo+json",
+            "rel": "self",
+            "href": "planet_psscene_qa_check_radiometric_unc_2022-04-01_2022-04-30.json"
+        },
+        {
+            "type": "application/json",
+            "rel": "collection",
+            "href": "qa_radiometric.json"
+        },
+        {
+            "type": "application/json",
+            "rel": "root",
+            "href": "catalog.json"
+        }
+    ],
+    "assets": {
+        "planet_psscene_qa_check_radiometric_unc": {
+            "roles": [
+                "data"
+            ],
+            "href": "planet_psscene_qa_check_radiometric_unc"
+        },
+        "qa-outputs": {
+            "href": "output_planet_psscene_qa_check_radiometric_unc_2022-04-01_2022-04-30.json",
+            "title": "output_planet_psscene_qa_check_radiometric_unc_2022-04-01_2022-04-30.json",
+            "description": "QA radiometric uncertainty results output for planet_psscene_qa_check_radiometric_unc_2022-04-01_2022-04-30",
+            "type": "application/json"
+        }
+    }
+}

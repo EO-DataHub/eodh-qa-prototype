@@ -1,0 +1,60 @@
+{
+    "data_collection": "Airbus_Pleiades",
+    "data_id_field": "https://staging.eodatahub.org.uk/api/catalogue/stac/catalogs/supported-datasets/catalogs/airbus/collections/airbus_phr_data",
+    "uuid": "uuid",
+    "check_name": "radiometric uncertainty",
+    "results": {
+        "data validation": {
+            "radiometric uncertainty": {
+                "metric": "https://eodatahub.org.uk/api/ontologies/qa/metrics/data-validation/radiometric-uncertainty",
+                "value": [
+                    "pass",
+                    [
+                        "pass",
+                        "pass",
+                        "pass",
+                        "pass"
+                    ]
+                ],
+                "stated_value": [
+                    "5% (blue)",
+                    "5% (green)",
+                    "5% (red)",
+                    "5% (NIR)"
+                ],
+                "links": [
+                    {
+                        "rel": "https://eodatahub.org.uk/api/ontologies/qa/detailed-result-report",
+                        "type": "application/pdf",
+                        "href": "https://npl-qa-workspace.eodatahub-worksapces.org.uk/files/qa-reports/detailed-report.pdf",
+                        "title": "Detailed QA Check Report for radiometric uncertainty"
+                    },
+                    {
+                        "rel": "https://eodatahub.org.uk/api/ontologies/qa/data_product_report",
+                        "type": "application/pdf",
+                        "href": "https://www.intelligence-airbusds.com/en/8718-user-guides",
+                        "title": "PleiadesUserGuide-18072019.pdf"
+                    },
+                    {
+                        "rel": "https://eodatahub.org.uk/api/ontologies/qa/data-visualisation",
+                        "type": "application/pdf",
+                        "href": "http://ceos-dashboard.eba-krpcapwh.eu-west-2.elasticbeanstalk.com/ceos-dashboard?sat=airbus_phr&refs=RCN-GONA&bands=490,565,665&date=2022-10-01,2022-10-31",
+                        "title": "Dashboard displaying detailed QA information for the radiometric uncertainty check"
+                    }
+                ]
+            }
+        }
+    },
+    "result_vocab": {
+        "pass": "All bands are passing the radiometric uncertainty check.",
+        "partial pass": "The bands have a mixture of pass, fail and partial pass results for the radiometric uncertainty check.",
+        "fail": "All bands are failing the radiometric uncertainty check."
+    },
+    "check_datetime": "20250328T151650.640492",
+    "check_datetime_validity_start": "20221001T000000.000000",
+    "check_datetime_validity_end": "20221031T000000.000000",
+    "check_creator": "S Malone",
+    "contact_point": "samantha.malone@npl.co.uk",
+    "publisher": "Climate and Earth Observation Group, National Physical Laboratory",
+    "eodh_qa_check_version": 1.0
+}

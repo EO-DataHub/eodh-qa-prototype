@@ -17,9 +17,27 @@ def do_func(args):
     os.environ["AWS_S3_ENDPOINT"] = s3_endpoint
 
     # name stac item/catalog after qa check
-    base_name = 'qa_check_doc_review'
+    base_name = 'qa_check_radiometric_unc'
 
-    create_stac_item(base_name)
+    dates_2022_list = ['2022-01-01_2022-01-31',
+                       '2022-02-01_2022-02-28',
+                       '2022-03-01_2022-03-31',
+                       '2022-04-01_2022-04-30',
+                       '2022-05-01_2022-05-31',
+                       '2022-06-01_2022-06-30',
+                       '2022-07-01_2022-07-31',
+                       '2022-08-01_2022-08-31',
+                       '2022-09-01_2022-09-30',
+                       '2022-10-01_2022-10-31',
+                       '2022-11-01_2022-11-30',
+                       '2022-12-01_2022-12-31',
+                       ]
+
+    # for date in dates_2022_list:
+    #     if os.path.isfile(f'output_results/qa_check_result_Airbus_Pleiades_radiometric_unc_{date}.json'):
+
+    date = '2022-04-01_2022-04-30'
+    create_stac_item(base_name, date)
     create_stac_catalog_root(base_name)
 
 
@@ -68,9 +86,18 @@ def qa_check_doc_review():
 
     return qa_check_result_doc_review
 
+def qa_check_rad_val(date):
 
-def create_stac_item(out_name):
-    qa_check_results_dict = json.loads(qa_check_doc_review())
+    qa_check_result_path = f'qa_check_result_Airbus_Pleiades_radiometric_unc_{date}.json'
+    with open(qa_check_result_path, 'r') as json_data:
+        qa_check_result_rad_val = json.load(json_data)
+        json_data.close()
+
+    return qa_check_result_rad_val
+
+
+def create_stac_item(out_name, date):
+    qa_check_results_dict = json.loads(qa_check_rad_val(date))
     stem = Path(out_name).stem  # later for "id": f"{stem}-{now}"
     # size = os.path.getsize(f"{out_name}")
     # mime = mimetypes.guess_type(f"{out_name}")[0]
@@ -78,17 +105,20 @@ def create_stac_item(out_name):
     data = dict(id = qa_check_results_dict["data_collection"].replace(" ", "_") + '_qa_check_test',
                 type = "Feature",
                 stac_version = "1.0.0",
-                geometry={
+                geometry={  # GONA coords
                     "type": "Polygon",
                     "coordinates": [
-                        [[-180, -90], [-180, 90], [180, 90], [180, -90], [-180, -90]]
+                        [[15.10274,-23.60723694],
+                         [15.13462891,-23.60723694],
+                         [15.13462891,-23.59451068],
+                         [15.10274,-23.59451068],
+                         [15.10274,-23.60723694]]
                     ],
                 },
-                bbox=[-180, -90, 180, 90],
-                properties={"datetime": qa_check_results_dict["check_datetime"],
-                            # "start_datetime": qa_check_results_dict["check_datetime"],
-                            # "end_datetime": qa_check_results_dict["check_date_validity_end"],
-                            "full_qa_check_result_output": qa_check_results_dict,
+                bbox=[15.10274,-23.60723694, 15.13462891,-23.59451068],  # GONA coords
+                properties={"check_datetime": qa_check_results_dict["check_datetime"],
+                            "check_validity_start_datetime": qa_check_results_dict["check_datetime_validity_start"],
+                            "check_validity_end_datetime": qa_check_results_dict["check_date_validity_end"]
                             },
                 links = [
                     {"type": "application/json", "rel": "self",  "href": f"{stem}.json"},
@@ -101,7 +131,8 @@ def create_stac_item(out_name):
                         # "file:size": size,
                         "roles": ["data"],
                         "href": f"{out_name}",
-                    }
+                    },
+                    "output_qa_check_radiometric_unc": qa_check_results_dict,
                 },
                 )
 

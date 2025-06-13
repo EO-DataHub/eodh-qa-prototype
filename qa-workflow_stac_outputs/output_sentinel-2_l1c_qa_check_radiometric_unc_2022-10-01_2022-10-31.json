@@ -1,0 +1,78 @@
+{
+    "data_collection": "Sentinel-2_L1C",
+    "data_id_field": "https://staging.eodatahub.org.uk/api/catalogue/stac/catalogs/supported-datasets/catalogs/ceda-stac-catalogue/collections/sentinel2_ard",
+    "uuid": "uuid",
+    "check_name": "radiometric uncertainty",
+    "results": {
+        "data validation": {
+            "radiometric uncertainty": {
+                "metric": "https://eodatahub.org.uk/api/ontologies/qa/metrics/data-validation/radiometric-uncertainty",
+                "value": [
+                    "pass",
+                    [
+                        "pass",
+                        "pass",
+                        "pass",
+                        "pass",
+                        "pass",
+                        "pass",
+                        "pass",
+                        "pass",
+                        "pass",
+                        "pass",
+                        "pass",
+                        "pass",
+                        "pass"
+                    ]
+                ],
+                "stated_value": [
+                    "5% (B1)",
+                    "5% (B2)",
+                    "5% (B3)",
+                    "5% (B4)",
+                    "5% (B5)",
+                    "5% (B6)",
+                    "5% (B7)",
+                    "5% (B8)",
+                    "5% (B9)",
+                    "5% (B10)",
+                    "5% (B11)",
+                    "5% (B12)",
+                    "5% (B8A)"
+                ],
+                "links": [
+                    {
+                        "rel": "https://eodatahub.org.uk/api/ontologies/qa/detailed-result-report",
+                        "type": "application/pdf",
+                        "href": "https://npl-qa-workspace.eodatahub-worksapces.org.uk/files/qa-reports/detailed-report.pdf",
+                        "title": "Detailed QA Check Report for radiometric uncertainty"
+                    },
+                    {
+                        "rel": "https://eodatahub.org.uk/api/ontologies/qa/data_product_report",
+                        "type": "application/pdf",
+                        "href": "https://sentinel.esa.int/documents/247904/4868341/OMPC.CS.DQR.001.12-2022+-+i83r0+-+MSI+L1C+DQR+January+2023.pdf",
+                        "title": "Data Quality Report Sentinel-2 L1C MSI January 2023"
+                    },
+                    {
+                        "rel": "https://eodatahub.org.uk/api/ontologies/qa/data-visualisation",
+                        "type": "application/pdf",
+                        "href": "http://ceos-dashboard.eba-krpcapwh.eu-west-2.elasticbeanstalk.com/ceos-dashboard?sat=s2a&refs=RCN-GONA&bands=490,565,665&date=2022-10-01,2022-10-31",
+                        "title": "Dashboard displaying detailed QA information for the radiometric uncertainty check"
+                    }
+                ]
+            }
+        }
+    },
+    "result_vocab": {
+        "pass": "All bands are passing the radiometric uncertainty check.",
+        "partial pass": "The bands have a mixture of pass, fail and partial pass results for the radiometric uncertainty check.",
+        "fail": "All bands are failing the radiometric uncertainty check."
+    },
+    "check_datetime": "20250328T152537.179642",
+    "check_datetime_validity_start": "20221001T000000.000000",
+    "check_datetime_validity_end": "20221031T000000.000000",
+    "check_creator": "S Malone",
+    "contact_point": "samantha.malone@npl.co.uk",
+    "publisher": "Climate and Earth Observation Group, National Physical Laboratory",
+    "eodh_qa_check_version": 1.0
+}

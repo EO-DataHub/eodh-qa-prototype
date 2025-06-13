@@ -1,0 +1,40 @@
+{
+    "id": "sentinel-2_l1c_qa_check_doc_review",
+    "type": "Feature",
+    "stac_version": "1.0.0",
+    "geometry": null,
+    "properties": {
+        "datetime": "20250325T000000.000000"
+    },
+    "links": [
+        {
+            "type": "application/geo+json",
+            "rel": "self",
+            "href": "sentinel-2_l1c_qa_check_doc_review.json"
+        },
+        {
+            "type": "application/json",
+            "rel": "collection",
+            "href": "qa_documentation.json"
+        },
+        {
+            "type": "application/json",
+            "rel": "root",
+            "href": "catalog.json"
+        }
+    ],
+    "assets": {
+        "sentinel-2_l1c_qa_check_doc_review": {
+            "roles": [
+                "data"
+            ],
+            "href": "sentinel-2_l1c_qa_check_doc_review"
+        },
+        "qa-outputs": {
+            "href": "output_sentinel-2_l1c_qa_check_doc_review.json",
+            "title": "output_sentinel-2_l1c_qa_check_doc_review.json",
+            "description": "QA documentation review output for sentinel-2_l1c_qa_check_doc_review",
+            "type": "application/json"
+        }
+    }
+}
