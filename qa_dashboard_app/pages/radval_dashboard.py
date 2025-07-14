@@ -7,23 +7,24 @@ import plotly.graph_objects as go
 import pandas as pd
 import flask
 import urllib
+from urllib.request import urlopen
 import os
 import sys
 
-# to find data_interface within docker container
-data_dir = os.path.join("\\".join(os.getcwd().split("\\")[:-1]))
+# to ensure paths are found correctly within Docker container for importing data_interface
+data_dir = os.path.join("\\".join(__file__.split("\\")[:-2]))
 sys.path.insert(1, data_dir)
+
 import data_interface
 
 dash.register_page(
     __name__,
     order=2,
-    title="Calibration Dashboard",  # name of tab
-    name="Dashboard",
-    # image='dashboard.png',
-    description="CEOS Calibration Dashboard.",
+    title="RadVAL Dashboard",  # name of tab
+    name="RadVAL Dashboard",
+    description="CEOS RadVAL Dashboard.",  # metadata
     location="sidebar",
-    # redirect_from='/home'
+    suppress_callback_exceptions=True,
 )
 
 HEIGHT_OF_ROW = 345
@@ -32,27 +33,28 @@ HEIGHT_OF_ROW = 345
 fig_empty = go.Figure()
 fig_empty.layout.margin = {"t": 10, "b": 10, "r": 0, "l": 20}
 
-lower_dummy_plot = dcc.Graph(
-    figure=fig_empty,
-    id="lower-dummy-plot-content",
-    style={"height": "40vh", "width": "60vh"},
+graph_upper = dcc.Loading(
+    [
+        dcc.Graph(
+            figure=fig_empty,
+            id="upper-graph-content",
+            style={"height": "55vh", "width": "120vh"},
+        )
+    ],
+    type="circle",
+    color="red",
 )
 
-# get loading spinner for upper plot
-upper_plot = dbc.Spinner(
-    dcc.Graph(
-        figure=fig_empty,
-        id="upper-graph-content",
-        style={"height": "55vh", "width": "120vh"},
-    ),
-    color="primary",
-    spinner_style={"width": "3rem", "height": "3rem"},
+graph_dummy_small = dcc.Graph(
+    figure=fig_empty,
+    id="small-dummy-graph-content",
+    style={"height": "40vh", "width": "60vh"},
 )
 
 # create control panel in upper container - select mission, reference site, bands, date range
 control_panel = dmc.Card(
     # style={'height': '65vh',
-    #        # 'width': '60vh' # CHANGED
+    #        # 'width': '60vh'
     #        },
     withBorder=True,
     shadow="xs",
@@ -67,7 +69,7 @@ control_panel = dmc.Card(
                         children=[
                             dmc.Text(
                                 "Mission:",
-                                weight=500,
+                                # weight=500,
                                 style={"margin-top": "10px", "padding-bottom": "5px"},
                             ),
                             # 'padding-left': '5px'
@@ -94,7 +96,7 @@ control_panel = dmc.Card(
                         children=[
                             dmc.Text(
                                 "Reference:",
-                                weight=500,
+                                # weight=500,
                                 style={"margin-top": "20px", "padding-bottom": "5px"},
                             ),
                             # 'padding-left': '5px',
@@ -108,7 +110,12 @@ control_panel = dmc.Card(
                                 options=[
                                     {"label": "RadCalNet - GONA", "value": "RCN-GONA"},
                                     {"label": "RadCalNet - RVUS", "value": "RCN-RVUS"},
-                                    {"label": "HYPERNETS - GHNA", "value": "HYP-GHNA"},
+                                    {"label": "PICS - Libya-4", "value": "LIBYA-4"},
+                                    {"label": "PICS - Libya-1", "value": "LIBYA-1"},
+                                    {
+                                        "label": "CEOS Virtual Reference",
+                                        "value": "ceos-virtual-ref",
+                                    },
                                 ],
                             ),
                         ]
@@ -118,8 +125,7 @@ control_panel = dmc.Card(
                     dbc.Col(
                         children=[
                             dmc.Text(
-                                "Wavebands:",
-                                weight=500,  # id='band_text',
+                                "Wavebands:",  # weight=500,  # id='band_text',
                                 style={
                                     "margin-top": "20px",
                                     "padding-bottom": "5px",
@@ -141,29 +147,20 @@ control_panel = dmc.Card(
                     dbc.Col(
                         children=[
                             dmc.Text(
-                                "Date range:",
-                                weight=500,
+                                "Date range:",  # weight=500,
                                 style={
                                     "margin-top": "20px",
                                     # 'padding-left': '5px',
                                     "padding-bottom": "5px",
                                 },
                             ),
-                            dmc.DateRangePicker(
+                            dcc.DatePickerRange(
                                 id="date-picker",
-                                # label="Start Date",
-                                # description="description",
-                                inputFormat="DD-MM-YYYY",
-                                minDate=datetime.date(2010, 1, 1),
-                                value=[
-                                    datetime.date(2022, 1, 1),
-                                    datetime.date(2022, 12, 30),
-                                ],
-                                style={"font-size": "0.2rem"},
-                                # display='',
-                                # dropdownPosition='up',
-                                dropdownType="",  # makes datepicker a popup box
-                                placeholder="DD-MM-YYYY",
+                                display_format="DD-MM-YYYY",
+                                end_date_placeholder_text="DD-MM-YYYY",
+                                start_date=None,
+                                end_date=None,
+                                style={"width": "30vh", "fontsize": "0.5rem"},
                             ),
                         ]
                     )
@@ -171,6 +168,7 @@ control_panel = dmc.Card(
             ],
         )
     ],
+    style={"height": "75vh"},
 )
 
 # average biases table empty data
@@ -182,7 +180,8 @@ matchup_analysis_dict_empty = {
         "Mission Satellite ID",
         "Cloud Percentage",
         "Satellite Viewing Angle",
-        "Sun Azimuth Angle",
+        "Solar Azimuth Angle",
+        "Solar Elevation",
         "AOD at 550 nm *",
         # 'Mission Product', 'Reference Product'
     ),
@@ -193,7 +192,8 @@ matchup_analysis_dict_empty = {
         "",
         "",
         "",
-        "",  #'', ''
+        "",
+        "",  # ''
     ),
 }
 
@@ -201,7 +201,7 @@ av_bias_empty = pd.DataFrame(data=av_bias_dict_empty, index=[0])
 matchup_analysis_empty = pd.DataFrame(data=matchup_analysis_dict_empty)
 
 # create upper panel containing timeseries plot and average bias table
-upper_plot_panel = dmc.Card(
+graph_panel_big = dmc.Card(
     # style={'height': '65vh', 'width': '120vh'},
     withBorder=True,
     shadow="xs",
@@ -214,7 +214,7 @@ upper_plot_panel = dmc.Card(
             """
             )
         ),
-        dbc.Row(upper_plot, style={"margin-bottom": "10px"}),
+        dbc.Row(graph_upper, style={"margin-bottom": "10px"}),
         dcc.Markdown("Mean bias: "),
         dbc.Row(
             dbc.Container(
@@ -276,7 +276,7 @@ top_panels = dmc.Container(
             children=[
                 dbc.Col(control_panel),  # xs=2, sm=2, md=2, lg=2,
                 dbc.Col(
-                    children=[upper_plot_panel],  # xs=2, sm=2, md=2, lg=2,
+                    children=[graph_panel_big],  # xs=2, sm=2, md=2, lg=2,
                     style={"margin-left": "10px"},
                 ),
             ]
@@ -385,7 +385,8 @@ bottom_panel = dmc.Card(
                                     fluid=True,
                                     children=[
                                         dcc.Markdown("Comparison Data"),
-                                        lower_dummy_plot,
+                                        graph_dummy_small,
+                                        # dcc.Markdown("Mean bias: ")
                                     ],
                                 )
                             ],
@@ -394,12 +395,11 @@ bottom_panel = dmc.Card(
                 ),
                 dbc.Row(
                     dbc.Col(
-                        dcc.Markdown(
-                            """ _\* All information is from satellite product metadata, \
-            except AOD which is from the RadCalNet reference site metadata._
-            """
-                        ),
-                        style={"padding-top": "15px"},
+                        html.Div(
+                            "* All information is from satellite product metadata, \
+            except AOD which is from the RadCalNet reference site metadata.",
+                            style={"padding-top": "15px"},
+                        )
                     )
                 ),
             ],
@@ -407,47 +407,48 @@ bottom_panel = dmc.Card(
     ],
 )
 
-
-layout = html.Div(
-    children=[
-        dcc.Location(
-            id="url",
-            refresh=False,
-        ),  # pathname='ceos_dashboard'),
-        dcc.Interval(
-            id="trigger",
-            n_intervals=0,
-            max_intervals=0,  # <-- only run once
-            interval=1,
-        ),
-        dbc.Row(
-            dbc.Col(
-                top_panels,
-                style={
-                    "margin-top": "0vh",
-                    "margin-left": "75px",
-                    "margin-right": "75px",
-                },
-            )
-        ),
-        dbc.Row(
-            [
+layout = dmc.MantineProvider(
+    html.Div(
+        children=[
+            dcc.Location(
+                id="url",
+                refresh=False,
+            ),
+            dcc.Interval(
+                id="trigger",
+                n_intervals=0,
+                max_intervals=0,  # <-- only run once
+                interval=1,
+            ),
+            dbc.Row(
                 dbc.Col(
-                    bottom_panel,
+                    top_panels,
                     style={
-                        "margin-top": "5vh",
-                        "margin-bottom": "5vh",
+                        "margin-top": "0vh",
                         "margin-left": "75px",
                         "margin-right": "75px",
                     },
                 )
-                # xs=12, sm=12, md=12, lg=12)
-            ]
-        ),
-    ]
+            ),
+            dbc.Row(
+                [
+                    dbc.Col(
+                        bottom_panel,
+                        style={
+                            "margin-top": "5vh",
+                            "margin-bottom": "5vh",
+                            "margin-left": "75px",
+                            "margin-right": "75px",
+                        },
+                    )
+                    # xs=12, sm=12, md=12, lg=12)
+                ]
+            ),
+        ]
+    )
 )
 
-# band options for Sentinel-2 (using same for S2A and S2B within control panel bands selection), Landsat 8, Planet SuperDove, Airbus Pleiades
+# control panel options data for Sentinel-2, Landsat 8, Planet SuperDove, Airbus Pleiades
 options_s2 = [
     {"label": "B1 - 442 nm", "value": "442 nm"},
     {"label": "B2 - 492 nm", "value": "492 nm"},
@@ -462,38 +463,6 @@ options_s2 = [
     {"label": "B10 - 1373 nm", "value": "1373 nm"},
     {"label": "B11 - 1613 nm", "value": "1613 nm"},
 ]
-
-# options_s2a = [ # diferente for S2B?
-#     {'label': 'B1 - 443 nm', 'value': '443 nm'},
-#     {'label': 'B2 - 492 nm', 'value': '492 nm'},
-#     {'label': 'B3 - 560 nm', 'value': '560 nm'},
-#     {'label': 'B4 - 665 nm', 'value': '665 nm'},
-#     {'label': 'B5 - 704 nm', 'value': '704 nm'},
-#     {'label': 'B6 - 741 nm', 'value': '741 nm'},
-#     {'label': 'B7 - 783 nm', 'value': '783 nm'},
-#     {'label': 'B8 - 833 nm', 'value': '833 nm'},
-#     {'label': 'B8A - 865 nm', 'value': '865 nm'},
-#     {'label': 'B9 - 945 nm', 'value': '945 nm'},
-#     {'label': 'B10 - 1374 nm', 'value': '1374 nm'},
-#     {'label': 'B11 - 1614 nm', 'value': '1614 nm'},
-#     {'label': 'B12 - 2202 nm', 'value': '2202 nm'}
-# ]
-
-# options_s2b = [
-#     {'label': 'B1 - 442 nm', 'value': '442 nm'},
-#     {'label': 'B2 - 492 nm', 'value': '492 nm'},
-#     {'label': 'B3 - 559 nm', 'value': '559 nm'},
-#     {'label': 'B4 - 665 nm', 'value': '665 nm'},
-#     {'label': 'B5 - 704 nm', 'value': '704 nm'},
-#     {'label': 'B6 - 739 nm', 'value': '739 nm'},
-#     {'label': 'B7 - 780 nm', 'value': '780 nm'},
-#     {'label': 'B8 - 833 nm', 'value': '833 nm'},
-#     {'label': 'B8A - 864 nm', 'value': '864 nm'},
-#     {'label': 'B9 - 943 nm', 'value': '943 nm'},
-#     {'label': 'B10 - 1377 nm', 'value': '1377 nm'},
-#     {'label': 'B11 - 1610 nm', 'value': '1610 nm'},
-#     {'label': 'B12 - 2186 nm', 'value': '2186 nm'}
-# ]
 
 options_l8 = [
     {"label": "B1 - 443 nm", "value": "443"},
@@ -543,7 +512,8 @@ all_options_dict = {
 # updates control panel wavebands based on satellite selection
 @callback(
     Output("band", "options", allow_duplicate=True),
-    Input("sat", "value"),
+    Input("sat", "value"),  # State
+    # Input('trigger', 'n_intervals'),
     prevent_initial_call=True,
 )
 def update_band_selector(selected_sat):
@@ -562,21 +532,28 @@ def update_band_selector(selected_sat):
     Input("sat", "value"),
     Input("ref", "value"),
     Input("band", "value"),
-    Input("date-picker", "value"),
+    Input("date-picker", "start_date"),
+    Input("date-picker", "end_date"),
     prevent_initial_call=True,
 )
-def update_timeseries(sat: list, refs: list, band: list, date: list):
+def update_timeseries(sat: list, refs: list, band: list, date_1, date_2):
     empty_upper_plot = fig_empty
 
-    if any(val is None for val in [sat, refs, band, date]):
+    if any(val is None for val in [sat, refs, band, date_1, date_2]):
         return empty_upper_plot
 
     else:
+        date = [date_1, date_2]
+
         refs = sorted(refs)
 
-        timeseries_data_ref1, timeseries_data_ref2 = (
-            data_interface.return_timeseries_data(sat, refs, band, date)
+        (
+            timeseries_data_ref1,
+            timeseries_data_ref2,
+        ) = data_interface.return_timeseries_data(
+            sat, refs, band, date
         )  # 2 pd dfs
+
         if len(timeseries_data_ref1) == 0 and len(timeseries_data_ref2) == 0:
             return empty_upper_plot
 
@@ -605,32 +582,43 @@ def update_timeseries(sat: list, refs: list, band: list, date: list):
     Input("sat", "value"),
     Input("ref", "value"),
     Input("band", "value"),
-    Input("date-picker", "value"),
+    Input("date-picker", "start_date"),
+    Input("date-picker", "end_date"),
     prevent_initial_call=True,
 )
-def update_bias_table(sat, refs, band, date):
+def update_bias_table(sat, refs, band, date_1, date_2):
 
     empty_bias_vals_table_output = (
         av_bias_empty.to_dict("records"),
         [{"name": i, "id": i} for i in av_bias_empty.columns],
     )
 
-    if any(val is None for val in [sat, refs, band, date]):
+    if any(val is None for val in [sat, refs, band, date_1, date_2]):
         return empty_bias_vals_table_output
 
     else:
-        ref = sorted(refs)
+        date = [date_1, date_2]
+        sel_refs = sorted(refs)
 
-        timeseries_data_ref1, timeseries_data_ref2 = (
-            data_interface.return_timeseries_data(sat, ref, band, date)
-        )
+        (
+            timeseries_data_ref1,
+            timeseries_data_ref2,
+        ) = data_interface.return_timeseries_data(sat, sel_refs, band, date)
+
         if len(timeseries_data_ref1) == 0 and len(timeseries_data_ref2) == 0:
             return empty_bias_vals_table_output
 
         else:
+            refs = []
+            for ref in sel_refs:
+                if ref == timeseries_data_ref1.loc[0, "Ref"]:
+                    refs.append(ref)
+                if ref == timeseries_data_ref2.loc[0, "Ref"]:
+                    refs.append(ref)
+
             bias_vals = data_interface.get_bias_table_vals(
                 sat,
-                ref,
+                refs,
                 band,
                 timeseries_data_ref1["Datetime"],
                 timeseries_data_ref1["BiasVals"],
@@ -651,13 +639,14 @@ def update_bias_table(sat, refs, band, date):
 
 # updates bottom panel parts
 @callback(
-    Output("lower-dummy-plot-content", "figure"),
+    Output("small-dummy-graph-content", "figure"),
     Output("matchup_analysis_tbl-content", "data"),
     Output("matchup_analysis_tbl-content", "columns"),
     Output("quicklook-image-content", "src"),
     Input("upper-graph-content", "clickData"),
     Input("sat", "value"),
     Input("ref", "value"),
+    # Input('band', 'value'),
     prevent_initial_call=True,
 )
 def update_bottom_panel(clickData, sat, refs):  # band
@@ -670,7 +659,24 @@ def update_bottom_panel(clickData, sat, refs):  # band
             "assets/empty_quicklook.png",
         )
     else:
-        refs = sorted(refs)
+        sel_refs = sorted(refs)
+
+        matchup_datetime = str(clickData["points"][0]["x"]).split(".")[0]
+
+        # convert dates into comparable format
+        clicked_matchup_date = datetime.datetime.strptime(
+            matchup_datetime, "%Y-%m-%d %H:%M:%S"
+        )
+        matchup_range_end = clicked_matchup_date + datetime.timedelta(minutes=60)
+
+        mup_info = data_interface.extract_mup_info_from_db(
+            sat, refs, [clicked_matchup_date, matchup_range_end]
+        )
+
+        refs = []
+        for ref in sel_refs:
+            if ref in str(mup_info.attrs.keys()):
+                refs.append(ref)
 
         if len(refs) >= 2:
             if clickData["points"][0]["curveNumber"] in [
@@ -682,21 +688,13 @@ def update_bottom_panel(clickData, sat, refs):  # band
                 10,
                 12,
                 14,
-            ]:  # only works for 2 refs for now
+            ]:  # only works for 2 refs for now,
                 clicked_ref = [refs[0]]
             else:
                 clicked_ref = [refs[1]]
         else:
             clicked_ref = refs
 
-        matchup_datetime = str(clickData["points"][0]["x"]).split(".")[0]
-
-        # convert dates into comparable format
-        clicked_matchup_date = datetime.datetime.strptime(
-            matchup_datetime, "%Y-%m-%d %H:%M:%S"
-        )
-
-        matchup_range_end = clicked_matchup_date + datetime.timedelta(minutes=60)
         mup_info = data_interface.extract_mup_info_from_db(
             sat, clicked_ref, [clicked_matchup_date, matchup_range_end]
         )
@@ -707,10 +705,12 @@ def update_bottom_panel(clickData, sat, refs):  # band
 
         if clicked_ref == [
             "RCN-GONA"
-        ]:  # currently works only for GONA and RVUS - update to get any ref based on clickData
+        ]:  # todo: update to get correct ref based on clickData (more than just RCN-GONA or RCN-RVUS
             src = "assets/Gobabeb.png"
-        else:
+        elif clicked_ref == ["RCN-RVUS"]:
             src = "assets/RailroadValley.png"
+        else:
+            src = "assets/empty_quicklook.png"
 
         output = figure, data, columns, src
 
@@ -723,14 +723,15 @@ def update_bottom_panel(clickData, sat, refs):  # band
     Output("band", "options"),
     Output("ref", "value"),
     Output("band", "value"),
-    Output("date-picker", "value"),
+    Output("date-picker", "start_date"),
+    Output("date-picker", "end_date"),
     Input("trigger", "n_intervals"),
 )
 def read_url(trigger):
     out_sat = None
     out_refs = None
     out_bands = None
-    out_date = None
+    out_date = [None, None]
 
     url = flask.request.referrer
     parts = urllib.parse.urlparse(url)
@@ -760,7 +761,7 @@ def read_url(trigger):
             for band_i in all_options_dict[out_sat]
         ]
 
-    return out_sat, band_options, out_refs, out_bands, out_date
+    return out_sat, band_options, out_refs, out_bands, out_date[0], out_date[1]
 
 
 # updates url based on control panel selection
@@ -769,11 +770,12 @@ def read_url(trigger):
     Input("sat", "value"),
     Input("ref", "value"),
     Input("band", "value"),
-    Input("date-picker", "value"),
+    Input("date-picker", "start_date"),
+    Input("date-picker", "end_date"),
     prevent_initial_call=True,
 )
-def display_page(sat, ref, band, date):
-    vals = [sat, ref, band, date]
+def display_page(sat, ref, band, date_1, date_2):
+    vals = [sat, ref, band, [date_1, date_2]]
     vars = ["sat", "refs", "bands", "date"]
 
     search_output = "?"
@@ -787,18 +789,20 @@ def display_page(sat, ref, band, date):
                     url_refs += f"{k},"
                 url_refs = url_refs[:-1]
                 search_output += f"{vars[i]}={url_refs}&"
-            elif i == 2:  # bands
+            elif i == 2:
                 url_bands = ""
                 for k in val:
                     url_bands += f"{k[:-3]},"
                 url_bands = url_bands[:-1]
                 search_output += f"{vars[i]}={url_bands}&"
-            elif i == 3:  # dates
+            elif i == 3:
                 url_dates = ""
-                for k in val:
-                    url_dates += f"{k},"
-                url_dates = url_dates[:-1]
-                search_output += f"{vars[i]}={url_dates}&"
+                if val != [None, None]:
+                    for k in val:
+                        if k is not None:
+                            url_dates += f"{k},"
+                    url_dates = url_dates[:-1]
+                    search_output += f"{vars[i]}={url_dates}&"
 
     search_output = search_output[:-1]
 

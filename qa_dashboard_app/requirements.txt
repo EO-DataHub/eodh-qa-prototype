@@ -1,7 +1,7 @@
 dash
 sqlalchemy
 dash_bootstrap_components==1.4.2
-dash_mantine_components==0.12.1
+dash_mantine_components
 
 plotly
 datetime
@@ -20,3 +20,4 @@ click
 logging
 
 psycopg2
+requests

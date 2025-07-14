@@ -6,9 +6,8 @@ import dash_bootstrap_components as dbc
 dash.register_page(
     __name__,
     order=3,
-    title="Calibration Dashboard - Help",  # name of tab
-    # image='help.png',
-    description="Further help and FAQs.",
+    title="RadVAL Dashboard - Help",  # name of tab
+    description="Further help and FAQs.",  # metadata
     location="sidebar",
 )
 
@@ -21,7 +20,7 @@ descr_box = dmc.Card(
     radius="md",
     children=[
         html.H2(
-            "What is the CEOS Calibration Dashboard?",
+            "What is the CEOS RadVAL Dashboard?",
             # style={'margin-top': '5vh',
             #      'margin-left': '75px',
             #      'margin-right': '75px'}
@@ -43,17 +42,14 @@ descr_box = dmc.Card(
     ],
 )
 
-# how-to box
-how_to_box = dmc.Card(
+# how-to use the dashboard box
+how_to_dashboard_box = dmc.Card(
     withBorder=True,
     shadow="xs",
     radius="md",
     children=[
         html.H2(
-            "How to navigate the dashboard:",
-            # style={'margin-top': '5vh',
-            #        'margin-left': '75px',
-            #        'margin-right': '75px'}
+            "How to navigate the RadVAL dashboard:",
         ),
         html.Div(
             dcc.Markdown(
@@ -64,10 +60,6 @@ how_to_box = dmc.Card(
                                             4. Scroll down to see more detailed information for that matchup.
                       """
             ),
-            # style={'margin-top': '5vh',
-            #        'margin-bottom': '75px',
-            #        'margin-left': '75px',
-            #        'margin-right': '75px'}
         ),
     ],
 )
@@ -86,8 +78,7 @@ eodh_card = dmc.Card(
         dbc.CardBody(
             html.Div(
                 dcc.Markdown(
-                    """ The EODH can be accessed at: [staging.eodatahub.org.uk]("https://staging.eodatahub.org.uk/").  
-                            The EODH is a centralised software infrastructure, \
+                    """ The [EODH]("https://eodatahub.org.uk/") is a centralised software infrastructure, \
                             providing a new ‘single point’ of access for EO data offerings from both public and commercial sources \
                             where you can carry out analyses, as well as access QA information for a range of missions.  
                             The EODH STAC catalog entry for the data collection selected on the CEOS Dashboard can be accessed at the link provided. 
@@ -99,54 +90,75 @@ eodh_card = dmc.Card(
             )
         ),
     ],
-    # style={"width": "25rem"},
 )
 
+# blank content box
+blank_content_box = dmc.Card(
+    withBorder=True,
+    shadow="xs",
+    radius="md",
+    children=[
+        html.H2(
+            "Other content",
+        ),
+        html.Div(
+            dcc.Markdown("""Description.""", style={"text-align": "justify"}),
+        ),
+    ],
+)
 
-layout = html.Div(
-    [
-        dbc.Row(
-            dbc.Col(
-                dmc.Container(
-                    fluid=True,
-                    children=[
-                        dbc.Row(
-                            children=[
-                                dbc.Col(descr_box),  # xs=2, sm=2, md=2, lg=2,
-                                dbc.Col(
-                                    how_to_box,  # xs=2, sm=2, md=2, lg=2,
-                                    # style={'margin-left': '10px'},
-                                ),
-                            ]
-                        )
-                    ],
-                )
+layout = dmc.MantineProvider(
+    html.Div(
+        [
+            dbc.Row(
+                dbc.Col(
+                    dmc.Container(
+                        fluid=True,
+                        children=[
+                            dbc.Row(
+                                children=[
+                                    dbc.Col(descr_box),  # xs=2, sm=2, md=2, lg=2,
+                                    dbc.Col(
+                                        how_to_dashboard_box,  # xs=2, sm=2, md=2, lg=2,
+                                        # style={'margin-left': '10px'},
+                                    ),
+                                ]
+                            )
+                        ],
+                    )
+                ),
+                style={
+                    "margin-top": "0vh",
+                    "margin-left": "75px",
+                    "margin-right": "75px",
+                },
             ),
-            style={"margin-top": "0vh", "margin-left": "75px", "margin-right": "75px"},
-        ),
-        dbc.Row(
-            dbc.Col(
-                dmc.Container(
-                    fluid=True,
-                    children=[
-                        dbc.Row(
-                            children=[
-                                dbc.Col(eodh_card),
-                                dbc.Col(descr_box),  # xs=2, sm=2, md=2, lg=2,
-                                dbc.Col(
-                                    how_to_box,  # xs=2, sm=2, md=2, lg=2,
-                                ),
-                            ]
-                        )
-                    ],
-                )
+            dbc.Row(
+                dbc.Col(
+                    dmc.Container(
+                        fluid=True,
+                        children=[
+                            dbc.Row(
+                                children=[
+                                    dbc.Col(eodh_card),
+                                    dbc.Col(
+                                        blank_content_box
+                                    ),  # xs=2, sm=2, md=2, lg=2,
+                                    dbc.Col(
+                                        blank_content_box,  # xs=2, sm=2, md=2, lg=2,
+                                    ),
+                                ]
+                            )
+                        ],
+                    )
+                ),
+                style={
+                    "margin-top": "5vh",
+                    "margin-bottom": "5vh",
+                    "margin-left": "75px",
+                    "margin-right": "75px",
+                },
             ),
-            style={
-                "margin-top": "5vh",
-                "margin-bottom": "5vh",
-                "margin-left": "75px",
-                "margin-right": "75px",
-            },
-        ),
-    ]
+        ]
+    )
 )
