@@ -116,20 +116,7 @@ def extract_mup_info_from_db(sensor1: str, sensor2: list, dates: list):
         if mup_ds:
             mup_info = xr.merge([mup_info, mup_ds], combine_attrs="no_conflicts")
 
-        # for idx, ref in enumerate(
-        #     refs_list
-        # ):  # replacing metadata with dummy values for now - todo: update once all db metadata inputs are in for all sats
-        #     for mup_id in mup_info.attrs[str(sensor1) + "_" + str(ref) + "_MatchupIDs"]:
-        #         mup_info.attrs[str(sensor1) + "_" + str(ref) + "_Metadata"][mup_id][
-        #             "Satellite Viewing Angle"
-        #         ] = (str(random.choice(dummy_sat_view_angle)) + "°")
-        #         mup_info.attrs[str(sensor1) + "_" + str(ref) + "_Metadata"][mup_id][
-        #             "Solar Azimuth Angle"
-        #         ] = (str(random.choice(dummy_sun_azimuth)) + "°")
-        #         mup_info.attrs[str(sensor1) + "_" + str(ref) + "_Metadata"][mup_id][
-        #             "Solar Elevation Angle"
-        #         ] = (str(random.choice(dummy_sun_elevation)) + "°")
-
+       
     # check which refs are output (important in case of updating lower panel)
     output_refs = []
     for output_ref in ref_name.keys():
