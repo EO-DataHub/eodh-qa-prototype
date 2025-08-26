@@ -6,6 +6,7 @@ import xarray as xr
 
 from natsort import natsorted
 from datetime import datetime
+from copy import deepcopy
 
 import requests
 import json
@@ -15,7 +16,8 @@ sat_name = {
     "s2a": "Sentinel-2A",
     "s2b": "Sentinel-2B",
     "l8": "Landsat 8",
-    "planet": "Planet SuperDove",
+    "l9": "Landsat 9",
+    "planetscope": "Planet SuperDove",
     "airbus_phr": "Airbus Pleiades",
 }
 ref_name = {
@@ -58,145 +60,15 @@ planet_bands_idx = {
 airbus_bands_idx = {"490 nm": 0, "560 nm": 1, "650 nm": 2, "840 nm": 3}
 
 l8_bands_idx = {
-    "444 nm": 0,
-    "458 nm": 1,
+    "440 nm": 0,
+    "480 nm": 1,
     "560 nm": 2,
-    "650 nm": 3,
-    "860 nm": 4,
+    "660 nm": 3,
+    "870 nm": 4,
     "1610 nm": 5,
     "2200 nm": 6,
-    "590 nm": 7,
-    "1380 nm": 8,
+    "1370 nm": 8,
 }
-
-dummy_AOD = np.array(
-    [
-        0.131,
-        0.151,
-        0.154,
-        0.088,
-        0.092,
-        0.096,
-        0.096,
-        0.110,
-        0.126,
-        0.121,
-        0.112,
-        0.103,
-        0.100,
-        0.070,
-        0.070,
-        0.063,
-        0.061,
-        0.058,
-        0.060,
-        0.059,
-        0.054,
-        0.052,
-        0.050,
-        0.052,
-        0.062,
-        0.057,
-        0.014,
-        0.014,
-        0.014,
-        0.013,
-        0.013,
-        0.013,
-        0.014,
-        0.013,
-        0.012,
-        0.013,
-        0.013,
-        0.015,
-        0.015,
-    ]
-)
-
-dummy_temp = np.array([])
-dummy_cloud_percent = np.array([0, 0, 0, 0, 0, 0, 0, 0, 2, 3, 4, 9, 15, 0, 0, 0, 3, 2])
-dummy_sun_azimuth = np.array(
-    [
-        97.5,
-        97.3,
-        94.6,
-        94.3,
-        97.4,
-        97.1,
-        97.3,
-        93.9,
-        96.5,
-        92.6,
-        95.8,
-        91.7,
-        85.6,
-        89.4,
-        85.2,
-        88.6,
-        85.5,
-        81.7,
-        81.5,
-        85.7,
-        77.3,
-        77.4,
-        76.8,
-        76.6,
-        74.0,
-    ]
-)
-dummy_sun_elevation = np.array(
-    [
-        51.7,
-        61.8,
-        51.7,
-        61.8,
-        53.7,
-        64.8,
-        53.7,
-        64.8,
-        56.2,
-        60.5,
-        56.2,
-        61.5,
-        56.3,
-        60.3,
-        55.8,
-        61.8,
-        54.4,
-        63.9,
-        52.2,
-        58.5,
-    ]
-)
-dummy_sat_view_angle = np.array(
-    [
-        5.0,
-        1.0,
-        5.0,
-        4.1,
-        2.0,
-        4.9,
-        4.9,
-        5.0,
-        2.0,
-        0.1,
-        2.0,
-        5.1,
-        1.9,
-        5.0,
-        4.0,
-        1.1,
-        2.1,
-        0.2,
-        0.2,
-        2.0,
-        2.0,
-        2.0,
-        5.0,
-        5.0,
-        1.7,
-    ]
-)
 
 
 # access db for given selection and extract corresponding matchups
@@ -214,9 +86,6 @@ def extract_mup_info_from_db(sensor1: str, sensor2: list, dates: list):
         )
     else:
         daterange = dates[0].strftime("%Y-%m-%d") + "," + dates[1].strftime("%Y-%m-%d")
-
-    if sensor1 == "s2":  # return S-2A by default if S2 is called
-        sensor1 = "s2a"
 
     url_sensor2 = None
     if len(sensor2) == 1:
@@ -247,19 +116,39 @@ def extract_mup_info_from_db(sensor1: str, sensor2: list, dates: list):
         if mup_ds:
             mup_info = xr.merge([mup_info, mup_ds], combine_attrs="no_conflicts")
 
-        for idx, ref in enumerate(
-            refs_list
-        ):  # replacing metadata with dummy values for now - todo: update once all db metadata inputs are in for all sats
-            for mup_id in mup_info.attrs[str(sensor1) + "_" + str(ref) + "_MatchupIDs"]:
-                mup_info.attrs[str(sensor1) + "_" + str(ref) + "_Metadata"][mup_id][
-                    "Satellite Viewing Angle"
-                ] = (str(random.choice(dummy_sat_view_angle)) + "°")
-                mup_info.attrs[str(sensor1) + "_" + str(ref) + "_Metadata"][mup_id][
-                    "Solar Azimuth Angle"
-                ] = (str(random.choice(dummy_sun_azimuth)) + "°")
-                mup_info.attrs[str(sensor1) + "_" + str(ref) + "_Metadata"][mup_id][
-                    "Solar Elevation Angle"
-                ] = (str(random.choice(dummy_sun_elevation)) + "°")
+        # for idx, ref in enumerate(
+        #     refs_list
+        # ):  # replacing metadata with dummy values for now - todo: update once all db metadata inputs are in for all sats
+        #     for mup_id in mup_info.attrs[str(sensor1) + "_" + str(ref) + "_MatchupIDs"]:
+        #         mup_info.attrs[str(sensor1) + "_" + str(ref) + "_Metadata"][mup_id][
+        #             "Satellite Viewing Angle"
+        #         ] = (str(random.choice(dummy_sat_view_angle)) + "°")
+        #         mup_info.attrs[str(sensor1) + "_" + str(ref) + "_Metadata"][mup_id][
+        #             "Solar Azimuth Angle"
+        #         ] = (str(random.choice(dummy_sun_azimuth)) + "°")
+        #         mup_info.attrs[str(sensor1) + "_" + str(ref) + "_Metadata"][mup_id][
+        #             "Solar Elevation Angle"
+        #         ] = (str(random.choice(dummy_sun_elevation)) + "°")
+
+    # check which refs are output (important in case of updating lower panel)
+    output_refs = []
+    for output_ref in ref_name.keys():
+        if output_ref in str(mup_info.attrs.keys()):
+            output_refs.append(output_ref)
+
+    for mup_ref in output_refs:
+        for data_var in mup_info:
+            mup_info[data_var].values[mup_info[data_var].values == -9999] = np.nan
+        for mup_attr in mup_info.attrs[f"{sensor1}_{mup_ref}_Metadata"]:
+            if (
+                mup_info.attrs[f"{sensor1}_{mup_ref}_Metadata"][mup_attr][
+                    "AOD at 550 nm *"
+                ]
+                == "0.0"
+            ):
+                mup_info.attrs[f"{sensor1}_{mup_ref}_Metadata"][mup_attr][
+                    "AOD at 550 nm *"
+                ] = "N/A"
 
     return mup_info
 
@@ -268,7 +157,7 @@ def extract_mup_info_from_db(sensor1: str, sensor2: list, dates: list):
 def return_timeseries_data(sat, refs, band, dates):
     bands = natsorted(band)
     sel_refs = sorted(refs)
-    refs = []
+    refs = sel_refs
 
     date_range = [
         datetime.strptime(dates[0], "%Y-%m-%d"),
@@ -278,9 +167,12 @@ def return_timeseries_data(sat, refs, band, dates):
     ]
 
     timeseries_data_all_bands = extract_mup_info_from_db(sat, sel_refs, date_range)
+
+    updated_refs = []
     for ref in sel_refs:
         if ref in str(timeseries_data_all_bands.attrs.keys()):
-            refs.append(ref)
+            updated_refs.append(ref)
+
     empty_df = pd.DataFrame(
         columns=[
             "Ref",
@@ -297,7 +189,7 @@ def return_timeseries_data(sat, refs, band, dates):
     timeseries_data_all_bands.copy()
 
     # output the timeseries data as df for plotting
-    if sat == "planet":
+    if sat == "planetscope":
         bands_idx = planet_bands_idx
     elif sat in [
         "s2",
@@ -305,7 +197,7 @@ def return_timeseries_data(sat, refs, band, dates):
         "s2b",
     ]:
         bands_idx = s2_bands_idx
-    elif sat == "l8":
+    elif sat in ["l8", "l9"]:
         bands_idx = l8_bands_idx
     elif sat == "airbus_phr":
         bands_idx = airbus_bands_idx
@@ -320,7 +212,7 @@ def return_timeseries_data(sat, refs, band, dates):
     timeseries_data_ref1 = pd.DataFrame(
         index=range(
             timeseries_data_all_bands.data_vars[
-                str(sat) + "_" + str(refs[0]) + "_BiasVals"
+                str(sat) + "_" + str(updated_refs[0]) + "_BiasVals"
             ].values.shape[0]
         ),
         columns=[
@@ -334,34 +226,35 @@ def return_timeseries_data(sat, refs, band, dates):
     )
 
     for i in range(len(timeseries_data_ref1.index)):
-        timeseries_data_ref1["Ref"] = refs[0]
+        timeseries_data_ref1["Ref"] = updated_refs[0]
         timeseries_data_ref1["Datetime"].iloc[i] = timeseries_data_all_bands.attrs[
-            str(sat) + "_" + str(refs[0]) + "_Datetime"
+            str(sat) + "_" + str(updated_refs[0]) + "_Datetime"
         ][i]
         timeseries_data_ref1["BiasVals"].iloc[i] = timeseries_data_all_bands.data_vars[
-            str(sat) + "_" + str(refs[0]) + "_BiasVals"
+            str(sat) + "_" + str(updated_refs[0]) + "_BiasVals"
         ].values[i][[clicked_band_idx]]
         timeseries_data_ref1["BiasUncVals"].iloc[i] = (
             timeseries_data_all_bands.data_vars[
-                str(sat) + "_" + str(refs[0]) + "_BiasUncVals"
+                str(sat) + "_" + str(updated_refs[0]) + "_BiasUncVals"
             ].values[i][[clicked_band_idx]]
         )
         timeseries_data_ref1["MeasValsSensor1"].iloc[i] = (
             timeseries_data_all_bands.data_vars[
-                str(sat) + "_" + str(refs[0]) + "_MeasValsSensor1"
+                str(sat) + "_" + str(updated_refs[0]) + "_MeasValsSensor1"
             ].values[i][[clicked_band_idx]]
         )
         timeseries_data_ref1["MeasValsSensor2"].iloc[i] = (
             timeseries_data_all_bands.data_vars[
-                str(sat) + "_" + str(refs[0]) + "_MeasValsSensor2"
+                str(sat) + "_" + str(updated_refs[0]) + "_MeasValsSensor2"
             ].values[i][[clicked_band_idx]]
         )
+        # timeseries_data_ref1["VirRefVals"].iloc[i] = timeseries_data_all_bands.data_vars["CEOS Virtual Reference"].values[[clicked_band_idx]]
 
-    if len(refs) > 1:
+    if len(updated_refs) > 1:
         timeseries_data_ref2 = pd.DataFrame(
             index=range(
                 timeseries_data_all_bands.data_vars[
-                    str(sat) + "_" + str(refs[1]) + "_BiasVals"
+                    str(sat) + "_" + str(updated_refs[1]) + "_BiasVals"
                 ].values.shape[0]
             ),
             columns=[
@@ -375,35 +268,36 @@ def return_timeseries_data(sat, refs, band, dates):
         )
 
         for i in range(len(timeseries_data_ref2.index)):
-            timeseries_data_ref2["Ref"] = refs[1]
+            timeseries_data_ref2["Ref"] = updated_refs[1]
             timeseries_data_ref2["Datetime"].iloc[i] = timeseries_data_all_bands.attrs[
-                str(sat) + "_" + str(refs[1]) + "_Datetime"
+                str(sat) + "_" + str(updated_refs[1]) + "_Datetime"
             ][i]
             timeseries_data_ref2["BiasVals"].iloc[i] = (
                 timeseries_data_all_bands.data_vars[
-                    str(sat) + "_" + str(refs[1]) + "_BiasVals"
+                    str(sat) + "_" + str(updated_refs[1]) + "_BiasVals"
                 ].values[i][[clicked_band_idx]]
             )
             timeseries_data_ref2["BiasUncVals"].iloc[i] = (
                 timeseries_data_all_bands.data_vars[
-                    str(sat) + "_" + str(refs[1]) + "_BiasUncVals"
+                    str(sat) + "_" + str(updated_refs[1]) + "_BiasUncVals"
                 ].values[i][[clicked_band_idx]]
             )
             timeseries_data_ref2["MeasValsSensor1"].iloc[i] = (
                 timeseries_data_all_bands.data_vars[
-                    str(sat) + "_" + str(refs[1]) + "_MeasValsSensor1"
+                    str(sat) + "_" + str(updated_refs[1]) + "_MeasValsSensor1"
                 ].values[i][[clicked_band_idx]]
             )
             timeseries_data_ref2["MeasValsSensor2"].iloc[i] = (
                 timeseries_data_all_bands.data_vars[
-                    str(sat) + "_" + str(refs[1]) + "_MeasValsSensor2"
+                    str(sat) + "_" + str(updated_refs[1]) + "_MeasValsSensor2"
                 ].values[i][[clicked_band_idx]]
             )
+            # timeseries_data_ref2["VirRefVals"].iloc[i] = timeseries_data_all_bands.data_vars["CEOS Virtual Reference"].values[[clicked_band_idx]]
     else:
         timeseries_data_ref2 = pd.DataFrame(
             index=range(
                 timeseries_data_all_bands.data_vars[
-                    str(sat) + "_" + str(refs[0]) + "_BiasVals"
+                    str(sat) + "_" + str(updated_refs[0]) + "_BiasVals"
                 ].values.shape[0]
             ),
             columns=[
@@ -429,20 +323,17 @@ def plot_timeseries(
     date_df_r1,
     bias_r1,
     bias_unc_r1,
-    meas_vals_r1,
+    meas_vals_s1_r1,
+    meas_vals_s2_r1,
     date_df_r2,
     bias_r2,
     bias_unc_r2,
-    meas_vals_r2,
-    hyp_bias=None,
-    hyp_bias_unc=None,
+    meas_vals_s1_r2,
+    meas_vals_s2_r2,
 ):
 
     bands = natsorted(band)
-    refs = sorted(refs)
-
-    if date_df_r2.isnull().iloc[0]:
-        refs = [refs[0]]
+    sel_refs = sorted(refs)
 
     bias_vals_r1 = np.ones((len(bands), len(date_df_r1))) * np.nan
     bias_unc_vals_r1 = np.ones((len(bands), len(date_df_r1))) * np.nan
@@ -456,14 +347,14 @@ def plot_timeseries(
         for k in range(len(bands)):
             bias_vals_r1[k][i] = bias_r1.values[i].flatten()[k]
             bias_unc_vals_r1[k][i] = bias_unc_r1.values[i].flatten()[k]
-            rcn_meas_vals_r1[k][i] = meas_vals_r1.values[i].flatten()[k]
+            rcn_meas_vals_r1[k][i] = meas_vals_s2_r1.values[i].flatten()[k]
 
-    if len(refs) > 1:
+    if len(sel_refs) > 1:
         for i in range(len(date_df_r2)):
             for k in range(len(bands)):
                 bias_vals_r2[k][i] = bias_r2.values[i].flatten()[k]
                 bias_unc_vals_r2[k][i] = bias_unc_r2.values[i].flatten()[k]
-                rcn_meas_vals_r2[k][i] = meas_vals_r2.values[i].flatten()[k]
+                rcn_meas_vals_r2[k][i] = meas_vals_s2_r2.values[i].flatten()[k]
 
     bias_percentage_r1 = np.ones(bias_vals_r1.shape) * np.nan
     bias_percentage_r2 = np.ones(bias_vals_r2.shape) * np.nan
@@ -490,10 +381,14 @@ def plot_timeseries(
     #         date_df_r2[idx] = np.nan
     #         bias_percentage_r2[i][idx] = np.nan
 
-    legend_ref = refs
-    for idx, ref in enumerate(refs):
+    legend_ref = deepcopy(sel_refs)
+    for idx, ref in enumerate(sel_refs):
         if ref == "ceos-virtual-ref":
-            legend_ref[idx] = "Ceos Virtual Ref"
+            legend_ref[idx] = "CEOS Virtual Ref"
+        else:
+            non_ceos_ref_idx = idx
+    if "ceos-virtual-ref" in sel_refs:
+        legend_ref = ["CEOS Virtual Ref", sel_refs[non_ceos_ref_idx]]
 
     fig_2 = go.Figure()
 
@@ -509,7 +404,7 @@ def plot_timeseries(
                 legendgrouptitle_text=f"{legend_ref[0]}",
             )
         )
-        if len(refs) > 1:
+        if len(sel_refs) > 1:
             fig_2.add_trace(
                 go.Scatter(
                     x=date_df_r2,
@@ -571,11 +466,13 @@ def get_bias_table_vals(
     date_df_r1,
     bias_r1,
     bias_unc_r1,
-    meas_vals_r1,
+    meas_vals_s1_r1,
+    meas_vals_s2_r1,
     date_df_r2=None,
     bias_r2=None,
     bias_unc_r2=None,
-    meas_vals_r2=None,
+    meas_vals_s1_r2=None,
+    meas_vals_s2_r2=None,
 ):  # todo: update to take in refs (not each refs bias) and get bias from that
     bias_vals = {}
     band = natsorted(bands)
@@ -596,14 +493,14 @@ def get_bias_table_vals(
         for k in range(len(bands)):
             bias_vals_r1[k][i] = bias_r1.values[i].flatten()[k]
             bias_unc_vals_r1[k][i] = bias_unc_r1.values[i].flatten()[k]
-            rcn_meas_vals_r1[k][i] = meas_vals_r1.values[i].flatten()[k]
+            rcn_meas_vals_r1[k][i] = meas_vals_s2_r1.values[i].flatten()[k]
 
     if len(refs) > 1:
         for i in range(len(date_df_r2)):
             for k in range(len(bands)):
                 bias_vals_r2[k][i] = bias_r2.values[i].flatten()[k]
                 bias_unc_vals_r2[k][i] = bias_unc_r2.values[i].flatten()[k]
-                rcn_meas_vals_r2[k][i] = meas_vals_r2.values[i].flatten()[k]
+                rcn_meas_vals_r2[k][i] = meas_vals_s2_r2.values[i].flatten()[k]
 
     bias_percentage_r1 = np.ones(bias_vals_r1.shape) * np.nan
     bias_percentage_r2 = np.ones(bias_vals_r2.shape) * np.nan
@@ -619,33 +516,33 @@ def get_bias_table_vals(
     for k in range(len(bias_vals_r1)):
         bias_vals_mean_r1.append(
             round(
-                sum(bias_percentage_r1[k][~np.isnan(bias_percentage_r1[k])])
-                / len(bias_percentage_r1[k][~np.isnan(bias_percentage_r1[k])]),
+                np.nanmean(bias_percentage_r1[k]),
                 2,
             )
         )
         if len(refs) > 1:
             bias_vals_mean_r2.append(
                 round(
-                    sum(bias_percentage_r2[k][~np.isnan(bias_percentage_r2[k])])
-                    / len(bias_percentage_r2[k][~np.isnan(bias_percentage_r2[k])]),
+                    np.nanmean(bias_percentage_r2[k]),
                     2,
                 )
             )
 
     # find relevant bands and order based on sat
-    for ref in refs:
-        if ref == refs[0]:
+    table_refs = deepcopy(refs)
+    for idx, ref in enumerate(refs):
+        if ref == "ceos-virtual-ref":
+            table_refs[idx] = "CEOS Virtual Ref"
+
+    for ref in table_refs:
+        table_ref = ref
+        if ref == table_refs[0]:
             rcn_bias_vals_mean = bias_vals_mean_r1
         else:
             rcn_bias_vals_mean = bias_vals_mean_r2
 
-        table_ref = ref
-        if ref == "ceos-virtual-ref":
-            table_ref = "Ceos Virtual Ref"
-
         for k in range(len(band)):
-            if sat == "planet":
+            if sat == "planetscope":
                 bias_vals[
                     table_ref
                     + " B"
@@ -661,14 +558,19 @@ def get_bias_table_vals(
                     + " - "
                     + str(band[k])
                 ] = f"{rcn_bias_vals_mean[k]}%"
-            elif sat == "l8":
-                bias_vals[
-                    table_ref
-                    + " B"
-                    + str(l8_bands_idx[band[k]] + 1)
-                    + " - "
-                    + str(band[k])
-                ] = f"{rcn_bias_vals_mean[k]}%"
+            elif sat in ["l8", "l9"]:
+                if l8_bands_idx[band[k]] == 7:
+                    bias_vals[table_ref + " B9" + " - " + str(band[k])] = (
+                        f"{rcn_bias_vals_mean[k]}%"
+                    )
+                else:
+                    bias_vals[
+                        table_ref
+                        + " B"
+                        + str(l8_bands_idx[band[k]] + 1)
+                        + " - "
+                        + str(band[k])
+                    ] = f"{rcn_bias_vals_mean[k]}%"
             elif sat in ["s2a", "s2b", "s2"]:
                 if s2_bands_idx[band[k]] <= 7:
                     bias_vals[
@@ -696,6 +598,8 @@ def get_bias_table_vals(
     for k, v in bias_vals_sorted.items():
         if v == "-0.0%":
             bias_vals_sorted[k] = "0.0%"
+        if v == "nan%":
+            bias_vals_sorted[k] = "N/A"
 
     return bias_vals_sorted
 
@@ -710,7 +614,13 @@ def analysis_table_update(sat, refs, mup_info):
     for key in mup_info.attrs[f"{sat}_{refs[0]}_Metadata"].keys():
         mup_id = key
     for k, v in mup_info.attrs[f"{sat}_{refs[0]}_Metadata"][mup_id].items():
-        if k not in ["Mission Product", "Reference Product"]:
+        if k not in [
+            "Mission Product",
+            "Reference Product",
+            "Temperature",
+            "Pressure",
+            "O3",
+        ]:
             if k in ["Mission Date & Time"]:
                 col_1.append(k)
                 col_2.append(v.split("T")[0] + " " + v.split("T")[1].split(".")[0])
@@ -764,7 +674,7 @@ def small_plot_update(sat, refs, mup_info):
         sensor_1_meas_vals = sensor_1_meas_vals[0:5]
         sensor_2_meas_vals = sensor_2_meas_vals[0:5]
 
-    # todo: check if will always be input in order
+    # todo: check if will always be input in order???
     sensor_1_wav_sort = sensor_1_wav_vals
     # sensor1_wav_idx = np.argsort(sensor_1_wav_vals)
     # sensor_1_wav_sort = sensor_1_wav_vals[sensor1_wav_idx][0]
@@ -820,9 +730,10 @@ def small_plot_update(sat, refs, mup_info):
         linewidth=2,
         linecolor="navy",
     )
-
+    # fig_small.show()
     return fig_small
 
 
+# test funcs work
 if __name__ == "__main__":
     pass

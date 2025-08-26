@@ -5,8 +5,8 @@ import dash_bootstrap_components as dbc
 
 dash.register_page(
     __name__,
-    order=4,
-    title="Calibration Dashboard - Methods",  # name of tab
+    order=5,
+    title="RadVAL - Methods",  # name of tab
     # image='methods.png',  # metadata
     description="Further information on methods.",  # metadata
     location="sidebar",

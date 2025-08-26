@@ -5,8 +5,8 @@ import dash_bootstrap_components as dbc
 
 dash.register_page(
     __name__,
-    order=3,
-    title="RadVAL Dashboard - Help",  # name of tab
+    order=6,
+    title="RadVAL - Help",  # name of tab
     description="Further help and FAQs.",  # metadata
     location="sidebar",
 )
@@ -54,7 +54,7 @@ how_to_dashboard_box = dmc.Card(
         html.Div(
             dcc.Markdown(
                 """
-                                            1. Make a selection of mission, reference site(s), bands and date range of interest. 
+                                            1. Make a selection of mission, up to two reference sites, bands and date range of interest. 
                                             2. View an interactive plot for the timeseries of data from matchups according to your selection.
                                             3. Select a specific point of interest from the plot, referring to one matchup between the selected satellite mission and reference site.
                                             4. Scroll down to see more detailed information for that matchup.
@@ -99,10 +99,10 @@ blank_content_box = dmc.Card(
     radius="md",
     children=[
         html.H2(
-            "Other content",
+            "  ",
         ),
         html.Div(
-            dcc.Markdown("""Description.""", style={"text-align": "justify"}),
+            dcc.Markdown(""" """, style={"text-align": "justify"}),
         ),
     ],
 )

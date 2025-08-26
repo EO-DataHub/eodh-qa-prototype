@@ -5,10 +5,11 @@ import dash_bootstrap_components as dbc
 
 dash.register_page(
     __name__,
-    order=6,
-    title="Calibration Dashboard - Missions information",  # name of tab
+    order=3,
+    name="CID and Sensors",
+    title="RadVAL - CID & Sensors",  # name of tab
     # image='missions.png',  # metadata
-    description="Further information on the missions.",  # metadata
+    description="Further information on the data collected within the CID and contributing sensor characteristics.",  # metadata
     location="sidebar",
 )
 
@@ -26,7 +27,11 @@ layout = dmc.MantineProvider(
                 },
             ),
             html.Div(
-                "This page will display information on all the missions contributing to CEOS-PVP.",
+                "This page will display the data collected within the Comparison Image Database (CID) "
+                "that populate the RadVal tool, alongside a description of the basic characteristics for"
+                " the sensors contributing to the CEOS-PVP activity. This is comprised of information that "
+                "the data providers have agreed to make public and, if applicable, will link to the sensor "
+                "operator for further information.",
                 style={
                     "margin-top": "5vh",
                     "margin-bottom": "75px",

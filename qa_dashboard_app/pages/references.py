@@ -6,8 +6,8 @@ import pandas as pd
 
 dash.register_page(
     __name__,
-    order=5,
-    title="Calibration Dashboard - References",  # name of tab
+    order=4,
+    title="RadVAL - References",  # name of tab
     # image='references.png',  # metadata
     description="Reference information.",  # metadata
     location="sidebar",
@@ -22,11 +22,11 @@ l4_site_info_dict = {
         "Surface type",
         "Coordinates",
     ),
-    "Libya-4": ("Libya", "PICS", "Desert sand", "28.55 N, 23.39 E"),
+    "Libya 4": ("Libya", "PICS", "Desert sand", "28.55 N, 23.39 E"),
 }
 l4_site_info_df = pd.DataFrame(data=l4_site_info_dict)
 
-# libya-4 box
+# libya 4 box
 libya4_box = dmc.Card(
     children=[
         dbc.Row(
@@ -263,7 +263,7 @@ lake_tahoe_site_info_dict = {
         "Surface type",
         "Coordinates",
     ),
-    "Lake Tahoe": (
+    "RCN - Lake Tahoe": (
         "California, USA",
         "Instrumented (RadCalNet) operated by NASA Jet Propulsion Lab (JPL)",
         "Water",
@@ -305,6 +305,160 @@ lake_tahoe_box = dmc.Card(  # withBorder=True, shadow="xs", radius="md",
                                     for i in lake_tahoe_site_info_df.columns
                                 ],
                                 id="lake-tahoe_tbl-content",
+                                # fill_width=True,
+                                style_cell={
+                                    "padding": "5px",
+                                    "textAlign": "left",
+                                    "whiteSpace": "pre-line",
+                                    "height": "auto",
+                                    "maxWidth": "20px",
+                                    # 'font-size': '0.8rem'
+                                },
+                                style_header={
+                                    "backgroundColor": "rgb(220, 230, 250)",
+                                    "fontWeight": "bold",
+                                    "font-size": "1.4rem",
+                                    "font-family": "Helvetica",
+                                    "whiteSpace": "normal",
+                                    "height": "auto",
+                                },
+                                style_data={
+                                    "color": "black",
+                                    "backgroundColor": "white",
+                                    "whiteSpace": "normal",
+                                    "height": "auto",
+                                    "font-size": "1.1rem",
+                                },
+                                fixed_rows={"headers": True, "data": 0},
+                            )
+                        ],
+                    )
+                ),
+            ]
+        )
+    ]
+)
+
+l1_site_info_dict = {
+    "Reference Site": (
+        "Location",
+        "Instrumented or Pseudo-Invariant Calibration Site (PICS)",
+        "Surface type",
+        "Coordinates",
+    ),
+    "Libya 1": ("Libya", "PICS", "Desert sand", "24.42 N, 13.35 E"),
+}
+l1_site_info_df = pd.DataFrame(data=l1_site_info_dict)
+
+# libya 4 box
+libya1_box = dmc.Card(
+    children=[
+        dbc.Row(
+            children=[
+                dbc.Col(
+                    dmc.Container(
+                        fluid=True,
+                        children=[
+                            html.Img(
+                                id="libya-1_image",
+                                src="assets/Libya-1-CenterROI-GoogleEarth.png",
+                                style={"width": "50vh", "margin-bottom": "5vh"},
+                            )
+                        ],
+                    )
+                ),
+                dbc.Col(
+                    dbc.Container(
+                        style={
+                            "margin-top": "25px",
+                            "width": "80vh",
+                            # 'margin-left': '15px', 'margin-right': '20px',
+                        },
+                        fluid="xs",
+                        children=[
+                            dash_table.DataTable(
+                                l1_site_info_df.to_dict("records"),
+                                [{"name": i, "id": i} for i in l1_site_info_df.columns],
+                                id="libya-1_tbl-content",
+                                # fill_width=True,
+                                style_cell={
+                                    "padding": "5px",
+                                    "textAlign": "left",
+                                    "whiteSpace": "pre-line",
+                                    "height": "auto",
+                                    "maxWidth": "20px",
+                                    # 'font-size': '0.8rem'
+                                },
+                                style_header={
+                                    "backgroundColor": "rgb(220, 230, 250)",
+                                    "fontWeight": "bold",
+                                    "font-size": "1.4rem",
+                                    "font-family": "Helvetica",
+                                    "whiteSpace": "normal",
+                                    "height": "auto",
+                                },
+                                style_data={
+                                    "color": "black",
+                                    "backgroundColor": "white",
+                                    "whiteSpace": "normal",
+                                    "height": "auto",
+                                    "font-size": "1.1rem",
+                                },
+                                fixed_rows={"headers": True, "data": 0},
+                            )
+                        ],
+                    )
+                ),
+            ]
+        )
+    ]
+)
+
+
+alg3_site_info_dict = {
+    "Reference Site": (
+        "Location",
+        "Instrumented or Pseudo-Invariant Calibration Site (PICS)",
+        "Surface type",
+        "Coordinates",
+    ),
+    "Algeria 3": ("Algeria", "PICS", "Desert sand", "30.32 N, 7.66 E"),
+}
+alg3_site_info_df = pd.DataFrame(data=alg3_site_info_dict)
+
+# algeria 3 box
+algeria3_box = dmc.Card(
+    children=[
+        dbc.Row(
+            children=[
+                dbc.Col(
+                    dmc.Container(
+                        fluid=True,
+                        children=[
+                            html.Img(
+                                id="algeria-3_image",
+                                src="assets/Algeria-3-centerROI-GoogleEarth.png",
+                                style={"width": "50vh", "margin-bottom": "5vh"},
+                            )
+                        ],
+                    )
+                ),
+                dbc.Col(
+                    dbc.Container(
+                        style={
+                            "margin-top": "25px",
+                            "width": "80vh",
+                            # 'margin-left': '15px', 'margin-right': '20px',
+                        },
+                        fluid="xs",
+                        children=[
+                            dash_table.DataTable(
+                                alg3_site_info_df.to_dict("records"),
+                                [
+                                    {"name": i, "id": i}
+                                    for i in alg3_site_info_df.columns
+                                ],
+                                id="algeria-3_tbl-content",
                                 # fill_width=True,
                                 style_cell={
                                     "padding": "5px",
@@ -387,7 +541,7 @@ baotou_geo_box = dmc.Card(  # withBorder=True, shadow="xs", radius="md",
                                     {"name": i, "id": i}
                                     for i in baotou_geo_info_df.columns
                                 ],
-                                id="libya-4_tbl-content",
+                                id="baotou-geo_tbl-content",
                                 # fill_width=True,
                                 style_cell={
                                     "padding": "5px",
@@ -471,7 +625,7 @@ shadnagar_box = dmc.Card(  # withBorder=True, shadow="xs", radius="md",
                                     {"name": i, "id": i}
                                     for i in shadnagar_info_df.columns
                                 ],
-                                id="libya-4_tbl-content",
+                                id="shadnagar_tbl-content",
                                 # fill_width=True,
                                 style_cell={
                                     "padding": "5px",
@@ -553,7 +707,7 @@ kf_causeway_box = dmc.Card(  # withBorder=True, shadow="xs", radius="md",
                                     {"name": i, "id": i}
                                     for i in kf_causeway_info_df.columns
                                 ],
-                                id="libya-4_tbl-content",
+                                id="kf-causeway_tbl-content",
                                 # fill_width=True,
                                 style_cell={
                                     "padding": "5px",
@@ -636,7 +790,7 @@ lake_pontchartrain_box = dmc.Card(  # withBorder=True, shadow="xs", radius="md",
                                     {"name": i, "id": i}
                                     for i in lake_pontchartrain_info_df.columns
                                 ],
-                                id="libya-4_tbl-content",
+                                id="lake-pont_tbl-content",
                                 # fill_width=True,
                                 style_cell={
                                     "padding": "5px",
@@ -689,6 +843,8 @@ rad_sites_card = dmc.Card(
         dbc.Row(children=[rvus_box]),
         dbc.Row(children=[lake_tahoe_box]),
         dbc.Row(children=[libya4_box]),
+        dbc.Row(children=[libya1_box]),
+        dbc.Row(children=[algeria3_box]),
     ],
     # style={'margin-left': '10px'},
 )

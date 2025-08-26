@@ -23,11 +23,11 @@ HEIGHT_OF_ROW = 345
 log = Logger(__name__)
 
 page_buttons = dbc.Container(
-    fluid="xs",
+    fluid=True,  # "xs",
     style={
         "width": "110vh",
-        # 'margin-left': '1px',
-        "margin-right": "3vh",
+        # 'margin-left': '15vh',
+        "margin-right": "5vh",
     },
     children=[
         html.Div(
@@ -100,23 +100,6 @@ header = dmc.Card(
                         dbc.Col(
                             dbc.Container(
                                 fluid="xs",
-                                style={"margin-left": "0vh", "margin-top": "0vh"},
-                                children=[
-                                    html.Div(
-                                        "Under development",
-                                        style={
-                                            "color": "red",
-                                            "fontSize": 30,
-                                            "font-weight": "bold",
-                                            "align": "centre",
-                                        },
-                                    )
-                                ],
-                            )
-                        ),
-                        dbc.Col(
-                            dbc.Container(
-                                fluid="xs",
                                 style={"margin-left": "-5vh", "margin-top": "-1.5vh"},
                                 children=[
                                     html.A(
@@ -146,7 +129,49 @@ header = dmc.Card(
                             )  # update button margins here
                         ),
                     ]
-                )
+                ),
+                dbc.Row(
+                    children=[
+                        dbc.Col(
+                            dbc.Container(
+                                fluid="xs",
+                                style={"margin-left": "0vh", "margin-top": "0vh"},
+                                children=[
+                                    html.Div(
+                                        "Operational Beta version welcoming inputs and users",
+                                        style={
+                                            "color": "red",
+                                            "fontSize": 30,
+                                            "font-weight": "bold",
+                                            "align": "centre",
+                                        },
+                                    )
+                                ],
+                            )
+                        ),
+                    ]
+                ),
+                dbc.Row(
+                    children=[
+                        dbc.Col(
+                            dbc.Container(
+                                fluid="xs",
+                                style={"margin-left": "0vh", "margin-top": "0vh"},
+                                children=[
+                                    html.Div(
+                                        "- Enhancements on-going",
+                                        style={
+                                            "color": "red",
+                                            "fontSize": 30,
+                                            "font-weight": "bold",
+                                            "align": "centre",
+                                        },
+                                    )
+                                ],
+                            )
+                        ),
+                    ]
+                ),
             ],
         )
     ]

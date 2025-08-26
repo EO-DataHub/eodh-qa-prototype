@@ -62,22 +62,33 @@ rad_geo_sites_box = dmc.Card(
     shadow="xs",
     radius="md",
     children=[
-        html.Img(
-            id="rad_sites_image",
-            src="assets/rad_sites.png",
-            style={"width": "80vh", "margin-bottom": "5vh"},
-        ),
-        html.Img(
-            id="geo_sites_image", src="assets/geo_sites.png", style={"width": "80vh"}
-        ),
-        html.Div(
-            dcc.Markdown(
-                """For detailed information on each of the sites, 
+        dbc.Row(
+            dbc.Col(
+                dmc.Container(
+                    fluid=True,
+                    children=[
+                        html.Img(
+                            id="rad_sites_image",
+                            src="assets/rad_sites.png",
+                            style={"width": "75vh", "margin-bottom": "5vh"},
+                        ),
+                        html.Img(
+                            id="geo_sites_image",
+                            src="assets/geo_sites.png",
+                            style={"width": "75vh", "margin-bottom": "5vh"},
+                        ),
+                        html.Div(
+                            dcc.Markdown(
+                                """For detailed information on each of the sites, 
                                including their coordinates, please visit the [*_References_*](./references) tab at the top of the page.
                                 """,
-                style={"text-align": "justify", "margin-top": "5vh"},
+                                style={"text-align": "justify", "margin-top": "5vh"},
+                            )
+                        ),
+                    ],
+                )
             )
-        ),
+        )
     ],
 )
 
@@ -175,7 +186,7 @@ outline_box = dmc.Card(
             id="ceos-pvp_breakdown_image",
             src="assets/ceos-pvp_breakdown.png",
             style={
-                "width": "80vh",
+                "width": "60vh",
                 "margin-left": "25px",
                 "margin-top": "25px",
             },
@@ -198,10 +209,13 @@ how_to_contribute_box = dmc.Card(
         # html.P(
         html.Div(
             dcc.Markdown(
-                """We encourage all sensor operators to provide their 
-                                 data in an automated manner.  However, to agree protocols the initial mechanism of 
-                                 data transfer will be via direct contact with NPL, system developer and operator, 
-                                 through completing a form with the required information. To start the process, 
+                """We encourage all sensor operators to collect data over all the listed sites and establish a process to 
+                provide it in an automated manner. However, in this early beta phase we will initially focus the RadVal 
+                tool on two RadCalNet sites (GONA and RVUS) and Libya 4, so these should be seen as a priority. In time, 
+                all sites will be included and historic data where available will be included so collection and submission
+                  to the CID is requested. Recognising differences in satellite formats/data interfaces, the initial 
+                  mechanism of data transfer will be established through direct contact with NPL, system developer and 
+                  operator, through completing a form with the required information. To start the process, 
                                  please contact  [*Samantha.Malone@npl.co.uk*](mailto:samantha.malone@npl.co.uk).""",
                 style={"text-align": "justify"},
             )
@@ -233,6 +247,10 @@ project_links_box = dmc.Card(
     withBorder=True,
     shadow="xs",
     radius="md",
+    style={
+        "margin-top": "5vh",
+        "margin-bottom": "5vh",
+    },
     children=[
         html.H2(
             "How does the CEOS-PVP fit within other ongoing Cal/Val activities?",
@@ -265,16 +283,20 @@ blank_content_box = dmc.Card(
     withBorder=True,
     shadow="xs",
     radius="md",
+    style={
+        "margin-top": "5vh",
+        "margin-bottom": "5vh",
+    },
     children=[
         html.H2(
-            "Other content",
+            "  ",
             # style={'margin-top': '5vh',
             #      'margin-left': '75px',
             #      'margin-right': '75px'}
         ),
         # html.P(
         html.Div(
-            dcc.Markdown("""Description.""", style={"text-align": "justify"}),
+            dcc.Markdown(""" """, style={"text-align": "justify"}),
             # style={'margin-top': '5vh',
             #        'margin-bottom': '75px',
             #        'margin-left': '75px',
@@ -305,8 +327,11 @@ layout = dmc.MantineProvider(
                                 children=[
                                     dbc.Col(outline_box),  # xs=2, sm=2, md=2, lg=2,
                                     dbc.Col(
-                                        rad_geo_sites_box,  # xs=2, sm=2, md=2, lg=2,
-                                        # style={'margin-left': '10px'},
+                                        children=[
+                                            how_to_contribute_box,
+                                            project_links_box,
+                                            blank_content_box,
+                                        ]
                                     ),
                                 ]
                             )
@@ -326,9 +351,9 @@ layout = dmc.MantineProvider(
                         children=[
                             dbc.Row(
                                 children=[
-                                    dbc.Col(how_to_contribute_box),
-                                    dbc.Col(project_links_box),
-                                    dbc.Col(blank_content_box),
+                                    dbc.Col(rad_geo_sites_box),
+                                    # dbc.Col(project_links_box),
+                                    # dbc.Col(blank_content_box),
                                 ]
                             )
                         ],

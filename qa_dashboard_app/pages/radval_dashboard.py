@@ -38,7 +38,7 @@ graph_upper = dcc.Loading(
         dcc.Graph(
             figure=fig_empty,
             id="upper-graph-content",
-            style={"height": "55vh", "width": "120vh"},
+            # style={"height": "55vh", "width": "120vh"},
         )
     ],
     type="circle",
@@ -53,16 +53,14 @@ graph_dummy_small = dcc.Graph(
 
 # create control panel in upper container - select mission, reference site, bands, date range
 control_panel = dmc.Card(
-    # style={'height': '65vh',
-    #        # 'width': '60vh'
-    #        },
+    style={"width": "350px"},
     withBorder=True,
     shadow="xs",
     radius="md",
     children=[
         dmc.Container(
             fluid=True,
-            style={"margin-bottom": "124px"},
+            # style={"margin-bottom": "124px"},
             children=[
                 dbc.Row(
                     dbc.Col(
@@ -70,7 +68,11 @@ control_panel = dmc.Card(
                             dmc.Text(
                                 "Mission:",
                                 # weight=500,
-                                style={"margin-top": "10px", "padding-bottom": "5px"},
+                                style={
+                                    "margin-top": "10px",
+                                    "margin-bottom": "5px",
+                                    #    "padding-bottom": "5px"
+                                },
                             ),
                             # 'padding-left': '5px'
                             dcc.Dropdown(
@@ -78,13 +80,17 @@ control_panel = dmc.Card(
                                 placeholder="Select a mission...",
                                 clearable=True,
                                 multi=False,
-                                # style={'padding-left': '10px', 'padding-bottom': '5px'},
+                                # style={"width": "150px"},
                                 # value=out_platform_type,
                                 options=[
                                     {"label": "Sentinel-2A", "value": "s2a"},
                                     {"label": "Sentinel-2B", "value": "s2b"},
                                     {"label": "Landsat 8", "value": "l8"},
-                                    {"label": "Planet SuperDove", "value": "planet"},
+                                    {"label": "Landsat 9", "value": "l9"},
+                                    {
+                                        "label": "Planet SuperDove",
+                                        "value": "planetscope",
+                                    },
                                     {"label": "Airbus Pleiades", "value": "airbus_phr"},
                                 ],
                             ),
@@ -97,7 +103,11 @@ control_panel = dmc.Card(
                             dmc.Text(
                                 "Reference:",
                                 # weight=500,
-                                style={"margin-top": "20px", "padding-bottom": "5px"},
+                                style={
+                                    "margin-top": "20px",
+                                    "margin-bottom": "5px",
+                                    #    "padding-bottom": "5px"
+                                },
                             ),
                             # 'padding-left': '5px',
                             dcc.Dropdown(
@@ -105,16 +115,30 @@ control_panel = dmc.Card(
                                 placeholder="Select a reference...",
                                 clearable=True,
                                 multi=True,
-                                # style={'padding-left': '10px'},
+                                # style={"width": "50px"},
                                 # value=out_platform_type,
                                 options=[
                                     {"label": "RadCalNet - GONA", "value": "RCN-GONA"},
                                     {"label": "RadCalNet - RVUS", "value": "RCN-RVUS"},
-                                    {"label": "PICS - Libya-4", "value": "LIBYA-4"},
-                                    {"label": "PICS - Libya-1", "value": "LIBYA-1"},
+                                    {"label": "PICS - Libya 4", "value": "LIBYA-4"},
                                     {
                                         "label": "CEOS Virtual Reference",
                                         "value": "ceos-virtual-ref",
+                                    },
+                                    {
+                                        "label": "PICS - Libya 1",
+                                        "value": "LIBYA-1",
+                                        "disabled": "True",
+                                    },
+                                    {
+                                        "label": "PICS - Algeria 3",
+                                        "value": "ALGERIA-3",
+                                        "disabled": "True",
+                                    },
+                                    {
+                                        "label": "PICS - Lake Tahoe",
+                                        "value": "LAKE-TAHOE",
+                                        "disabled": "True",
                                     },
                                 ],
                             ),
@@ -128,8 +152,8 @@ control_panel = dmc.Card(
                                 "Wavebands:",  # weight=500,  # id='band_text',
                                 style={
                                     "margin-top": "20px",
-                                    "padding-bottom": "5px",
-                                    "padding-left": "5px",
+                                    "margin-bottom": "5px",
+                                    #    "padding-bottom": "5px"
                                 },
                             ),
                             dcc.Dropdown(
@@ -137,7 +161,7 @@ control_panel = dmc.Card(
                                 placeholder="Select wavebands...",
                                 clearable=True,
                                 multi=True,
-                                # style={'padding-left': '10px'},
+                                # style={"width": "50px"},
                                 options=[],
                             ),
                         ]
@@ -146,29 +170,45 @@ control_panel = dmc.Card(
                 dbc.Row(
                     dbc.Col(
                         children=[
-                            dmc.Text(
-                                "Date range:",  # weight=500,
-                                style={
-                                    "margin-top": "20px",
-                                    # 'padding-left': '5px',
-                                    "padding-bottom": "5px",
-                                },
+                            dbc.Container(
+                                fluid="True",
+                                # style={
+                                #     # "margin-left": "0vh",
+                                #     "margin-top": "0vh"},
+                                children=[
+                                    dmc.Text(
+                                        "Date range:",  # weight=500,
+                                        style={
+                                            "margin-top": "20px",
+                                            "margin-bottom": "5px",
+                                            #    "padding-bottom": "5px"
+                                        },
+                                    ),
+                                    dcc.DatePickerRange(
+                                        id="date-picker",
+                                        display_format="DD-MM-YYYY",
+                                        end_date_placeholder_text="DD-MM-YYYY",
+                                        start_date=None,
+                                        end_date=None,
+                                        style={
+                                            # "width": "50px",
+                                            "fontsize": "0.5rem",
+                                            #    'padding-right': '50px'
+                                            "margin-bottom": "300px",
+                                        },
+                                    ),
+                                ],
                             ),
-                            dcc.DatePickerRange(
-                                id="date-picker",
-                                display_format="DD-MM-YYYY",
-                                end_date_placeholder_text="DD-MM-YYYY",
-                                start_date=None,
-                                end_date=None,
-                                style={"width": "30vh", "fontsize": "0.5rem"},
-                            ),
-                        ]
+                        ],
+                        #  width=8, lg=4, sm=8
                     )
                 ),
             ],
         )
     ],
-    style={"height": "75vh"},
+    # style={"height": "660px",
+    #        "width": "150px",
+    #        "sm": "660px"},
 )
 
 # average biases table empty data
@@ -218,7 +258,10 @@ graph_panel_big = dmc.Card(
         dcc.Markdown("Mean bias: "),
         dbc.Row(
             dbc.Container(
-                style={"margin-left": "15px", "width": "115vh"},
+                style={
+                    "margin-left": "15px",
+                    #    "width": "115vh"
+                },
                 fluid="xs",
                 children=[
                     dash_table.DataTable(
@@ -250,6 +293,7 @@ graph_panel_big = dmc.Card(
                             "font-size": "0.9rem",
                         },
                         fixed_rows={"headers": True, "data": 0},
+                        style_table={"width": "115vh"},
                         css=[
                             {
                                 "selector": ".dash-spreadsheet td div",
@@ -274,11 +318,9 @@ top_panels = dmc.Container(
     children=[
         dbc.Row(
             children=[
-                dbc.Col(control_panel),  # xs=2, sm=2, md=2, lg=2,
-                dbc.Col(
-                    children=[graph_panel_big],  # xs=2, sm=2, md=2, lg=2,
-                    style={"margin-left": "10px"},
-                ),
+                dbc.Col(children=[control_panel], xs=4, sm=4, md=4, lg=4),
+                dbc.Col(children=[graph_panel_big], xs=8, sm=8, md=8, lg=8),
+                # style={"margin-left": "10px"},
             ]
         )
     ],
@@ -370,7 +412,7 @@ bottom_panel = dmc.Card(
                                         ),  # Site Map /
                                         html.Img(
                                             id="quicklook-image-content",
-                                            src="assets/empty_quicklook.png",
+                                            src=f"{os.pardir}/assets/empty_quicklook.png",
                                             style={"width": "50vh"},
                                         ),
                                     ],
@@ -448,7 +490,7 @@ layout = dmc.MantineProvider(
     )
 )
 
-# control panel options data for Sentinel-2, Landsat 8, Planet SuperDove, Airbus Pleiades
+# control panel options data for Sentinel-2, Landsat 8, Landsat 9, Planet SuperDove, Airbus Pleiades
 options_s2 = [
     {"label": "B1 - 442 nm", "value": "442 nm"},
     {"label": "B2 - 492 nm", "value": "492 nm"},
@@ -465,16 +507,17 @@ options_s2 = [
 ]
 
 options_l8 = [
-    {"label": "B1 - 443 nm", "value": "443"},
-    {"label": "B2 - 483 nm", "value": "483"},
-    {"label": "B3 - 560 nm", "value": "560"},
-    {"label": "B4 - 660 nm", "value": "660"},
-    {"label": "B5 - 865 nm", "value": "865"},
-    {"label": "B6 - 1650 nm", "value": "1650"},
-    {"label": "B7 - 2220 nm", "value": "2220"},
-    {"label": "B8 - 640 nm", "value": "640"},
-    {"label": "B9 - 1375 nm", "value": "1375"},
+    {"label": "B1 - 440 nm", "value": "440 nm"},
+    {"label": "B2 - 480 nm", "value": "480 nm"},
+    {"label": "B3 - 560 nm", "value": "560 nm"},
+    {"label": "B4 - 660 nm", "value": "660 nm"},
+    {"label": "B5 - 870 nm", "value": "870 nm"},
+    {"label": "B6 - 1610 nm", "value": "1610 nm"},
+    {"label": "B7 - 2200 nm", "value": "2200 nm"},
+    {"label": "B9 - 1370 nm", "value": "1370 nm"},
 ]
+
+options_l9 = options_l8
 
 options_planet = [
     {"label": "B1 - 442 nm", "value": "442 nm"},
@@ -495,8 +538,8 @@ options_airbus = [
 ]
 
 all_options = pd.DataFrame(
-    data=[options_s2, options_l8, options_planet, options_airbus],
-    index=["s2", "l8", "planet", "airbus_phr"],
+    data=[options_s2, options_l8, options_l9, options_planet, options_airbus],
+    index=["s2", "l8", "l9", "planetscope", "airbus_phr"],
 )  # 's2a', 's2b',
 
 all_options_dict = {
@@ -504,7 +547,8 @@ all_options_dict = {
     "s2a": options_s2,
     "s2b": options_s2,
     "l8": options_l8,
-    "planet": options_planet,
+    "l9": options_l9,
+    "planetscope": options_planet,
     "airbus_phr": options_airbus,
 }
 
@@ -557,19 +601,29 @@ def update_timeseries(sat: list, refs: list, band: list, date_1, date_2):
         if len(timeseries_data_ref1) == 0 and len(timeseries_data_ref2) == 0:
             return empty_upper_plot
 
+        updated_refs = []
+        for ref in [timeseries_data_ref1["Ref"][0], timeseries_data_ref2["Ref"][0]]:
+            if not isinstance(ref, float):
+                updated_refs.append(ref)
+
         upper_plot = data_interface.plot_timeseries(
             sat,
             band,
-            refs,
+            updated_refs,
             timeseries_data_ref1["Datetime"],
             timeseries_data_ref1["BiasVals"],
             timeseries_data_ref1["BiasUncVals"],
+            timeseries_data_ref1["MeasValsSensor1"],
             timeseries_data_ref1["MeasValsSensor2"],
             timeseries_data_ref2["Datetime"],
             timeseries_data_ref2["BiasVals"],
             timeseries_data_ref2["BiasUncVals"],
+            timeseries_data_ref2["MeasValsSensor1"],
             timeseries_data_ref2["MeasValsSensor2"],
         )
+
+        if upper_plot == None:
+            upper_plot = empty_upper_plot
 
     return upper_plot
 
@@ -609,30 +663,40 @@ def update_bias_table(sat, refs, band, date_1, date_2):
             return empty_bias_vals_table_output
 
         else:
-            refs = []
-            for ref in sel_refs:
-                if ref == timeseries_data_ref1.loc[0, "Ref"]:
-                    refs.append(ref)
-                if ref == timeseries_data_ref2.loc[0, "Ref"]:
-                    refs.append(ref)
+            # refs = []
+            # for ref in sel_refs:
+            #     if ref == timeseries_data_ref1.loc[0, "Ref"]:
+            #         refs.append(ref)
+            #     if ref == timeseries_data_ref2.loc[0, "Ref"]:
+            #         refs.append(ref)
+
+            updated_refs = []
+            for ref in [timeseries_data_ref1["Ref"][0], timeseries_data_ref2["Ref"][0]]:
+                if not isinstance(ref, float):
+                    updated_refs.append(ref)
 
             bias_vals = data_interface.get_bias_table_vals(
                 sat,
-                refs,
+                updated_refs,
                 band,
                 timeseries_data_ref1["Datetime"],
                 timeseries_data_ref1["BiasVals"],
                 timeseries_data_ref1["BiasUncVals"],
+                timeseries_data_ref1["MeasValsSensor1"],
                 timeseries_data_ref1["MeasValsSensor2"],
                 timeseries_data_ref2["Datetime"],
                 timeseries_data_ref2["BiasVals"],
                 timeseries_data_ref2["BiasUncVals"],
+                timeseries_data_ref2["MeasValsSensor1"],
                 timeseries_data_ref2["MeasValsSensor2"],
             )
             bias_vals_df = pd.DataFrame(data=bias_vals, index=[0])
             bias_vals_table_output = bias_vals_df.to_dict("records"), [
                 {"name": i, "id": i} for i in bias_vals_df.columns
             ]
+
+            if bias_vals == None:
+                bias_vals_table_output = empty_bias_vals_table_output
 
     return bias_vals_table_output
 
@@ -656,7 +720,7 @@ def update_bottom_panel(clickData, sat, refs):  # band
             fig_empty,
             matchup_analysis_empty.to_dict("records"),
             [{"name": i, "id": i} for i in matchup_analysis_empty.columns],
-            "assets/empty_quicklook.png",
+            f"{os.pardir}/assets/empty_quicklook.png",
         )
     else:
         sel_refs = sorted(refs)
@@ -670,15 +734,15 @@ def update_bottom_panel(clickData, sat, refs):  # band
         matchup_range_end = clicked_matchup_date + datetime.timedelta(minutes=60)
 
         mup_info = data_interface.extract_mup_info_from_db(
-            sat, refs, [clicked_matchup_date, matchup_range_end]
+            sat, sel_refs, [clicked_matchup_date, matchup_range_end]
         )
 
-        refs = []
+        bottom_panel_refs = []
         for ref in sel_refs:
             if ref in str(mup_info.attrs.keys()):
-                refs.append(ref)
+                bottom_panel_refs.append(ref)
 
-        if len(refs) >= 2:
+        if len(bottom_panel_refs) >= 2:
             if clickData["points"][0]["curveNumber"] in [
                 0,
                 2,
@@ -689,11 +753,11 @@ def update_bottom_panel(clickData, sat, refs):  # band
                 12,
                 14,
             ]:  # only works for 2 refs for now,
-                clicked_ref = [refs[0]]
+                clicked_ref = [bottom_panel_refs[0]]
             else:
-                clicked_ref = [refs[1]]
+                clicked_ref = [bottom_panel_refs[1]]
         else:
-            clicked_ref = refs
+            clicked_ref = bottom_panel_refs
 
         mup_info = data_interface.extract_mup_info_from_db(
             sat, clicked_ref, [clicked_matchup_date, matchup_range_end]
@@ -703,14 +767,16 @@ def update_bottom_panel(clickData, sat, refs):  # band
 
         figure = data_interface.small_plot_update(sat, clicked_ref, mup_info)
 
-        if clicked_ref == [
-            "RCN-GONA"
-        ]:  # todo: update to get correct ref based on clickData (more than just RCN-GONA or RCN-RVUS
-            src = "assets/Gobabeb.png"
-        elif clicked_ref == ["RCN-RVUS"]:
-            src = "assets/RailroadValley.png"
+        assets_dict = {
+            "RCN-GONA": "Gobabeb",
+            "RCN-RVUS": "RailroadValley",
+            "LIBYA-4": "libya-4-2",
+        }
+
+        if clicked_ref[0] in assets_dict.keys():
+            src = f"{os.pardir}/assets/{assets_dict[clicked_ref[0]]}.png"
         else:
-            src = "assets/empty_quicklook.png"
+            src = f"{os.pardir}/assets/empty_quicklook.png"
 
         output = figure, data, columns, src
 
