@@ -3,7 +3,8 @@ from dash import Dash, html, dcc
 import dash_bootstrap_components as dbc
 import dash_mantine_components as dmc
 from logging import Logger
-
+import flask
+import urllib
 
 # create app
 app = Dash(
@@ -11,7 +12,8 @@ app = Dash(
     # suppress_callback_exceptions=True,
     use_pages=True,
     external_stylesheets=[dbc.themes.SIMPLEX, dbc.icons.BOOTSTRAP],
-    title="CEOS Calibration Dashboard",
+    title="CEOS-PVP RadVAL Dashboard",
+    serve_locally=True,
 )
 
 application = app.server
@@ -20,13 +22,12 @@ HEIGHT_OF_ROW = 345
 
 log = Logger(__name__)
 
-# add upper buttons based on pages
 page_buttons = dbc.Container(
-    fluid="xs",
+    fluid=True,  # "xs",
     style={
         "width": "110vh",
-        # 'margin-left': '1px',
-        "margin-right": "3vh",
+        # 'margin-left': '15vh',
+        "margin-right": "5vh",
     },
     children=[
         html.Div(
@@ -67,7 +68,6 @@ page_buttons = dbc.Container(
     ],
 )
 
-# create header of logos and buttons
 header = dmc.Card(
     children=[
         dbc.Container(
@@ -84,7 +84,7 @@ header = dmc.Card(
                                 children=[
                                     html.A(
                                         href="https://ceos.org/",
-                                        target="newPage",  # https://calvalportal.ceos.org/web/guest
+                                        target="newPage",
                                         children=[
                                             html.Img(
                                                 alt="Link to CEOS portal",
@@ -100,39 +100,83 @@ header = dmc.Card(
                         dbc.Col(
                             dbc.Container(
                                 fluid="xs",
+                                style={"margin-left": "-5vh", "margin-top": "-1.5vh"},
+                                children=[
+                                    html.A(
+                                        href="https://ceos.org/",
+                                        target="newPage",
+                                        children=[
+                                            html.Img(
+                                                alt="Link to CEOS portal",
+                                                src="assets/RadVAL_logo.png",
+                                                height=100,
+                                            )
+                                        ],
+                                    )
+                                    # width=100),
+                                ],
+                            )
+                        ),
+                        dbc.Col(
+                            dbc.Container(
+                                fluid="xs",
+                                children=[page_buttons],
                                 style={
-                                    "width": "20vh",
-                                    "margin-top": "0vh",
+                                    "margin-top": "1vh",
+                                    "margin-right": "-5vh",
                                     "margin-left": "-5vh",
                                 },
+                            )  # update button margins here
+                        ),
+                    ]
+                ),
+                dbc.Row(
+                    children=[
+                        dbc.Col(
+                            dbc.Container(
+                                fluid="xs",
+                                style={"margin-left": "0vh", "margin-top": "0vh"},
                                 children=[
-                                    dmc.Text(
-                                        "Calibration Dashboard",
-                                        weight=500,
-                                        align="left",
-                                        inline=True,
+                                    html.Div(
+                                        "Operational Beta version welcoming inputs and users",
                                         style={
-                                            "font-size": "2rem",
-                                            "font-family": "Segoe UI",
-                                            # 'position': 'absolute',
-                                            "top": "12",
+                                            "color": "red",
+                                            "fontSize": 30,
+                                            "font-weight": "bold",
+                                            "align": "centre",
                                         },
                                     )
                                 ],
                             )
                         ),
+                    ]
+                ),
+                dbc.Row(
+                    children=[
                         dbc.Col(
-                            page_buttons,
-                            style={"margin-top": "1vh", "margin-right": "1vh"},
+                            dbc.Container(
+                                fluid="xs",
+                                style={"margin-left": "0vh", "margin-top": "0vh"},
+                                children=[
+                                    html.Div(
+                                        "- Enhancements on-going",
+                                        style={
+                                            "color": "red",
+                                            "fontSize": 30,
+                                            "font-weight": "bold",
+                                            "align": "centre",
+                                        },
+                                    )
+                                ],
+                            )
                         ),
                     ]
-                )
+                ),
             ],
         )
     ]
 )
 
-# create footer of logos & links
 footer = dmc.Card(
     children=[
         dbc.Container(
@@ -143,7 +187,7 @@ footer = dmc.Card(
                         dbc.Col(
                             html.A(
                                 href="https://ceos.org/",
-                                target="newPage",  # https://calvalportal.ceos.org/web/guest
+                                target="newPage",
                                 children=[
                                     html.Img(
                                         alt="Link to CEOS portal",
@@ -196,7 +240,7 @@ footer = dmc.Card(
                         ),
                         dbc.Col(
                             html.A(
-                                href="https://staging.eodatahub.org.uk/",
+                                href="https://eodatahub.org.uk/",
                                 target="newPage",
                                 children=[
                                     html.Img(
@@ -222,9 +266,7 @@ footer = dmc.Card(
                             ),
                             align="center",
                         ),
-                        dbc.Row(
-                            [html.Div([html.Br()])]
-                        ),  # add in empty row for spacing
+                        dbc.Row([html.Div([html.Br()])]),  # empty row for spacing
                         dbc.Row(
                             [
                                 dbc.Col(
@@ -242,37 +284,41 @@ footer = dmc.Card(
 )
 
 
-app.layout = html.Div(
-    [
-        dbc.Row(
-            children=[
-                dbc.Container(
-                    fluid=True,
-                    children=[
-                        dbc.Col(
-                            header,
-                            style={
-                                "margin-bottom": "5vh",
-                                "margin-left": "5vh",
-                                "margin-right": "5vh",
-                            },
-                        ),  # , xs=12, sm=12, md=12, lg=12)),
-                    ],
-                )
-            ]
-        ),
-        dash.page_container,
-        dbc.Row(
-            dbc.Col(
-                footer, style={"margin-bottom": "5vh", "margin-left": "5vh"}
-            )  # xs=12, sm=12, md=12, lg=12))
-        ),
-    ]
+app.layout = dmc.MantineProvider(
+    html.Div(
+        [
+            dbc.Row(
+                children=[
+                    dbc.Container(
+                        fluid=True,
+                        children=[
+                            dbc.Col(
+                                header,
+                                style={
+                                    "margin-bottom": "5vh",
+                                    "margin-left": "5vh",
+                                    "margin-right": "5vh",
+                                },
+                            ),  # , xs=12, sm=12, md=12, lg=12)),
+                        ],
+                    )
+                ]
+            ),
+            dash.page_container,
+            dbc.Row(
+                dbc.Col(
+                    footer, style={"margin-bottom": "5vh", "margin-left": "5vh"}
+                )  # xs=12, sm=12, md=12, lg=12))
+            ),
+        ]
+    )
 )
 
 if __name__ == "__main__":
     app.run(
-        debug=True,  # for testing locally
-        # dev_tools_ui=False, dev_tools_props_check=False  # disables the blue marker that shows errors
+        dev_tools_props_check=False,
+        # debug=True,
+        # dev_tools_ui=False,  # disables the blue marker that shows errors
+        host="0.0.0.0",
+        port=80,
     )
-    # app.run(debug=False, host='0.0.0.0', port=5000)  # for running in Docker container

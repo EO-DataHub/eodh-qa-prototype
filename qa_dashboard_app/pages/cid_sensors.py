@@ -5,33 +5,15 @@ import dash_bootstrap_components as dbc
 
 dash.register_page(
     __name__,
-    order=5,
-    title="RadVAL - Methods",  # name of tab
-    # image='methods.png',  # metadata
-    description="Further information on methods.",  # metadata
+    order=3,
+    name="CID and Sensors",
+    title="RadVAL - CID & Sensors",  # name of tab
+    # image='missions.png',  # metadata
+    description="Further information on the data collected within the CID and contributing sensor characteristics.",  # metadata
     location="sidebar",
 )
 
 HEIGHT_OF_ROW = 345
-
-# description box
-atbd_box = dmc.Card(
-    withBorder=True,
-    shadow="xs",
-    radius="md",
-    children=[
-        html.H2(
-            "ATBD to be added",
-        ),
-        html.Div(
-            dcc.Markdown(
-                """ATBD to be added.""",
-                link_target="_blank",
-                style={"text-align": "justify"},
-            ),
-        ),
-    ],
-)
 
 layout = dmc.MantineProvider(
     html.Div(
@@ -45,7 +27,11 @@ layout = dmc.MantineProvider(
                 },
             ),
             html.Div(
-                "This page will display the methods and algorithms used to create the comparisons displayed on the RadVAL dashboard.",
+                "This page will display the data collected within the Comparison Image Database (CID) "
+                "that populate the RadVal tool, alongside a description of the basic characteristics for"
+                " the sensors contributing to the CEOS-PVP activity. This is comprised of information that "
+                "the data providers have agreed to make public and, if applicable, will link to the sensor "
+                "operator for further information.",
                 style={
                     "margin-top": "5vh",
                     "margin-bottom": "75px",
